@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Helmet } from "react-helmet-async";
+import { AppProvider } from "./providers/app.provider";
+import AppRoutes from "./routes";
+import GloablStyle from "./theme";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppProvider>
+      <GloablStyle />
+      <Helmet>
+        <title>React Blank Project Template with Typescript</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        {/*
+          // @ts-ignore */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        {/* Fonts you want to use */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+          rel="stylesheet"
+        />
+      </Helmet>
+      <AppRoutes />
+    </AppProvider>
   );
-}
+};
 
 export default App;
