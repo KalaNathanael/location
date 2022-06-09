@@ -1,8 +1,10 @@
 import * as React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { HelmetProvider } from "react-helmet-async";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
+import { store } from "../store";
 import { theme } from "../theme";
 
 const ErrorFallback = () => {
@@ -31,9 +33,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     >
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <HelmetProvider>
-          <ThemeProvider theme={theme}>
-            <Router>{children}</Router>
-          </ThemeProvider>
+          <Provider store={store}>
+            <ThemeProvider theme={theme}>
+              <Router>{children}</Router>
+            </ThemeProvider>
+          </Provider>
         </HelmetProvider>
       </ErrorBoundary>
     </React.Suspense>
