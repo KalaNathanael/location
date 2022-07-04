@@ -1,1 +1,1 @@
-export const API_URL = "https://jsonplaceholder.typicode.com/";
+export const API_URL = process.env.REACT_APP_API_URL as string;

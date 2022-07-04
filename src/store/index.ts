@@ -1,11 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dumbReducer from "@/features/dumb/store/dumbSlice";
+import { createLogger } from "redux-logger";
+import { isDev } from "@/utils/isDev";
+import rootReducer from "./reducers/rootReducer";
+import { useDispatch } from "react-redux";
 
-export const store = configureStore({
-  reducer: {
-    dumb: dumbReducer,
-  },
+const loggerMiddleware = createLogger({
+  predicate: () => isDev(),
+  collapsed: true,
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(loggerMiddleware),
+});
+
+export type TRootState = ReturnType<typeof store.getState>;
+export type TAppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
