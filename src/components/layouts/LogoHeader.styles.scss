@@ -1,0 +1,27 @@
+.logo-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: black;
+  width: 100%;
+
+  .left-logo {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .right-logo {
+    display: flex;
+    align-items: flex-end;
+    width: 76px;
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+}

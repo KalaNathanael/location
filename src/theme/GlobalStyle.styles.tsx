@@ -6,7 +6,7 @@ import convertThemeColorsToRootColors, {
 const GloablStyle = createGlobalStyle`
     *, ::after, ::before {
         box-sizing: border-box;
-        font-family: 'Open Sans', sans-serif;
+        font-family: 'Roboto', sans-serif;
         padding: 0;
         margin: 0;
     }
@@ -23,6 +23,17 @@ const GloablStyle = createGlobalStyle`
 
     a {
         text-decoration: none;
+    }
+
+    .form-group {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
     }
 `;
 

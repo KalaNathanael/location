@@ -1,0 +1,174 @@
+import React, { FC, useEffect, useRef } from "react";
+import { routePaths } from "@/config";
+import { useLocation, useNavigate } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
+import { connect, ConnectedProps } from "react-redux";
+import { Icon } from "@iconify/react";
+
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+
+import "./DashboardHeader.styles.scss";
+
+const menuItems = [
+  {
+    name: "Page d'accueil",
+    path: routePaths.home,
+    icon: <HomeIcon color="primary" />,
+  },
+  {
+    name: "Espace administrateur",
+    path: routePaths.admin,
+    icon: <Icon color="var(--ui-green-normal)" icon="uit:create-dashboard" />,
+    admin: true,
+  },
+  {
+    name: "Louer du matériel",
+    path: routePaths.location,
+    icon: (
+      <Icon
+        color="var(--ui-blue-normal)"
+        icon="healthicons:rdt-result-out-stock-outline"
+        fontSize={20}
+      />
+    ),
+  },
+  // {
+  //   name: "Retour d'expérience",
+  //   path: routePaths.fraud,
+  //   icon: (
+  //     <Icon
+  //       color="var(--ui-yellow-main)"
+  //       icon={warningStandardSolid}
+  //       fontSize={24}
+  //     />
+  //   ),
+  // },
+];
+
+// type DashboardHeaderProps = ConnectedProps<typeof connector>;
+const DashboardHeader: FC = () => {
+  let location = useLocation();
+  let navigate = useNavigate();
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const openMenu = Boolean(anchorEl);
+
+  const handleMenuButtonClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const renderTitle = () => {
+    // switch (location.pathname) {
+    //   case routePaths.admin:
+    //     return "Espace administrateur";
+    //   case routePaths.location:
+    //     return "Louer du matériel";
+    // }
+    if (location.pathname.includes(routePaths.admin)) {
+      return "Espace administrateur";
+    } else if (location.pathname.includes(routePaths.location)) {
+      return "Louer du matériel";
+    }
+  };
+
+  const filteredMenuList = menuItems.filter((elt) => {
+    let alterCondition = true;
+    // if (elt?.admin) alterCondition = user?.admin === 1;
+    return elt.path !== location.pathname && alterCondition;
+  });
+
+  return (
+    <div className="l-dashboard-header">
+      <div className="content">
+        <Tooltip title="Menu">
+          <IconButton
+            className="menu-button"
+            aria-label="Menu"
+            onClick={handleMenuButtonClick}
+            onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>
+              e.preventDefault()
+            }
+            aria-controls={openMenu ? "navigation-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={openMenu ? "true" : undefined}
+          >
+            <MenuIcon fontSize="medium" />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          anchorEl={anchorEl}
+          id="navigation-menu"
+          open={openMenu}
+          onClose={handleMenuClose}
+          onClick={handleMenuClose}
+          PaperProps={{
+            elevation: 0,
+            sx: {
+              minWidth: 220,
+              overflow: "visible",
+              filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+              mt: 1.5,
+              "& .MuiAvatar-root": {
+                width: 32,
+                height: 32,
+                ml: -0.5,
+                mr: 1,
+              },
+              "&:before": {
+                content: '""',
+                display: "block",
+                position: "absolute",
+                top: 0,
+                left: 14,
+                width: 10,
+                height: 10,
+                bgcolor: "#fff",
+                transform: "translateY(-50%) rotate(45deg)",
+                zIndex: 0,
+              },
+            },
+          }}
+          transformOrigin={{ horizontal: "left", vertical: "top" }}
+          anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+        >
+          {filteredMenuList.map((elt, idx) => {
+            return (
+              <div key={`navigation-item-${idx}`}>
+                <MenuItem
+                  onClick={() => {
+                    navigate(elt.path);
+                    handleMenuClose();
+                  }}
+                >
+                  <ListItemIcon>{elt.icon}</ListItemIcon>
+                  {elt.name}
+                </MenuItem>
+                {idx < filteredMenuList.length - 2 && <Divider />}
+              </div>
+            );
+          })}
+        </Menu>
+        <span className="title">{renderTitle()}</span>
+      </div>
+    </div>
+  );
+};
+
+// const mapStateToProps = createStructuredSelector({
+//   user: selectAuthUser,
+// });
+
+// const connector = connect(mapStateToProps);
+
+export default DashboardHeader;

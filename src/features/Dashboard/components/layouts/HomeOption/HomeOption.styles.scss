@@ -1,0 +1,64 @@
+.l-dashboard-option {
+  position: relative;
+  width: 100%;
+  padding: 20px 34px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 16px;
+  transition: all 0.25s ease-in-out;
+
+  &.disable {
+    background: linear-gradient(321.68deg, #8e8e8e, #dedede 100%);
+    pointer-events: none;
+  }
+
+  &.blue {
+    background: linear-gradient(
+      321.68deg,
+      var(--ui-blue-normal),
+      var(--ui-blue-lighter) 100%
+    );
+  }
+  &.red {
+    background: linear-gradient(
+      321.68deg,
+      var(--ui-red-normal),
+      var(--ui-red-lighter) 100%
+    );
+  }
+  &.yellow {
+    background: linear-gradient(
+      321.68deg,
+      var(--ui-yellow-normal),
+      var(--ui-yellow-lighter) 100%
+    );
+  }
+  &.green {
+    background: linear-gradient(
+      321.68deg,
+      var(--ui-green-normal),
+      var(--ui-green-lighter) 100%
+    );
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 4px -4px;
+  }
+
+  .icon {
+    color: #fff;
+    opacity: 0.8;
+  }
+
+  .label {
+    display: flex;
+    width: 184px;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.25;
+    color: #fff;
+  }
+}

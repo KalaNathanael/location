@@ -4,6 +4,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
+import { CustomProvider } from "rsuite";
 import { store } from "../store";
 import { theme } from "../theme";
 
@@ -35,7 +36,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         <HelmetProvider>
           <Provider store={store}>
             <ThemeProvider theme={theme}>
-              <Router>{children}</Router>
+              <CustomProvider theme="light">
+                <Router>{children}</Router>
+              </CustomProvider>
             </ThemeProvider>
           </Provider>
         </HelmetProvider>

@@ -1,0 +1,40 @@
+.p-login {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 15px 30px 0;
+
+    .intro-text {
+      font-size: 14px;
+      line-height: 1.2;
+      margin-top: 48px;
+      margin-bottom: 35px;
+    }
+
+    .title {
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 700;
+      margin-bottom: 34px;
+    }
+
+    .error-alert {
+      margin-bottom: 34px;
+    }
+  }
+
+  .footer-img {
+    width: 100%;
+    display: flex;
+
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+}

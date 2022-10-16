@@ -1,0 +1,34 @@
+.p-location-datetime {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+
+  & > .header-icon {
+    align-self: center;
+    color: var(--ui-primary);
+  }
+
+  & > h3 {
+    margin-bottom: 18px;
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  & form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    align-self: center;
+    width: 100%;
+
+    & > .button-group {
+      justify-content: center;
+    }
+    & .submit-button {
+      height: 40px;
+      width: 150px;
+    }
+  }
+}

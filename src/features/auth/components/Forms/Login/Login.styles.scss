@@ -1,0 +1,22 @@
+.f-login {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 80px;
+
+  .form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+
+  .button-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .submit-button {
+      height: 58px;
+    }
+  }
+}

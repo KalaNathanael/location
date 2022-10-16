@@ -8,7 +8,7 @@ const App: React.FC = () => {
     <AppProvider>
       <GloablStyle />
       <Helmet>
-        <title>React Blank Project Template with Typescript</title>
+        <title>Location</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         {/*
           // @ts-ignore */}
