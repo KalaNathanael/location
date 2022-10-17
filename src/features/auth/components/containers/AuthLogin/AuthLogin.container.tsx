@@ -8,6 +8,8 @@ import * as Yup from "yup";
 
 import LoginForm from "../../Forms/Login/Login.form";
 import { selectDumbValue } from "@/store/reducers/dumb/dumb.selector";
+import { useNavigate } from "react-router-dom";
+import { routePaths } from "@/config";
 
 export type TAuthValues = {
   login: string;
@@ -21,6 +23,7 @@ const defaultValues: TAuthValues = {
 
 type AuthLoginContainerProps = ConnectedProps<typeof connector>;
 const AuthLoginContainer: FC<AuthLoginContainerProps> = ({ dumb }) => {
+  let navigate = useNavigate();
   const validationSchema: any = Yup.object({
     login: Yup.string().required("Le login est requis"),
     password: Yup.string().required("Le mot de passe est requis"),
@@ -31,6 +34,7 @@ const AuthLoginContainer: FC<AuthLoginContainerProps> = ({ dumb }) => {
     { resetForm, setSubmitting }: FormikHelpers<FormikValues>
   ) => {
     console.log({ values });
+    navigate(routePaths.home);
   };
 
   return (

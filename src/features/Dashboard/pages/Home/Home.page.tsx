@@ -35,7 +35,9 @@ const HomePage: FC = () => {
             inverted={true}
             color="var(--ui-red-normal)"
             Icon={<Icon icon="ri:logout-circle-line" fontSize={24} />}
-            onClick={() => {}}
+            onClick={() => {
+              navigate(routePaths.login);
+            }}
           />
         </span>
       </h1>

@@ -4,6 +4,8 @@ import DashboardHeader from "@/features/Dashboard/components/layouts/DashboardHe
 import HomePage from "@/features/Dashboard/pages/Home/Home.page";
 import { routePaths } from "@/config";
 import PLocationDateTime from "@/features/Dashboard/pages/LocationDateTime/LocationDateTime.page";
+import PItemList from "@/features/Dashboard/pages/ItemsList/ItemsList.page";
+import PSubItem from "@/features/Dashboard/pages/SubItem/SubItem.page";
 
 export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
   return [
@@ -46,7 +48,11 @@ export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
         },
         {
           path: routePaths.locationList,
-          element: <></>,
+          element: <PItemList />,
+        },
+        {
+          path: routePaths.locationElement,
+          element: <PSubItem />,
         },
       ],
     },
