@@ -35,6 +35,7 @@
     "redux-persist": "^6.0.0",
     "rsuite": "^5.19.1",
     "styled-components": "^5.3.6",
+    "sweetalert2": "^11.5.2",
     "typescript": "^4.7.2",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

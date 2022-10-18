@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { routePaths } from "@/config";
 import { useLocation, useNavigate } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
@@ -11,11 +11,17 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
+import Badge from "@mui/material/Badge";
+import Zoom from "@mui/material/Zoom";
+
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import "./DashboardHeader.styles.scss";
+import CCartModal from "../../Conainers/CartModal/CartModal.container";
+import { selectItemsBasket } from "@/store/reducers/items/items.selector";
 
 const menuItems = [
   {
@@ -23,12 +29,12 @@ const menuItems = [
     path: routePaths.home,
     icon: <HomeIcon color="primary" />,
   },
-  {
-    name: "Espace administrateur",
-    path: routePaths.admin,
-    icon: <Icon color="var(--ui-green-normal)" icon="uit:create-dashboard" />,
-    admin: true,
-  },
+  // {
+  //   name: "Espace administrateur",
+  //   path: routePaths.admin,
+  //   icon: <Icon color="var(--ui-green-normal)" icon="uit:create-dashboard" />,
+  //   admin: true,
+  // },
   {
     name: "Louer du matériel",
     path: routePaths.location,
@@ -40,26 +46,35 @@ const menuItems = [
       />
     ),
   },
-  // {
-  //   name: "Retour d'expérience",
-  //   path: routePaths.fraud,
-  //   icon: (
-  //     <Icon
-  //       color="var(--ui-yellow-main)"
-  //       icon={warningStandardSolid}
-  //       fontSize={24}
-  //     />
-  //   ),
-  // },
 ];
 
-// type DashboardHeaderProps = ConnectedProps<typeof connector>;
-const DashboardHeader: FC = () => {
+type DashboardHeaderProps = ConnectedProps<typeof connector>;
+const DashboardHeader: FC<DashboardHeaderProps> = ({ basket }) => {
   let location = useLocation();
   let navigate = useNavigate();
+  let { pathname } = useLocation();
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [openCart, setOpenCart] = useState<boolean>(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [basketEmpty, setBasketEmpty] = useState<boolean>(false);
+  const [showBasket, setShowBasket] = useState<boolean>(false);
   const openMenu = Boolean(anchorEl);
+
+  useEffect(() => {
+    if (Object.keys(basket).length > 0) {
+      setBasketEmpty(false);
+    } else {
+      setBasketEmpty(true);
+    }
+  }, [basket]);
+
+  useEffect(() => {
+    if (pathname.includes(routePaths.locationList)) {
+      setShowBasket(true);
+    } else {
+      setShowBasket(false);
+    }
+  }, [pathname]);
 
   const handleMenuButtonClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -85,7 +100,14 @@ const DashboardHeader: FC = () => {
   const filteredMenuList = menuItems.filter((elt) => {
     let alterCondition = true;
     // if (elt?.admin) alterCondition = user?.admin === 1;
-    return elt.path !== location.pathname && alterCondition;
+    if (location.pathname !== routePaths.home)
+      return (
+        (!location.pathname.includes(elt.path) && alterCondition) ||
+        elt.path === routePaths.home
+      );
+    else {
+      return elt.path !== routePaths.home;
+    }
   });
 
   return (
@@ -160,15 +182,40 @@ const DashboardHeader: FC = () => {
           })}
         </Menu>
         <span className="title">{renderTitle()}</span>
+        <Zoom in={showBasket}>
+          <Tooltip title={"Ouvrir le panier"} placement="left">
+            <IconButton
+              className="cart-button"
+              aria-label="cart"
+              onClick={() => {
+                setOpenCart(true);
+              }}
+              onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>
+                e.preventDefault()
+              }
+              color="primary"
+            >
+              <Badge color="error" variant="dot" invisible={basketEmpty}>
+                <ShoppingCartIcon fontSize="medium" />
+              </Badge>
+            </IconButton>
+          </Tooltip>
+        </Zoom>
       </div>
+      <CCartModal
+        open={openCart}
+        handleClose={() => {
+          setOpenCart(false);
+        }}
+      />
     </div>
   );
 };
 
-// const mapStateToProps = createStructuredSelector({
-//   user: selectAuthUser,
-// });
+const mapStateToProps = createStructuredSelector({
+  basket: selectItemsBasket,
+});
 
-// const connector = connect(mapStateToProps);
+const connector = connect(mapStateToProps);
 
-export default DashboardHeader;
+export default connector(DashboardHeader);

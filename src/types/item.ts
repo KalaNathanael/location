@@ -2,6 +2,7 @@ export type TItem = {
   id: string;
   label: string;
   image_url: string;
+  description: string;
 };
 
 export type TSubItem = {
@@ -9,5 +10,6 @@ export type TSubItem = {
   label: string;
   total_qte: number;
   available_qte: number;
+  price: number;
   image_url?: string;
 };

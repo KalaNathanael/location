@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Formik, FormikHelpers, FormikValues, getIn } from "formik";
+import { Formik, FormikHelpers, getIn } from "formik";
 import * as Yup from "yup";
 
 import { Icon } from "@iconify/react";
@@ -13,6 +13,11 @@ import Button from "@/components/UICs/Button/Button.uic";
 import "./LocationDateTime.styles.scss";
 import { useNavigate } from "react-router-dom";
 import { routePaths } from "@/config";
+import { createStructuredSelector } from "reselect";
+import { selectItemsEventDetails } from "@/store/reducers/items/items.selector";
+import { connect, ConnectedProps } from "react-redux";
+import { store } from "@/store";
+import { setEventDetails } from "@/store/reducers/items/items.reducer";
 
 const { beforeToday } = DateRangePicker;
 
@@ -23,15 +28,10 @@ export type TLocationDateTimeValues = {
   };
   eventName: string;
 };
-const defaultValues: TLocationDateTimeValues = {
-  dateTime: {
-    start: null,
-    end: null,
-  },
-  eventName: "",
-};
 
-const PLocationDateTime: FC = () => {
+type PLocationDateTimeProps = ConnectedProps<typeof connector>;
+const PLocationDateTime: FC<PLocationDateTimeProps> = ({ eventDetails }) => {
+  const dispatch = store.dispatch;
   const navigate = useNavigate();
   const currentDate = new Date();
 
@@ -50,6 +50,7 @@ const PLocationDateTime: FC = () => {
     { resetForm, setSubmitting }: FormikHelpers<TLocationDateTimeValues>
   ) => {
     console.log({ values });
+    dispatch(setEventDetails(values));
     navigate(routePaths.locationList);
   };
 
@@ -64,7 +65,7 @@ const PLocationDateTime: FC = () => {
       </h3>
 
       <Formik
-        initialValues={defaultValues}
+        initialValues={eventDetails}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
         enableReinitialize={true}
@@ -74,7 +75,6 @@ const PLocationDateTime: FC = () => {
             error: getIn(formik.errors, "eventName"),
             touched: getIn(formik.touched, "eventName"),
           };
-          console.log({ formik });
 
           return (
             <form
@@ -135,4 +135,9 @@ const PLocationDateTime: FC = () => {
   );
 };
 
-export default PLocationDateTime;
+const mapStateToProps = createStructuredSelector({
+  eventDetails: selectItemsEventDetails,
+});
+const connector = connect(mapStateToProps);
+
+export default connector(PLocationDateTime);
