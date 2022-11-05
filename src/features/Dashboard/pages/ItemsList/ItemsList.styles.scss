@@ -10,6 +10,21 @@
     margin-bottom: 10px;
   }
 
+  & > .subCat-title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    color: var(--ui-secondary);
+    & > img {
+      width: 90px;
+      object-fit: contain;
+    }
+  }
+
   & > h2 {
     font-size: 1.5rem;
     letter-spacing: 1px;
@@ -17,6 +32,7 @@
     color: var(--ui-secondary);
     line-height: 1.5;
     margin-bottom: 16px;
+    margin-top: 1rem;
   }
 
   & > p {

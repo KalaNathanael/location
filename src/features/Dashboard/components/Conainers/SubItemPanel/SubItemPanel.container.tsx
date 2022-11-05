@@ -14,16 +14,18 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Button from "@/components/UICs/Button/Button.uic";
 
-import { TSubItem } from "@/types";
+import { TArticle } from "@/types";
 import { store } from "@/store";
 import {
   selectItemsBasket,
-  selectItemsSelectedItems,
+  selectItemsSelectedCat,
 } from "@/store/reducers/items/items.selector";
 import {
   addSubItemsInBasket,
   TBasket,
 } from "@/store/reducers/items/items.reducer";
+
+import heart from "@/assets/images/coeur_ci.png";
 
 import "./SubItemPanel.styles.scss";
 
@@ -32,11 +34,11 @@ type CSubItemPanelProps = ConnectedProps<typeof connector> & {
   onPanelChange:
     | ((event: React.SyntheticEvent<Element, Event>, expanded: boolean) => void)
     | undefined;
-  subItem: TSubItem;
+  subItem: TArticle;
 };
 const CSubItemPanel: FC<CSubItemPanelProps> = ({
   basket,
-  selectedItem,
+  selectedCat,
   expanded,
   subItem,
   onPanelChange,
@@ -47,8 +49,8 @@ const CSubItemPanel: FC<CSubItemPanelProps> = ({
 
   useEffect(() => {
     let alter = basket as TBasket;
-    if (alter[selectedItem?.id]) {
-      let inBasket = alter[selectedItem.id].selectedSubItems.find(
+    if (alter[selectedCat?.id]) {
+      let inBasket = alter[selectedCat.id].selectedSubItems.find(
         (elt) => elt.subItemId === subItem.id
       );
       if (inBasket) {
@@ -118,48 +120,52 @@ const CSubItemPanel: FC<CSubItemPanelProps> = ({
       <AccordionDetails>
         <div className="panel-content">
           <div className="left-part">
-            <p>Sélectionnez la quantité souhaitée</p>
-            <div>
-              <IconButton
-                aria-label="minus"
-                size="medium"
-                color="primary"
-                onClick={() => {
-                  onMinus();
-                }}
-              >
-                <RemoveCircleIcon fontSize="inherit" />
-              </IconButton>
-              <input
-                type="number"
-                max={subItem.available_qte}
-                min={0}
-                value={value}
-                onChange={(e) => {
-                  console.log({ e });
-                  let newValue: number = Number(e.target.value);
-                  if (newValue > subItem.available_qte) {
-                    setValue(subItem.available_qte);
-                  } else {
-                    setValue(newValue);
-                  }
-                }}
-              />
-              <IconButton
-                aria-label="add"
-                size="medium"
-                color="primary"
-                onClick={() => {
-                  onAdd();
-                }}
-              >
-                <AddCircleIcon fontSize="inherit" />
-              </IconButton>
-            </div>
+            <img src={heart} alt={"Sous-catégorie"} />
           </div>
           <div className="right-part">
+            <div className="up-form">
+              <p>Sélectionnez la quantité souhaitée</p>
+              <div>
+                <IconButton
+                  aria-label="minus"
+                  size="medium"
+                  color="primary"
+                  onClick={() => {
+                    onMinus();
+                  }}
+                >
+                  <RemoveCircleIcon fontSize="inherit" />
+                </IconButton>
+                <input
+                  type="number"
+                  max={subItem.available_qte}
+                  min={0}
+                  value={value}
+                  onChange={(e) => {
+                    console.log({ e });
+                    let newValue: number = Number(e.target.value);
+                    if (newValue > subItem.available_qte) {
+                      setValue(subItem.available_qte);
+                    } else {
+                      setValue(newValue);
+                    }
+                  }}
+                />
+                <IconButton
+                  aria-label="add"
+                  size="medium"
+                  color="primary"
+                  onClick={() => {
+                    onAdd();
+                  }}
+                >
+                  <AddCircleIcon fontSize="inherit" />
+                </IconButton>
+              </div>
+            </div>
             <Button
               label="Ajouter au panier"
+              className="submit-button"
               onClick={() => {
                 addToBasket();
               }}
@@ -173,7 +179,7 @@ const CSubItemPanel: FC<CSubItemPanelProps> = ({
 
 const mapStateToProps = createStructuredSelector({
   basket: selectItemsBasket,
-  selectedItem: selectItemsSelectedItems,
+  selectedCat: selectItemsSelectedCat,
 });
 const connector = connect(mapStateToProps);
 

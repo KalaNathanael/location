@@ -5,8 +5,11 @@ export const routePaths = {
   home: "/home",
   location: "/home/location",
   locationDate: "/home/location/date",
-  locationList: "/home/location/list",
-  locationElement: "/home/location/list/:id_element",
+  locationCategories: "/home/location/list",
+  locationCategoriesArticles: "/home/location/list/:id_cat",
+  locationSubCategories: "/home/location/list/:id_cat/subCat",
+  locationSubCategoriesArticles:
+    "/home/location/list/:id_cat/subCat/:id_subCat",
   locationReserve: "/home/location/reserve",
   admin: "/home/admin",
 };

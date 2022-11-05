@@ -14,7 +14,7 @@ import Divider from "@mui/material/Divider";
 import Badge from "@mui/material/Badge";
 import Zoom from "@mui/material/Zoom";
 
-import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+// import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -69,7 +69,7 @@ const DashboardHeader: FC<DashboardHeaderProps> = ({ basket }) => {
   }, [basket]);
 
   useEffect(() => {
-    if (pathname.includes(routePaths.locationList)) {
+    if (pathname.includes(routePaths.locationCategories)) {
       setShowBasket(true);
     } else {
       setShowBasket(false);

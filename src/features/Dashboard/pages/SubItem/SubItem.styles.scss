@@ -11,10 +11,18 @@
   }
 
   & > h3 {
+    display: flex;
+    align-items: center;
+    gap: 5px;
     font-size: 1.4rem;
-    font-weight: 500;
-    margin-bottom: 16px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
     color: var(--ui-secondary);
+    & > img {
+      width: 90px;
+      object-fit: contain;
+    }
   }
 
   & > p {

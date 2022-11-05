@@ -1,5 +1,5 @@
 import { TLocationDateTimeValues } from "@/features/Dashboard/pages/LocationDateTime/LocationDateTime.page";
-import { TItem, TReducerError, TSubItem } from "@/types";
+import { TCat, TReducerError, TArticle, TSubCat } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const errorInitialValue: TReducerError = {
@@ -20,7 +20,8 @@ export type TBasket = {
 
 export type TItemsState = {
   eventDetails: TLocationDateTimeValues;
-  selectedItem: TItem | null;
+  selectedCat: TCat | null;
+  selectedSubCat: TSubCat | null;
   basket: TBasket;
   loading: "idle" | "pending" | "failed";
   error: TReducerError;
@@ -34,7 +35,8 @@ const initialState: TItemsState = {
     },
     eventName: "",
   },
-  selectedItem: null,
+  selectedCat: null,
+  selectedSubCat: null,
   basket: {},
   loading: "idle",
   error: errorInitialValue,
@@ -43,6 +45,9 @@ const itemSlice = createSlice({
   name: "item",
   initialState,
   reducers: {
+    initialiseItemSlice: (state) => {
+      state = initialState;
+    },
     setEventDetails: (
       state,
       action: PayloadAction<TLocationDateTimeValues>
@@ -58,38 +63,44 @@ const itemSlice = createSlice({
         eventName: "",
       };
     },
-    setSelectedItem: (state, action: PayloadAction<TItem>) => {
-      state.selectedItem = action.payload;
+    setSelectedCat: (state, action: PayloadAction<TCat>) => {
+      state.selectedCat = action.payload;
     },
-    clearChoice: (state) => {
-      state.selectedItem = null;
+    clearSelectedCat: (state) => {
+      state.selectedCat = null;
+    },
+    setSelectedSubCat: (state, action: PayloadAction<TSubCat>) => {
+      state.selectedSubCat = action.payload;
+    },
+    clearSelectedSubCat: (state) => {
+      state.selectedSubCat = null;
     },
     addSubItemsInBasket: (
       state,
-      action: PayloadAction<{ subItem: TSubItem; qte: number }>
+      action: PayloadAction<{ subItem: TArticle; qte: number }>
     ) => {
       const { qte, subItem } = action.payload;
 
       let alreadyThere: boolean = !!state.basket[
-        state.selectedItem.id
+        state.selectedCat.id
       ]?.selectedSubItems.find((elt) => elt.subItemId === subItem.id);
 
       if (qte === 0) {
         if (alreadyThere) {
           if (
-            state.basket[state.selectedItem.id].selectedSubItems.length === 1
+            state.basket[state.selectedCat.id].selectedSubItems.length === 1
           ) {
-            delete state.basket[state.selectedItem.id];
+            delete state.basket[state.selectedCat.id];
           } else {
-            state.basket[state.selectedItem.id].selectedSubItems = state.basket[
-              state.selectedItem.id
+            state.basket[state.selectedCat.id].selectedSubItems = state.basket[
+              state.selectedCat.id
             ].selectedSubItems.filter((elt) => elt.subItemId !== subItem.id);
           }
         }
       } else {
         if (alreadyThere) {
-          state.basket[state.selectedItem.id].selectedSubItems = state.basket[
-            state.selectedItem.id
+          state.basket[state.selectedCat.id].selectedSubItems = state.basket[
+            state.selectedCat.id
           ].selectedSubItems.map((elt) => {
             if (elt.subItemId === subItem.id) {
               return {
@@ -108,11 +119,11 @@ const itemSlice = createSlice({
             subItemPrice: subItem.price,
             subItemLabel: subItem.label,
           };
-          if (state.basket[state.selectedItem.id]) {
-            state.basket[state.selectedItem.id].selectedSubItems.push(toAdd);
+          if (state.basket[state.selectedCat.id]) {
+            state.basket[state.selectedCat.id].selectedSubItems.push(toAdd);
           } else {
-            state.basket[state.selectedItem.id] = {
-              label: state.selectedItem.label,
+            state.basket[state.selectedCat.id] = {
+              label: state.selectedCat.label,
               selectedSubItems: [toAdd],
             };
           }
@@ -136,17 +147,19 @@ const itemSlice = createSlice({
       state.basket = {};
     },
   },
-  extraReducers: (builder) => {},
 });
 
 const { actions, reducer } = itemSlice;
 export const {
-  clearEventDetails,
-  setEventDetails,
   addSubItemsInBasket,
-  removeSubItemFromBasket,
   clearBasket,
-  clearChoice,
-  setSelectedItem,
+  clearEventDetails,
+  clearSelectedCat,
+  clearSelectedSubCat,
+  initialiseItemSlice,
+  removeSubItemFromBasket,
+  setEventDetails,
+  setSelectedCat,
+  setSelectedSubCat,
 } = actions;
 export default reducer;

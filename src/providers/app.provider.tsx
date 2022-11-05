@@ -5,8 +5,9 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { CustomProvider } from "rsuite";
-import { store } from "../store";
+import { persistor, store } from "../store";
 import { theme } from "../theme";
+import { PersistGate } from "redux-persist/integration/react";
 
 const ErrorFallback = () => {
   return (
@@ -32,17 +33,19 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         </div>
       }
     >
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <HelmetProvider>
-          <Provider store={store}>
-            <ThemeProvider theme={theme}>
-              <CustomProvider theme="light">
-                <Router>{children}</Router>
-              </CustomProvider>
-            </ThemeProvider>
-          </Provider>
-        </HelmetProvider>
-      </ErrorBoundary>
+      <PersistGate loading={null} persistor={persistor}>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <HelmetProvider>
+            <Provider store={store}>
+              <ThemeProvider theme={theme}>
+                <CustomProvider theme="light">
+                  <Router>{children}</Router>
+                </CustomProvider>
+              </ThemeProvider>
+            </Provider>
+          </HelmetProvider>
+        </ErrorBoundary>
+      </PersistGate>
     </React.Suspense>
   );
 };

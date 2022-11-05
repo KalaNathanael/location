@@ -47,11 +47,19 @@ export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
           element: <PLocationDateTime />,
         },
         {
-          path: routePaths.locationList,
+          path: routePaths.locationCategories,
           element: <PItemList />,
         },
         {
-          path: routePaths.locationElement,
+          path: routePaths.locationSubCategories,
+          element: <PItemList />,
+        },
+        {
+          path: routePaths.locationCategoriesArticles,
+          element: <PSubItem />,
+        },
+        {
+          path: routePaths.locationSubCategoriesArticles,
           element: <PSubItem />,
         },
       ],

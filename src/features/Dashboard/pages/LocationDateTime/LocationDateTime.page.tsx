@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Formik, FormikHelpers, getIn } from "formik";
 import * as Yup from "yup";
 
@@ -17,7 +17,10 @@ import { createStructuredSelector } from "reselect";
 import { selectItemsEventDetails } from "@/store/reducers/items/items.selector";
 import { connect, ConnectedProps } from "react-redux";
 import { store } from "@/store";
-import { setEventDetails } from "@/store/reducers/items/items.reducer";
+import {
+  clearEventDetails,
+  setEventDetails,
+} from "@/store/reducers/items/items.reducer";
 
 const { beforeToday } = DateRangePicker;
 
@@ -45,13 +48,18 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({ eventDetails }) => {
     ),
   });
 
+  useEffect(() => {
+    dispatch(clearEventDetails());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSubmit = (
     values: TLocationDateTimeValues,
     { resetForm, setSubmitting }: FormikHelpers<TLocationDateTimeValues>
   ) => {
     console.log({ values });
     dispatch(setEventDetails(values));
-    navigate(routePaths.locationList);
+    navigate(routePaths.locationCategories);
   };
 
   return (
@@ -60,12 +68,24 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({ eventDetails }) => {
         <Icon icon="healthicons:stock-out" fontSize={100} />{" "}
       </span>
       <h3>
-        Vous voulez louez du matériel pour votre évènement ? Réserver tout de
-        suite en nous donnant la date et l'heure.{" "}
+        Nouvel évènement pour une location ? Commençons par présiciser la date
+        et l'heure.{" "}
       </h3>
 
       <Formik
-        initialValues={eventDetails}
+        initialValues={{
+          dateTime: {
+            end:
+              typeof eventDetails.dateTime.end === "string"
+                ? new Date(eventDetails.dateTime.end)
+                : eventDetails.dateTime.end,
+            start:
+              typeof eventDetails.dateTime.start === "string"
+                ? new Date(eventDetails.dateTime.start)
+                : eventDetails.dateTime.start,
+          },
+          eventName: eventDetails.eventName,
+        }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
         enableReinitialize={true}

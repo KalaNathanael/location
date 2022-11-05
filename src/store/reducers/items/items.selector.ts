@@ -8,9 +8,14 @@ export const selectItemsEventDetails = createSelector(
   (items) => items.eventDetails
 );
 
-export const selectItemsSelectedItems = createSelector(
+export const selectItemsSelectedCat = createSelector(
   [selectItems],
-  (items) => items.selectedItem
+  (items) => items.selectedCat
+);
+
+export const selectItemsSelectedSubCat = createSelector(
+  [selectItems],
+  (items) => items.selectedSubCat
 );
 
 export const selectItemsBasket = createSelector(

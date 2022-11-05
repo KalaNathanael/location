@@ -7,7 +7,6 @@ import { createStructuredSelector } from "reselect";
 import * as Yup from "yup";
 
 import LoginForm from "../../Forms/Login/Login.form";
-import { selectDumbValue } from "@/store/reducers/dumb/dumb.selector";
 import { useNavigate } from "react-router-dom";
 import { routePaths } from "@/config";
 
@@ -21,8 +20,8 @@ const defaultValues: TAuthValues = {
   password: "",
 };
 
-type AuthLoginContainerProps = ConnectedProps<typeof connector>;
-const AuthLoginContainer: FC<AuthLoginContainerProps> = ({ dumb }) => {
+// type AuthLoginContainerProps = ConnectedProps<typeof connector>;
+const AuthLoginContainer: FC = () => {
   let navigate = useNavigate();
   const validationSchema: any = Yup.object({
     login: Yup.string().required("Le login est requis"),
@@ -50,14 +49,14 @@ const AuthLoginContainer: FC<AuthLoginContainerProps> = ({ dumb }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  dumb: selectDumbValue,
-});
+// const mapStateToProps = createStructuredSelector({
+//   dumb: selectDumbValue,
+// });
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<any, any, AnyAction>
-) => ({});
+// const mapDispatchToProps = (
+//   dispatch: ThunkDispatch<any, any, AnyAction>
+// ) => ({});
 
-const connector = connect(mapStateToProps);
-export default connector(AuthLoginContainer);
-// export default AuthLoginContainer;
+// const connector = connect(mapStateToProps);
+// export default connector(AuthLoginContainer);
+export default AuthLoginContainer;

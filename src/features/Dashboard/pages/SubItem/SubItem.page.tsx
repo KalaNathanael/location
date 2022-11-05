@@ -2,22 +2,33 @@ import { useState, FC, SyntheticEvent, useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { Icon } from "@iconify/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "@/components/UICs/Button/Button.uic";
 import CSubItemPanel from "../../components/Conainers/SubItemPanel/SubItemPanel.container";
 
-import { TSubItem } from "@/types";
+import { TArticle } from "@/types";
 import { routePaths } from "@/config";
 
-import { selectItemsSelectedItems } from "@/store/reducers/items/items.selector";
+import { store } from "@/store";
+import {
+  selectItemsSelectedCat,
+  selectItemsSelectedSubCat,
+} from "@/store/reducers/items/items.selector";
+import {
+  clearSelectedCat,
+  clearSelectedSubCat,
+} from "@/store/reducers/items/items.reducer";
 
+import heart from "@/assets/images/coeur_ci.png";
 import "./SubItem.styles.scss";
 
 type PSubItemProps = ConnectedProps<typeof connector>;
-const PSubItem: FC<PSubItemProps> = ({ selectedItem }) => {
+const PSubItem: FC<PSubItemProps> = ({ selectedCat, selectedSubCat }) => {
   const navigate = useNavigate();
-  const falseSubItems: TSubItem[] = Array(5)
+  const dispatch = store.dispatch;
+  const { id_cat, id_subCat } = useParams();
+  const falseSubItems: TArticle[] = Array(5)
     .fill(0)
     .map((elt, idx) => {
       return {
@@ -26,16 +37,26 @@ const PSubItem: FC<PSubItemProps> = ({ selectedItem }) => {
         total_qte: 4 * (idx + 1),
         label: "Sous-catégorie " + (idx + 1),
         price: (5 - idx) * 500,
+        image_url: heart,
       };
     });
+
   const [expanded, setExpanded] = useState<string | false>(false);
+  const [articles, setArticles] = useState<TArticle[]>([]);
 
   useEffect(() => {
-    if (!selectedItem) {
-      navigate(routePaths.locationList);
+    if (!selectedCat && !selectedSubCat) {
+      navigate(routePaths.locationCategories);
+    }
+    if (id_subCat) {
+      //API- récupérer la liste des articles de la sous-catégorie:  id = id_subCat
+      setArticles(falseSubItems);
+    } else {
+      //API- récupérer la liste des articles de la catégorie: id = id_cat
+      setArticles(falseSubItems);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id_cat, id_subCat]);
 
   const handleChangeAccordions =
     (panel: string) => (event: SyntheticEvent, isExpanded: boolean) => {
@@ -50,13 +71,22 @@ const PSubItem: FC<PSubItemProps> = ({ selectedItem }) => {
         color="var(--ui-primary)"
         Icon={<Icon icon="akar-icons:arrow-left" fontSize={18} />}
         onClick={() => {
-          navigate(routePaths.locationList);
+          if (id_subCat) {
+            dispatch(clearSelectedSubCat());
+            navigate(`${routePaths.locationCategories}/${id_cat}/subCat`);
+          } else {
+            dispatch(clearSelectedCat());
+            navigate(routePaths.locationCategories);
+          }
         }}
       />
-      <h3> {selectedItem?.label} </h3>
-      <p>{selectedItem?.description}</p>
+      <h3>
+        <img src={selectedCat?.image_url} alt="categorie-representative" />
+        {id_subCat ? selectedSubCat?.label : selectedCat?.label}{" "}
+      </h3>
+      {/* <p>{selectedCat?.description}</p> */}
       <div className="sub-list">
-        {falseSubItems.map((elt) => (
+        {articles.map((elt) => (
           <CSubItemPanel
             expanded={expanded === elt.id}
             onPanelChange={handleChangeAccordions(elt.id)}
@@ -70,7 +100,8 @@ const PSubItem: FC<PSubItemProps> = ({ selectedItem }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  selectedItem: selectItemsSelectedItems,
+  selectedCat: selectItemsSelectedCat,
+  selectedSubCat: selectItemsSelectedSubCat,
 });
 const connector = connect(mapStateToProps);
 export default connector(PSubItem);
