@@ -1,0 +1,66 @@
+@import "@/index.scss";
+
+@mixin button-filter() {
+  padding: 5px 10px;
+  color: var(--ui-tertiary);
+  @include media-breakpoint-down(sm) {
+    width: 100%;
+    padding: 10px;
+  }
+  &:hover {
+    background: var(--bg-secondary-light);
+  }
+}
+
+.table-toolbar-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border-radius: 2px 2px 0px 0px;
+  padding: 4px 10px;
+  @include media-breakpoint-down(sm) {
+    flex-direction: column;
+  }
+  .toolbar-filter {
+    @include button-filter();
+  }
+  .toolbar-column {
+    @include button-filter();
+  }
+  .toolbar-export {
+    @include button-filter();
+  }
+}
+
+.table-viewer-layout {
+  width: 100%;
+  height: fit-content;
+  .MuiDataGrid-columnHeadersInner {
+    .MuiDataGrid-columnHeaderTitle {
+      font-weight: bold;
+    }
+  }
+  .MuiDataGrid-cellContent {
+    font-size: 0.75rem;
+  }
+
+  .MuiDataGrid-virtualScroller {
+    &::-webkit-scrollbar {
+      height: 11px;
+      width: 11px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 11px;
+      background-color: rgba(192, 192, 192, 0.6);
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      -webkit-background-clip: padding-box;
+      background-clip: padding-box;
+      transition: background-color 500ms;
+
+      &:hover {
+        background-color: rgba(192, 192, 192, 0.9);
+      }
+    }
+  }
+}

@@ -1,9 +1,5 @@
 import { FC } from "react";
-import { ThunkDispatch } from "redux-thunk";
-import { AnyAction } from "redux";
-import { createStructuredSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
-import { connect, ConnectedProps } from "react-redux";
 import { Icon } from "@iconify/react";
 
 import Button from "@/components/UICs/Button/Button.uic";
@@ -48,6 +44,13 @@ const HomePage: FC = () => {
           icon={"uit:create-dashboard"}
           label={"Espace administrateur"}
           onClick={() => navigate(routePaths.admin)}
+          isDisabled={true}
+        />
+        <HomeOption
+          color="yellow"
+          icon={"gridicons:stats-alt"}
+          label={"Statistiques"}
+          onClick={() => navigate("#")}
           isDisabled={true}
         />
         <HomeOption

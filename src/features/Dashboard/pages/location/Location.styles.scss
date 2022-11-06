@@ -1,0 +1,25 @@
+.p-location {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 5px;
+
+  .new-location {
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: center;
+
+    & > button {
+      width: 164px;
+      height: 34px;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+  }
+
+  .location-kpi {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 18px;
+  }
+}

@@ -1,4 +1,4 @@
-import { TLocationDateTimeValues } from "@/features/Dashboard/pages/LocationDateTime/LocationDateTime.page";
+import { TLocationDateTimeValues } from "@/features/Dashboard/pages/location/LocationDateTime/LocationDateTime.page";
 import { TCat, TReducerError, TArticle, TSubCat } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

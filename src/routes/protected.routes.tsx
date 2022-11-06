@@ -1,11 +1,12 @@
-import { Navigate, Outlet, RouteObject } from "react-router-dom";
+import { Outlet, RouteObject } from "react-router-dom";
 import MainContainer from "@/components/containers/Main/Main.container";
 import DashboardHeader from "@/features/Dashboard/components/layouts/DashboardHeader/DashboardHeader.layout";
 import HomePage from "@/features/Dashboard/pages/Home/Home.page";
 import { routePaths } from "@/config";
-import PLocationDateTime from "@/features/Dashboard/pages/LocationDateTime/LocationDateTime.page";
-import PItemList from "@/features/Dashboard/pages/ItemsList/ItemsList.page";
-import PSubItem from "@/features/Dashboard/pages/SubItem/SubItem.page";
+import PLocationDateTime from "@/features/Dashboard/pages/location/LocationDateTime/LocationDateTime.page";
+import PItemList from "@/features/Dashboard/pages/location/ItemsList/ItemsList.page";
+import PSubItem from "@/features/Dashboard/pages/location/SubItem/SubItem.page";
+import PLocation from "@/features/Dashboard/pages/location/Location.page";
 
 export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
   return [
@@ -41,7 +42,7 @@ export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
         </>
       ),
       children: [
-        { path: "", element: <Navigate to={routePaths.locationDate} /> },
+        { path: "", element: <PLocation /> },
         {
           path: routePaths.locationDate,
           element: <PLocationDateTime />,

@@ -64,6 +64,16 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({ eventDetails }) => {
 
   return (
     <div className="p-location-datetime">
+      <Button
+        label="Retour"
+        inverted={true}
+        color="var(--ui-primary)"
+        Icon={<Icon icon="akar-icons:arrow-left" fontSize={18} />}
+        onClick={() => {
+          navigate(routePaths.location);
+        }}
+      />
+
       <span className="header-icon">
         <Icon icon="healthicons:stock-out" fontSize={100} />{" "}
       </span>
