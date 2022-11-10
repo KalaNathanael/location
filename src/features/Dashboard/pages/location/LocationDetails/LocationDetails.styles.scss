@@ -1,0 +1,121 @@
+.p-location-details {
+  position: relative;
+  padding: 24px 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+
+  .header-icon {
+    position: absolute;
+    opacity: 0.08;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .location-details-title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    color: var(--ui-secondary);
+  }
+
+  .location-details-content {
+    overflow: auto;
+    flex: 1;
+
+    .item-card {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+
+      &__delete {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+      }
+      &__content {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        & > .name {
+          font-weight: 500;
+          font-size: 1rem;
+
+          & > em {
+            color: var(--ui-blue-normal);
+            font-weight: 600;
+            font-size: 1.1rem;
+          }
+        }
+
+        & > .category {
+          font-size: 0.8rem;
+          color: var(--ui-grey-normal);
+        }
+      }
+      &__price {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        & > .price {
+          font-size: 1.1rem;
+          font-weight: 800;
+          color: var(--ui-blue-normal);
+          letter-spacing: 1px;
+        }
+
+        & > .calcul {
+          font-size: 0.75rem;
+          color: var(--ui-grey-normal);
+        }
+      }
+    }
+
+    &::-webkit-scrollbar {
+      height: 8px;
+      width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: rgba(192, 192, 192, 0.6);
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      -webkit-background-clip: padding-box;
+      background-clip: padding-box;
+      transition: background-color 500ms;
+
+      &:hover {
+        background-color: rgba(192, 192, 192, 0.9);
+      }
+    }
+  }
+
+  .location-details-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+
+    & button {
+      height: 36px;
+      font-size: 1rem;
+    }
+  }
+
+  hr {
+    margin: 5px 0;
+    border-top-width: 2px;
+  }
+}

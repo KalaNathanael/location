@@ -20,10 +20,14 @@ import {
 } from "@/store/reducers/items/items.reducer";
 
 import "./CartModal.styles.scss";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { routePaths } from "@/config";
 
-type TCartElt = {
+export type TCartElt = {
   categoryId: string;
   categoryLabel: string;
+  subCategoryLabel?: string;
   id: string;
   label: string;
   price: number;
@@ -36,6 +40,7 @@ type CCartModalProps = ConnectedProps<typeof connector> & {
 };
 const CCartModal: FC<CCartModalProps> = ({ basket, handleClose, open }) => {
   const dispatch = store.dispatch;
+  const navigate = useNavigate();
 
   const listCartItems = () => {
     let alter = basket as TBasket;
@@ -46,6 +51,7 @@ const CCartModal: FC<CCartModalProps> = ({ basket, handleClose, open }) => {
         return {
           categoryId: key,
           categoryLabel: alter[key].label,
+          subCategoryLabel: elt.subCat ? elt.subCat.label : undefined,
           id: elt.subItemId,
           label: elt.subItemLabel,
           price: elt.subItemPrice,
@@ -58,7 +64,18 @@ const CCartModal: FC<CCartModalProps> = ({ basket, handleClose, open }) => {
   };
 
   const clear = () => {
-    dispatch(clearBasket());
+    Swal.fire({
+      icon: "warning",
+      title: "Êtes-vous sûr de vouloir vider le panier ?",
+      showCancelButton: true,
+      cancelButtonText: "Non, Annuler",
+      confirmButtonText: "Oui, Vider",
+      confirmButtonColor: "var(--ui-primary)",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(clearBasket());
+      }
+    });
   };
 
   const remove = (categoryId, itemId) => {
@@ -92,7 +109,12 @@ const CCartModal: FC<CCartModalProps> = ({ basket, handleClose, open }) => {
                   <span className="name">
                     {item.label} (<em>{item.qty}</em>){" "}
                   </span>
-                  <span className="category">{item.categoryLabel}</span>
+                  <span className="category">
+                    {item.categoryLabel}
+                    {item.subCategoryLabel
+                      ? ` -> ${item.subCategoryLabel}`
+                      : ""}
+                  </span>
                 </div>
                 <div className="item-card__price">
                   <span className="price">
@@ -136,6 +158,10 @@ const CCartModal: FC<CCartModalProps> = ({ basket, handleClose, open }) => {
               // isLoading={formik.isSubmitting}
               color="var(--ui-primary)"
               label="Valider la location"
+              onClick={() => {
+                navigate(routePaths.locationConfirmCommand);
+                handleClose();
+              }}
             />
           </div>
         </div>

@@ -3,7 +3,7 @@ export type TCat = {
   label: string;
   image_url: string;
   description?: string;
-  hasSubCat: boolean;
+  hasSubCat?: boolean;
 };
 
 export type TSubCat = {

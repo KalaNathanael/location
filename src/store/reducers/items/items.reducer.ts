@@ -10,6 +10,7 @@ export type TBasket = {
   [itemId: string]: {
     label: string;
     selectedSubItems: Array<{
+      subCat?: TSubCat;
       subItemId: string;
       subItemLabel: string;
       subItemPrice: number;
@@ -104,6 +105,7 @@ const itemSlice = createSlice({
           ].selectedSubItems.map((elt) => {
             if (elt.subItemId === subItem.id) {
               return {
+                subCat: state.selectedSubCat ? state.selectedSubCat : undefined,
                 subItemId: subItem.id,
                 subItemLabel: subItem.label,
                 subItemPrice: subItem.price,
@@ -114,6 +116,7 @@ const itemSlice = createSlice({
           });
         } else {
           let toAdd = {
+            subCat: state.selectedSubCat ? state.selectedSubCat : undefined,
             selectedQuantity: qte,
             subItemId: subItem.id,
             subItemPrice: subItem.price,

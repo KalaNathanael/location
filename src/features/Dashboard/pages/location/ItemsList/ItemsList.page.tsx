@@ -6,8 +6,26 @@ import Swal from "sweetalert2";
 
 import { Icon } from "@iconify/react";
 
-import { routePaths } from "@/config";
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
+
 import Button from "@/components/UICs/Button/Button.uic";
+import { ToastError } from "@/utils/toast";
+
+import {
+  APIfetchCategories,
+  APIfetchSubCategories,
+} from "@/features/Dashboard/api/category";
+
+import { TCat, TSubCat } from "@/types";
+import { routePaths } from "@/config";
+
+import {
+  clearBasket,
+  clearSelectedCat,
+  setSelectedCat,
+  setSelectedSubCat,
+} from "@/store/reducers/items/items.reducer";
 import {
   selectItemsEventDetails,
   selectItemsSelectedCat,
@@ -16,13 +34,6 @@ import { store } from "@/store";
 
 import heart from "@/assets/images/coeur_ci.png";
 import "./ItemsList.styles.scss";
-import { TCat, TSubCat } from "@/types";
-import {
-  clearBasket,
-  clearSelectedCat,
-  setSelectedCat,
-  setSelectedSubCat,
-} from "@/store/reducers/items/items.reducer";
 
 type PItemListProps = ConnectedProps<typeof connector>;
 const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
@@ -60,6 +71,7 @@ const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
 
   const [catList, setCatList] = useState<TCat[]>([]);
   const [subCatList, setSubCatList] = useState<TSubCat[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (eventDetails.eventName === "") {
@@ -67,19 +79,68 @@ const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
     }
 
     if (id_cat) {
-      //récupérer la liste des sous-catégories par API
-      //A faire ici
-
-      //Instancier la liste des sous-catégories
-      setSubCatList(falseSubCats);
+      getSubCatList();
     } else {
-      //récupérer la liste des catégories par API
-
-      //Instancier la liste des sous-catégories
-      setCatList(falseCats);
+      getCatList();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id_cat]);
+
+  async function getCatList() {
+    setLoading(true);
+    try {
+      const response = await APIfetchCategories();
+
+      if (response.error) {
+        ToastError.fire({
+          text: response.message,
+          timer: 6000,
+        });
+      } else {
+        let datas: any[] = response.data;
+        let toSet: TCat[] = datas.map((elt) => {
+          return {
+            id: elt.id,
+            image_url: elt.img_path,
+            label: elt.libelle,
+            hasSubCat: true,
+          };
+        });
+        setCatList(toSet);
+      }
+    } catch (err: any) {
+      ToastError.fire();
+    }
+    setLoading(false);
+  }
+
+  async function getSubCatList() {
+    setLoading(true);
+    try {
+      const response = await APIfetchSubCategories();
+
+      if (response.error) {
+        ToastError.fire({
+          text: response.message,
+          timer: 6000,
+        });
+      } else {
+        let datas: any[] = response.data;
+        let parentCat = datas.find((elt) => `${elt.id}` === id_cat);
+        let toSet: TSubCat[] = parentCat?.sous_categorie.map((elt) => {
+          return {
+            id: elt.id,
+            label: elt.libelle,
+            image_url: elt.img_path,
+          };
+        });
+        setSubCatList(toSet);
+      }
+    } catch (err: any) {
+      ToastError.fire();
+    }
+    setLoading(false);
+  }
 
   const onReturnPage = () => {
     if (id_cat) {
@@ -113,7 +174,7 @@ const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
     }
   };
   const onSubCatItemClick = (elt: TSubCat) => {
-    navigate(`${routePaths.locationCategories}/${elt.id}/subCat/${elt.id}`);
+    navigate(`${routePaths.locationCategories}/${id_cat}/subCat/${elt.id}`);
     dispatch(setSelectedSubCat(elt));
   };
 
@@ -127,18 +188,44 @@ const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
           intéressent.
         </p> */}
         <div className="list">
-          {catList.map((elt) => (
-            <div
-              key={elt.id}
-              className="item-card"
-              onClick={() => onCatItemClick(elt)}
+          {!loading ? (
+            catList.map((elt) => (
+              <div
+                key={elt.id}
+                className="item-card"
+                onClick={() => onCatItemClick(elt)}
+              >
+                <span className="item-image">
+                  <img src={elt.image_url} alt={elt.label} />
+                </span>
+                <span className="item-name">{elt.label}</span>
+              </div>
+            ))
+          ) : (
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
             >
-              <span className="item-image">
-                <img src={elt.image_url} alt="representative" />
-              </span>
-              <span className="item-name">{elt.label}</span>
-            </div>
-          ))}
+              <Box sx={{ width: "32%" }}>
+                <Skeleton variant="rounded" height={100} />
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+              </Box>
+              <Box sx={{ width: "32%" }}>
+                <Skeleton variant="rounded" height={100} />
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+              </Box>
+              <Box sx={{ width: "32%" }}>
+                <Skeleton variant="rounded" height={100} />
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+              </Box>
+            </Box>
+          )}
+          {!loading && catList.length === 0 && (
+            <span className="no-element">Aucune Catégorie</span>
+          )}
         </div>
       </>
     );
@@ -148,22 +235,48 @@ const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
     return (
       <>
         <h3 className="subCat-title">
-          <img src={selectedCat.image_url} alt="categorie-representative" />
+          <img src={selectedCat.image_url} alt={selectedCat.label} />
           {selectedCat.label}
         </h3>
         <div className="list">
-          {subCatList.map((elt) => (
-            <div
-              key={elt.id}
-              className="item-card"
-              onClick={() => onSubCatItemClick(elt)}
+          {!loading ? (
+            subCatList.map((elt) => (
+              <div
+                key={elt.id}
+                className="item-card"
+                onClick={() => onSubCatItemClick(elt)}
+              >
+                <span className="item-image">
+                  <img src={elt.image_url} alt={elt.label} />
+                </span>
+                <span className="item-name">{elt.label}</span>
+              </div>
+            ))
+          ) : (
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
             >
-              <span className="item-image">
-                <img src={elt.image_url} alt="representative" />
-              </span>
-              <span className="item-name">{elt.label}</span>
-            </div>
-          ))}
+              <Box sx={{ width: "32%" }}>
+                <Skeleton variant="rounded" height={100} />
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+              </Box>
+              <Box sx={{ width: "32%" }}>
+                <Skeleton variant="rounded" height={100} />
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+              </Box>
+              <Box sx={{ width: "32%" }}>
+                <Skeleton variant="rounded" height={100} />
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+              </Box>
+            </Box>
+          )}
+          {!loading && subCatList.length === 0 && (
+            <span className="no-element">Aucune Sous-catégorie</span>
+          )}
         </div>
       </>
     );

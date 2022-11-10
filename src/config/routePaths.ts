@@ -11,5 +11,7 @@ export const routePaths = {
   locationSubCategoriesArticles:
     "/home/location/list/:id_cat/subCat/:id_subCat",
   locationReserve: "/home/location/reserve",
+  locationConfirmCommand: "/home/location/confirm-command",
+  locationDetails: "/home/location/details/:id_command",
   admin: "/home/admin",
 };

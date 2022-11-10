@@ -1,12 +1,15 @@
 import { Outlet, RouteObject } from "react-router-dom";
+
 import MainContainer from "@/components/containers/Main/Main.container";
 import DashboardHeader from "@/features/Dashboard/components/layouts/DashboardHeader/DashboardHeader.layout";
 import HomePage from "@/features/Dashboard/pages/Home/Home.page";
-import { routePaths } from "@/config";
 import PLocationDateTime from "@/features/Dashboard/pages/location/LocationDateTime/LocationDateTime.page";
 import PItemList from "@/features/Dashboard/pages/location/ItemsList/ItemsList.page";
 import PSubItem from "@/features/Dashboard/pages/location/SubItem/SubItem.page";
 import PLocation from "@/features/Dashboard/pages/location/Location.page";
+import PLocationDetails from "@/features/Dashboard/pages/location/LocationDetails/LocationDetails.page";
+
+import { routePaths } from "@/config";
 
 export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
   return [
@@ -62,6 +65,14 @@ export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
         {
           path: routePaths.locationSubCategoriesArticles,
           element: <PSubItem />,
+        },
+        {
+          path: routePaths.locationConfirmCommand,
+          element: <PLocationDetails />,
+        },
+        {
+          path: routePaths.locationDetails,
+          element: <PLocationDetails />,
         },
       ],
     },

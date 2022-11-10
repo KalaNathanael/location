@@ -32,10 +32,20 @@ const PSubItem: FC<PSubItemProps> = ({ selectedCat, selectedSubCat }) => {
     .fill(0)
     .map((elt, idx) => {
       return {
-        id: "sub-" + (idx + 1),
+        id:
+          (selectedCat ? selectedCat?.id : "") +
+          (selectedSubCat ? selectedSubCat?.id : "") +
+          "article-" +
+          (idx + 1),
         available_qte: 3 * (idx + 1),
         total_qte: 4 * (idx + 1),
-        label: "Sous-catégorie " + (idx + 1),
+        label:
+          (selectedCat ? selectedCat.id : "") +
+          " " +
+          (selectedSubCat ? selectedSubCat.id : "") +
+          " " +
+          "article " +
+          (idx + 1),
         price: (5 - idx) * 500,
         image_url: heart,
       };

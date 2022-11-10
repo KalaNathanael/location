@@ -107,13 +107,13 @@ const PLocation: FC = () => {
           color="green"
           icon="carbon:delivery"
           title="Délivré"
-          value={14}
+          value={0}
         />
         <KPICardUIC
           color="yellow"
           icon="mdi:timer-sand"
           title="À venir"
-          value={7}
+          value={0}
         />
       </div>
       <div className="new-location">

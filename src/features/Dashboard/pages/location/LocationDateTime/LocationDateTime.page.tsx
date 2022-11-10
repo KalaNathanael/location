@@ -18,6 +18,7 @@ import { selectItemsEventDetails } from "@/store/reducers/items/items.selector";
 import { connect, ConnectedProps } from "react-redux";
 import { store } from "@/store";
 import {
+  clearBasket,
   clearEventDetails,
   setEventDetails,
 } from "@/store/reducers/items/items.reducer";
@@ -50,6 +51,7 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({ eventDetails }) => {
 
   useEffect(() => {
     dispatch(clearEventDetails());
+    dispatch(clearBasket());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
