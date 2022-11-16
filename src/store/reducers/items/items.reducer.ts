@@ -1,6 +1,7 @@
 import { TLocationDateTimeValues } from "@/features/Dashboard/pages/location/LocationDateTime/LocationDateTime.page";
 import { TCat, TReducerError, TArticle, TSubCat } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { logout } from "../app/app.reducer";
 
 const errorInitialValue: TReducerError = {
   message: "",
@@ -149,6 +150,16 @@ const itemSlice = createSlice({
     clearBasket: (state) => {
       state.basket = {};
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout, (state) => {
+      state.basket = {};
+      state.error = errorInitialValue;
+      state.eventDetails = initialState.eventDetails;
+      state.loading = "idle";
+      state.selectedCat = null;
+      state.selectedSubCat = null;
+    });
   },
 });
 

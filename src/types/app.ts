@@ -1,10 +1,12 @@
 export type AuthUser = {
-  is_actif: 0 | -1 | 1;
-  username: string;
   email: string;
-  nom: string;
+  noms: string;
   prenoms: string;
   id: string;
-  date_created: Date;
-  admin: 0 | 1;
+  created_at: string;
+  telephone: string;
+  profil_id: {
+    id: number;
+    libelle: "ADMINISTRATEUR" | "ASSISTANTE";
+  };
 };

@@ -2,6 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import itemsReducer from "./items/items.reducer";
+import appReducer from "./app/app.reducer";
 
 export const persistConfig = {
   key: "location",
@@ -11,6 +12,7 @@ export const persistConfig = {
 };
 
 const topReducer = combineReducers({
+  app: appReducer,
   items: itemsReducer,
 });
 

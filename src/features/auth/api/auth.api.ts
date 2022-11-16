@@ -2,11 +2,11 @@ import { axios } from "@/lib/axios";
 import { IUserAPIResponse } from "../interfaces";
 
 export type LoginCredentialsDTO = {
-  email: string;
-  mot_passe: string;
+  login: string;
+  password: string;
 };
 
-export const authAPI = (
+export const APIauth = (
   data: LoginCredentialsDTO
 ): Promise<IUserAPIResponse> => {
   return axios.post("/login", data);

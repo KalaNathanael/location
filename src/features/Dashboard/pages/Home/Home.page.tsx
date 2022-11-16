@@ -1,22 +1,24 @@
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { connect, ConnectedProps } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import Button from "@/components/UICs/Button/Button.uic";
 import LogoHeaderLayout from "@/components/layouts/LogoHeader.layout";
 import HomeOption from "../../components/layouts/HomeOption/HomeOption.layout";
 
+import { store } from "@/store";
 import { routePaths } from "@/config";
 
 import "./Home.styles.scss";
+import { selectConnectedUser } from "@/store/reducers/app/app.selector";
+import { logout } from "@/store/reducers/app/app.reducer";
 
 // type HomePageProps = ConnectedProps<typeof connector>;
-const HomePage: FC = () => {
-  let user = {
-    nom: "Nom",
-    prenoms: "Prenoms",
-    admin: 1,
-  };
+type HomePageProps = ConnectedProps<typeof connector>;
+const HomePage: FC<HomePageProps> = ({ connectedUser }) => {
+  const dispatch = store.dispatch;
   let navigate = useNavigate();
 
   return (
@@ -24,7 +26,7 @@ const HomePage: FC = () => {
       <LogoHeaderLayout />
       <h1 className="welcome-message">
         <span className="welcome">Bienvenue</span>
-        <span className="name">{`${user?.nom} ${user?.prenoms}`}</span>
+        <span className="name">{`${connectedUser?.noms} ${connectedUser?.prenoms}`}</span>
         <span className="logout-button">
           <Button
             label="Déconnexion"
@@ -32,6 +34,7 @@ const HomePage: FC = () => {
             color="var(--ui-red-normal)"
             Icon={<Icon icon="ri:logout-circle-line" fontSize={24} />}
             onClick={() => {
+              dispatch(logout());
               navigate(routePaths.login);
             }}
           />
@@ -64,11 +67,8 @@ const HomePage: FC = () => {
   );
 };
 
-// const mapStateToProps = createStructuredSelector({
-//   user: selectAuthUser,
-// });
-// const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => ({
-//   logout: () => dispatch(logout()),
-// });
-// const connector = connect(mapStateToProps, mapDispatchToProps);
-export default HomePage;
+const mapStateToProps = createStructuredSelector({
+  connectedUser: selectConnectedUser,
+});
+const connector = connect(mapStateToProps);
+export default connector(HomePage);

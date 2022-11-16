@@ -75,7 +75,7 @@
         transition: box-shadow 100ms ease-in-out;
 
         & > img {
-          object-fit: fill;
+          object-fit: cover;
           height: 100%;
           width: 100%;
         }
