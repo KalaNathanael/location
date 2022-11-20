@@ -15,7 +15,7 @@ import { ToastError } from "@/utils/toast";
 import {
   APIfetchCategories,
   APIfetchSubCategories,
-} from "@/features/Dashboard/api/category";
+} from "@/features/Dashboard/api/category.api";
 
 import { TCat, TSubCat } from "@/types";
 import { routePaths } from "@/config";
@@ -32,7 +32,6 @@ import {
 } from "@/store/reducers/items/items.selector";
 import { store } from "@/store";
 
-import heart from "@/assets/images/coeur_ci.png";
 import "./ItemsList.styles.scss";
 
 type PItemListProps = ConnectedProps<typeof connector>;
@@ -40,34 +39,6 @@ const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
   const dispatch = store.dispatch;
   const navigate = useNavigate();
   const { id_cat } = useParams();
-
-  const falseCats: TCat[] = Array(11)
-    .fill(0)
-    .map((elt, idx) => {
-      return {
-        //   description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-        // molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-        // numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-        // optio, eaque rerum! Provident similique accusantium nemo autem.`,
-        id: "cat-" + (idx + 1),
-        image_url: heart,
-        label: "Catégorie " + (idx + 1),
-        hasSubCat: idx % 2 === 1 ? true : false,
-      };
-    });
-  const falseSubCats: TSubCat[] = Array(9)
-    .fill(0)
-    .map((elt, idx) => {
-      return {
-        //   description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-        // molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-        // numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-        // optio, eaque rerum! Provident similique accusantium nemo autem.`,
-        id: "subCat-" + (idx + 1),
-        image_url: heart,
-        label: "Sous-catégorie " + (idx + 1),
-      };
-    });
 
   const [catList, setCatList] = useState<TCat[]>([]);
   const [subCatList, setSubCatList] = useState<TSubCat[]>([]);

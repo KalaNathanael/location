@@ -65,14 +65,14 @@ const CSubItemPanel: FC<CSubItemPanelProps> = ({
   }, [basket]);
 
   const onMinus = () => {
-    if (value > 0) {
-      setValue((value) => value - 1);
+    if (value - subItem.set >= 0) {
+      setValue((value) => value - subItem.set);
     }
   };
 
   const onAdd = () => {
-    if (value < subItem.available_qte) {
-      setValue((value) => value + 1);
+    if (value + subItem.set <= subItem.available_qte) {
+      setValue((value) => value + subItem.set);
     }
   };
 
@@ -120,10 +120,13 @@ const CSubItemPanel: FC<CSubItemPanelProps> = ({
       <AccordionDetails>
         <div className="panel-content">
           <div className="left-part">
-            <img src={heart} alt={"Sous-catégorie"} />
+            <img src={subItem.image_url} alt={"Sous-catégorie"} />
           </div>
           <div className="right-part">
             <div className="up-form">
+              <span>
+                Location par set de : <em>{subItem.set}</em>
+              </span>
               <p>Sélectionnez la quantité souhaitée</p>
               <div>
                 <IconButton
@@ -150,6 +153,7 @@ const CSubItemPanel: FC<CSubItemPanelProps> = ({
                       setValue(newValue);
                     }
                   }}
+                  readOnly={subItem.set > 1}
                 />
                 <IconButton
                   aria-label="add"
