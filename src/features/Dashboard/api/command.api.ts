@@ -23,3 +23,9 @@ export const APIsaveCommand = (
 
   return axios.post("commandes", toSend);
 };
+
+export const APIfetchDevis = (
+  codeCommande: string
+): Promise<IAPIResponseInterface> => {
+  return axios.get(`get-devis/${codeCommande}`);
+};

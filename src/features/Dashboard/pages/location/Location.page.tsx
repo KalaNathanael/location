@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import "./Location.styles.scss";
 import KPICardUIC from "../../components/elements/KPICard/KPICard.uic";
 import { TCommand } from "@/types/command";
-import { APIfetchCommands } from "../../api/command.api";
+import { APIfetchCommands, APIfetchDevis } from "../../api/command.api";
 import { ToastError } from "@/utils/toast";
 
 const PLocation: FC = () => {
@@ -127,6 +127,7 @@ const PLocation: FC = () => {
       minWidth: 200,
       disableColumnMenu: true,
       renderCell: (params: GridRenderCellParams) => {
+        let code = params.row.codeCommande;
         let status_devis = params.row.statusDevis;
         let statusCommande = params.row.statusCommande;
 
@@ -137,7 +138,7 @@ const PLocation: FC = () => {
                 aria-label="visualize"
                 color="primary"
                 onClick={() => {
-                  // visualizeSheet(url);
+                  getDevis(code);
                 }}
               >
                 <PreviewIcon />
@@ -246,6 +247,10 @@ const PLocation: FC = () => {
     }
     setLoadingDatas(false);
   };
+
+  function getDevis(code: string) {
+    APIfetchDevis(code);
+  }
 
   return (
     <div className="p-location">
