@@ -153,6 +153,7 @@ const PLocation: FC = () => {
                     onClick={() => {
                       // visualizeSheet(url);
                     }}
+                    disabled={true}
                   >
                     <PriceCheckIcon />
                   </IconButton>
@@ -164,6 +165,7 @@ const PLocation: FC = () => {
                     onClick={() => {
                       // alertOnRejectingSheet(sheetId, connectedUser?.id!);
                     }}
+                    disabled={true}
                   >
                     <CancelIcon />
                   </IconButton>
@@ -179,6 +181,7 @@ const PLocation: FC = () => {
                     onClick={() => {
                       // visualizeSheet(url);
                     }}
+                    disabled={true}
                   >
                     <DoneIcon />
                   </IconButton>
@@ -194,6 +197,7 @@ const PLocation: FC = () => {
                     onClick={() => {
                       // visualizeSheet(url);
                     }}
+                    disabled={true}
                   >
                     <DoneAllIcon />
                   </IconButton>
@@ -249,7 +253,18 @@ const PLocation: FC = () => {
   };
 
   function getDevis(code: string) {
-    APIfetchDevis(code);
+    setLoadingDatas(true);
+    APIfetchDevis(code)
+      .then((res) => {
+        if (res.error) {
+          ToastError.fire();
+        } else {
+        }
+      })
+      .catch((reason) => {
+        ToastError.fire();
+      });
+    setLoadingDatas(false);
   }
 
   return (
