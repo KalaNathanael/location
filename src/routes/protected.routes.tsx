@@ -12,69 +12,71 @@ import PLocationDetails from "@/features/Dashboard/pages/location/LocationDetail
 import { routePaths } from "@/config";
 
 export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
-  return [
-    {
-      path: routePaths.home,
-      element: (
-        <MainContainer>
-          <HomePage />
-        </MainContainer>
-      ),
-    },
-    {
-      path: routePaths.admin,
-      element: (
-        <>
-          <DashboardHeader />
+  if (permitRent)
+    return [
+      {
+        path: routePaths.home,
+        element: (
           <MainContainer>
-            <div style={{ height: "63.5px" }}></div>
-            <Outlet />
+            <HomePage />
           </MainContainer>
-        </>
-      ),
-    },
-    {
-      path: routePaths.location,
-      element: (
-        <>
-          <DashboardHeader />
-          <MainContainer>
-            <div style={{ height: "63.5px" }}></div>
-            <Outlet />
-          </MainContainer>
-        </>
-      ),
-      children: [
-        { path: "", element: <PLocation /> },
-        {
-          path: routePaths.locationDate,
-          element: <PLocationDateTime />,
-        },
-        {
-          path: routePaths.locationCategories,
-          element: <PItemList />,
-        },
-        {
-          path: routePaths.locationSubCategories,
-          element: <PItemList />,
-        },
-        {
-          path: routePaths.locationCategoriesArticles,
-          element: <PSubItem />,
-        },
-        {
-          path: routePaths.locationSubCategoriesArticles,
-          element: <PSubItem />,
-        },
-        {
-          path: routePaths.locationConfirmCommand,
-          element: <PLocationDetails />,
-        },
-        {
-          path: routePaths.locationDetails,
-          element: <PLocationDetails />,
-        },
-      ],
-    },
-  ];
+        ),
+      },
+      {
+        path: routePaths.admin,
+        element: (
+          <>
+            <DashboardHeader />
+            <MainContainer>
+              <div style={{ height: "63.5px" }}></div>
+              <Outlet />
+            </MainContainer>
+          </>
+        ),
+      },
+      {
+        path: routePaths.location,
+        element: (
+          <>
+            <DashboardHeader />
+            <MainContainer>
+              <div style={{ height: "63.5px" }}></div>
+              <Outlet />
+            </MainContainer>
+          </>
+        ),
+        children: [
+          { path: "", element: <PLocation /> },
+          {
+            path: routePaths.locationDate,
+            element: <PLocationDateTime />,
+          },
+          {
+            path: routePaths.locationCategories,
+            element: <PItemList />,
+          },
+          {
+            path: routePaths.locationSubCategories,
+            element: <PItemList />,
+          },
+          {
+            path: routePaths.locationCategoriesArticles,
+            element: <PSubItem />,
+          },
+          {
+            path: routePaths.locationSubCategoriesArticles,
+            element: <PSubItem />,
+          },
+          {
+            path: routePaths.locationConfirmCommand,
+            element: <PLocationDetails />,
+          },
+          {
+            path: routePaths.locationDetails,
+            element: <PLocationDetails />,
+          },
+        ],
+      },
+    ];
+  else return [];
 };
