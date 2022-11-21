@@ -259,6 +259,14 @@ const PLocation: FC = () => {
         if (res.error) {
           ToastError.fire();
         } else {
+          const href = URL.createObjectURL(res.data);
+          const link = document.createElement("a");
+
+          console.log("Humu humu humu");
+          link.href = href;
+          link.setAttribute("download", `devis_${code}.pdf`);
+          link.click();
+          URL.revokeObjectURL(href);
         }
       })
       .catch((reason) => {
