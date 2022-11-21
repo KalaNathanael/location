@@ -259,7 +259,7 @@ const PLocation: FC = () => {
         if (res.error) {
           ToastError.fire();
         } else {
-          const href = URL.createObjectURL(res.data);
+          const href = URL.createObjectURL(res);
           const link = document.createElement("a");
 
           console.log("Humu humu humu");

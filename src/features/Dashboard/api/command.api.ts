@@ -26,6 +26,6 @@ export const APIsaveCommand = (
 
 export const APIfetchDevis = (
   codeCommande: string
-): Promise<IAPIResponseInterface> => {
+): Promise<any> => {
   return axios.get(`get-devis/${codeCommande}`, { responseType: "blob" });
 };
