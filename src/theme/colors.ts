@@ -26,6 +26,13 @@ export const colors: TThemeColors = {
       dark: "rgba(188, 163, 1, 1)",
       "rgb-dark": "188, 163, 1",
     },
+    orange: {
+      normal: "rgba(250, 155, 47, 1)",
+      rgb: "250, 155, 47",
+      lighter: "rgba(252, 198, 144, 1)",
+      dark: "rgba(219, 128, 0, 1)",
+      "rgb-dark": "219, 128, 0",
+    },
     green: {
       normal: "rgba(12, 245, 116, 1)",
       rgb: "12, 245, 116",
