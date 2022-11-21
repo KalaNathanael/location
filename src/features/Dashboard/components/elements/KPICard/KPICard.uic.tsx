@@ -27,11 +27,12 @@ export default KPICardUIC;
 const KPIContainer = styled.div<{
   color: string;
 }>`
-  min-width: 180px;
+  width: 180px;
   display: flex;
+  height: fit-content;
   flex-direction: column;
   align-items: center;
-  padding: 30px 0;
+  padding: 8px 0;
   background-color: rgba(var(--ui-${({ color }) => color}-rgb), 0.2);
   border-radius: 12px;
 `;
@@ -39,7 +40,6 @@ const KPIContainer = styled.div<{
 const KPISymbol = styled.div<{
   color: string;
 }>`
-  margin-bottom: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,5 +73,6 @@ const KPITitle = styled.span<{
 }>`
   font-size: 13px;
   font-weight: 400;
+  text-align: center;
   color: var(--ui-${({ color }) => color}-dark);
 `;

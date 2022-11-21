@@ -45,7 +45,7 @@ const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (eventDetails.eventName === "") {
+    if (eventDetails.client === null) {
       navigate(routePaths.locationDate);
     }
 

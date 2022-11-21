@@ -7,7 +7,7 @@ import appReducer from "./app/app.reducer";
 export const persistConfig = {
   key: "location",
   storage,
-  whitelist: ["items"],
+  whitelist: ["items", "app"],
   blacklist: [],
 };
 

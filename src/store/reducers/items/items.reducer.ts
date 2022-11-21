@@ -1,7 +1,9 @@
 import { TLocationDateTimeValues } from "@/features/Dashboard/pages/location/LocationDateTime/LocationDateTime.page";
 import { TCat, TReducerError, TArticle, TSubCat } from "@/types";
+import { TClient } from "@/types/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { logout } from "../app/app.reducer";
+import { createClientAction, getClientsListAction } from "./items.action";
 
 const errorInitialValue: TReducerError = {
   message: "",
@@ -20,10 +22,19 @@ export type TBasket = {
   };
 };
 
+export type TEventDetails = Pick<TLocationDateTimeValues, "dateTime"> & {
+  client: TClient | null;
+};
+
 export type TItemsState = {
-  eventDetails: TLocationDateTimeValues;
+  eventDetails: TEventDetails;
   selectedCat: TCat | null;
   selectedSubCat: TSubCat | null;
+  clientList: {
+    loading: "idle" | "pending" | "failed";
+    data: TClient[];
+    error: TReducerError;
+  };
   basket: TBasket;
   loading: "idle" | "pending" | "failed";
   error: TReducerError;
@@ -35,7 +46,13 @@ const initialState: TItemsState = {
       start: null,
       end: null,
     },
-    eventName: "",
+    // eventName: "",
+    client: null,
+  },
+  clientList: {
+    data: [],
+    error: errorInitialValue,
+    loading: "idle",
   },
   selectedCat: null,
   selectedSubCat: null,
@@ -50,10 +67,7 @@ const itemSlice = createSlice({
     initialiseItemSlice: (state) => {
       state = initialState;
     },
-    setEventDetails: (
-      state,
-      action: PayloadAction<TLocationDateTimeValues>
-    ) => {
+    setEventDetails: (state, action: PayloadAction<TEventDetails>) => {
       state.eventDetails = action.payload;
     },
     clearEventDetails: (state) => {
@@ -62,8 +76,12 @@ const itemSlice = createSlice({
           start: null,
           end: null,
         },
-        eventName: "",
+        // eventName: "",
+        client: null,
       };
+    },
+    addClient: (state, action: PayloadAction<TClient>) => {
+      state.clientList.data.push(action.payload);
     },
     setSelectedCat: (state, action: PayloadAction<TCat>) => {
       state.selectedCat = action.payload;
@@ -159,6 +177,41 @@ const itemSlice = createSlice({
       state.loading = "idle";
       state.selectedCat = null;
       state.selectedSubCat = null;
+      state.clientList = {
+        data: [],
+        error: errorInitialValue,
+        loading: "idle",
+      };
+    });
+
+    //getClientsListAction actions
+    builder.addCase(getClientsListAction.pending, (state) => {
+      state.clientList.loading = "pending";
+      state.clientList.error = errorInitialValue;
+    });
+    builder.addCase(getClientsListAction.fulfilled, (state, action) => {
+      state.clientList.data = action.payload;
+      state.clientList.loading = "idle";
+      state.clientList.error = errorInitialValue;
+    });
+    builder.addCase(getClientsListAction.rejected, (state, action) => {
+      state.clientList.loading = "failed";
+      state.clientList.error = action.payload!;
+    });
+
+    //createClientAction actions
+    builder.addCase(createClientAction.pending, (state) => {
+      state.clientList.loading = "pending";
+      state.clientList.error = errorInitialValue;
+    });
+    builder.addCase(createClientAction.fulfilled, (state, action) => {
+      state.clientList.data.push(action.payload);
+      state.clientList.loading = "idle";
+      state.clientList.error = errorInitialValue;
+    });
+    builder.addCase(createClientAction.rejected, (state, action) => {
+      state.clientList.loading = "failed";
+      state.clientList.error = action.payload!;
     });
   },
 });
@@ -170,6 +223,7 @@ export const {
   clearEventDetails,
   clearSelectedCat,
   clearSelectedSubCat,
+  addClient,
   initialiseItemSlice,
   removeSubItemFromBasket,
   setEventDetails,

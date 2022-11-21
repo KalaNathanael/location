@@ -9,6 +9,40 @@
     margin-bottom: 14px;
   }
 
+  .date-label {
+    position: absolute;
+    top: -7px;
+    left: 8px;
+    font-size: 10px;
+    width: fit-content;
+    height: fit-content;
+    padding: 0 5px;
+    background: white;
+    color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+  }
+
+  .client-label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .no-client {
+    font-size: 12px;
+    margin: 4px 0;
+
+    & > em {
+      font-weight: 500;
+      color: var(--ui-primary);
+      cursor: pointer;
+      transition: all ease-in-out 100ms;
+
+      &:hover {
+        font-weight: 700;
+      }
+    }
+  }
+
   & > .header-icon {
     align-self: center;
     color: var(--ui-primary);

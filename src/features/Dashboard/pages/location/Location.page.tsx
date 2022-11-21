@@ -104,15 +104,27 @@ const PLocation: FC = () => {
     <div className="p-location">
       <div className="location-kpi">
         <KPICardUIC
-          color="green"
+          color="red"
+          icon="mdi:auto-pay"
+          title="En attente de paiement"
+          value={0}
+        />
+        <KPICardUIC
+          color="yellow"
           icon="carbon:delivery"
-          title="Délivré"
+          title="À livrer"
           value={0}
         />
         <KPICardUIC
           color="yellow"
           icon="mdi:timer-sand"
-          title="À venir"
+          title="À récupérer"
+          value={0}
+        />
+        <KPICardUIC
+          color="green"
+          icon="ep:finished"
+          title="Terminé"
           value={0}
         />
       </div>

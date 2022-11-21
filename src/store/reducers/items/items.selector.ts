@@ -8,6 +8,19 @@ export const selectItemsEventDetails = createSelector(
   (items) => items.eventDetails
 );
 
+export const selectItemsClientsDatas = createSelector(
+  [selectItems],
+  (items) => items.clientList.data
+);
+export const selectItemsClientsError = createSelector(
+  [selectItems],
+  (items) => items.clientList.error
+);
+export const selectItemsClientsLoading = createSelector(
+  [selectItems],
+  (items) => items.clientList.loading
+);
+
 export const selectItemsSelectedCat = createSelector(
   [selectItems],
   (items) => items.selectedCat

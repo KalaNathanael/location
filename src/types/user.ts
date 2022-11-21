@@ -1,6 +1,6 @@
 export type TUser = {
   noms: string;
-  id: string;
+  id: number;
   created_at: Date;
   prenoms: string;
   telephone: string;

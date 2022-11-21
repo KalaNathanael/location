@@ -1,0 +1,23 @@
+.f-client {
+  .button-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    .cancel-button,
+    .submit-button {
+      min-width: 93px;
+      height: 36px;
+
+      button {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.33;
+      }
+    }
+
+    .cancel-button {
+      margin-right: 10px;
+    }
+  }
+}

@@ -58,7 +58,7 @@ const AuthLoginContainer: FC = () => {
         let toSet: TUser = {
           created_at: new Date(created_at),
           email,
-          id: String(id),
+          id: id,
           noms,
           prenoms,
           telephone,

@@ -5,3 +5,7 @@ export interface IAPIResponseInterface extends AxiosResponse {
   error: boolean;
   message: string;
 }
+export interface IAutoCompleteList {
+  label: string;
+  id?: string | number;
+}

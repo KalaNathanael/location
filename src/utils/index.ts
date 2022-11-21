@@ -1,3 +1,5 @@
+import { IAutoCompleteList } from "@/interfaces";
+
 export * from "./convertThemeColorsToRootColors";
 export * from "./isDev";
 export * from "./lazyImport";
@@ -13,4 +15,17 @@ export const formatNumberOnDisplay = (number: number, separator: string) => {
   return `${charsToIgnore}${
     toIgnore > 0 ? separator : ""
   }${charsToTransform.replace(regExp, "$1 ")}`;
+};
+
+export const sortAutoCompleteList = (list: IAutoCompleteList[]) => {
+  let lowercaseList = list.map((elt, idx) => {
+    return {
+      ...elt,
+      label: elt.label.toLowerCase(),
+      idx: idx,
+    };
+  });
+  lowercaseList.sort((a, b) => a.label.localeCompare(b.label, "fr"));
+
+  return lowercaseList.map((elt) => list[elt.idx]);
 };

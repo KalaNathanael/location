@@ -26,6 +26,7 @@ const GloablStyle = createGlobalStyle`
     }
 
     .form-group {
+        position: relative;
         width: 100%;
         display: flex;
         flex-direction: column;
