@@ -252,9 +252,9 @@ const PLocation: FC = () => {
     setLoadingDatas(false);
   };
 
-  function getDevis(code: string) {
+  async function getDevis(code: string) {
     setLoadingDatas(true);
-    APIfetchDevis(code)
+    await APIfetchDevis(code)
       .then((res) => {
         if (res.error) {
           ToastError.fire();
