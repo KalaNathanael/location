@@ -48,23 +48,18 @@ export const TableViewer: React.FC<TableViewerProps> = ({
   loading = false,
   checkboxSelection = false,
 }) => {
-  const [
-    filterButtonEl,
-    setFilterButtonEl,
-  ] = React.useState<HTMLButtonElement | null>(null);
-  const [
-    columnButtonEl,
-    setColumnButtonEl,
-  ] = React.useState<HTMLButtonElement | null>(null);
-  const [
-    exportButtonEl,
-    setExportButtonEl,
-  ] = React.useState<HTMLButtonElement | null>(null);
+  const [filterButtonEl, setFilterButtonEl] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [columnButtonEl, setColumnButtonEl] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [exportButtonEl, setExportButtonEl] =
+    React.useState<HTMLButtonElement | null>(null);
 
   return (
     <div className="table-viewer-layout">
       <DataGrid
         columns={columns}
+        initialState={{ columns: { columnVisibilityModel: { id: false } } }}
         rows={rows}
         rowHeight={50}
         rowsPerPageOptions={[rowPerPage]}
