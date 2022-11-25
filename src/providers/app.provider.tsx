@@ -1,13 +1,17 @@
 import * as React from "react";
+import { PersistGate } from "redux-persist/integration/react";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { ErrorBoundary } from "react-error-boundary";
 import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { CustomProvider } from "rsuite";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/fr";
+
 import { persistor, store } from "../store";
 import { theme } from "../theme";
-import { PersistGate } from "redux-persist/integration/react";
 
 const ErrorFallback = () => {
   return (
@@ -36,13 +40,18 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       <PersistGate loading={null} persistor={persistor}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <HelmetProvider>
-            <Provider store={store}>
-              <ThemeProvider theme={theme}>
-                <CustomProvider theme="light">
-                  <Router>{children}</Router>
-                </CustomProvider>
-              </ThemeProvider>
-            </Provider>
+            <LocalizationProvider
+              dateAdapter={AdapterDayjs}
+              adapterLocale={"fr"}
+            >
+              <Provider store={store}>
+                <ThemeProvider theme={theme}>
+                  <CustomProvider theme="light">
+                    <Router>{children}</Router>
+                  </CustomProvider>
+                </ThemeProvider>
+              </Provider>
+            </LocalizationProvider>
           </HelmetProvider>
         </ErrorBoundary>
       </PersistGate>

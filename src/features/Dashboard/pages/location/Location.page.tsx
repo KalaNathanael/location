@@ -271,8 +271,10 @@ const PLocation: FC = () => {
       })
       .catch((reason) => {
         ToastError.fire();
+      })
+      .finally(() => {
+        setLoadingDatas(false);
       });
-    setLoadingDatas(false);
   }
 
   return (
