@@ -1,0 +1,21 @@
+.f-client {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 10px;
+
+  .profil-label {
+    font-size: 12px;
+    font-weight: 500;
+    padding-left: 4px;
+    color: rgba(0, 0, 0, 0.5);
+
+    &.error {
+      color: var(--ui-red-normal);
+    }
+  }
+
+  #id-field-error {
+    color: var(--ui-red-normal);
+  }
+}

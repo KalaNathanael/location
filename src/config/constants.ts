@@ -31,3 +31,14 @@ export const devisStatus: { [key: string]: TStatus } = {
     color: "var(--ui-green-dark)",
   },
 };
+
+export const defaultProfils = {
+  1: {
+    id: 1,
+    libelle: "ASSISTANTE",
+  },
+  2: {
+    id: 2,
+    libelle: "ADMINISTRATEUR",
+  },
+};

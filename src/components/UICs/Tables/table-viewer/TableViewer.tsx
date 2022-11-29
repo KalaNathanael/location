@@ -37,14 +37,14 @@ const CustomToolbar: React.FC<{
 type TableViewerProps = {
   columns: GridColDef[] | [];
   rows: any[];
-  rowPerPage?: number;
+  rowPerPage?: number[];
   loading?: boolean;
   checkboxSelection?: boolean;
 };
 export const TableViewer: React.FC<TableViewerProps> = ({
   columns,
   rows,
-  rowPerPage = 7,
+  rowPerPage = [7],
   loading = false,
   checkboxSelection = false,
 }) => {
@@ -55,6 +55,8 @@ export const TableViewer: React.FC<TableViewerProps> = ({
   const [exportButtonEl, setExportButtonEl] =
     React.useState<HTMLButtonElement | null>(null);
 
+  const [pageSize, setPageSize] = React.useState<number>(rowPerPage[0]);
+
   return (
     <div className="table-viewer-layout">
       <DataGrid
@@ -62,8 +64,9 @@ export const TableViewer: React.FC<TableViewerProps> = ({
         initialState={{ columns: { columnVisibilityModel: { id: false } } }}
         rows={rows}
         rowHeight={50}
-        rowsPerPageOptions={[rowPerPage]}
-        pageSize={rowPerPage}
+        rowsPerPageOptions={rowPerPage}
+        pageSize={pageSize}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         checkboxSelection={checkboxSelection}
         autoHeight={true}
         loading={loading}

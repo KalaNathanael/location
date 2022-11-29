@@ -5,6 +5,7 @@ import {
 import { TRootState } from "@/store";
 import { TReducerError } from "@/types";
 import { TClient } from "@/types/client";
+import { changeDateStringFormat } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
@@ -59,7 +60,7 @@ export const createClientAction = createAsyncThunk<
     const data: any = response.data;
     const toReturn: TClient = {
       id: data.id,
-      created_at: new Date(data.created_at),
+      created_at: new Date(changeDateStringFormat(data.created_at)),
       email: data.email,
       nom_prenom: data.nom_prenom,
       telephone: data.telephone,

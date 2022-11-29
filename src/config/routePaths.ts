@@ -14,4 +14,7 @@ export const routePaths = {
   locationConfirmCommand: "/home/location/confirm-command",
   locationDetails: "/home/location/details/:id_command",
   admin: "/home/admin",
+  adminUsers: "/home/admin/users",
+  adminArticles: "/home/admin/articles",
+  statistics: "/home/statistics",
 };

@@ -47,7 +47,7 @@ const HomePage: FC<HomePageProps> = ({ connectedUser }) => {
           icon={"uit:create-dashboard"}
           label={"Espace administrateur"}
           onClick={() => navigate(routePaths.admin)}
-          isDisabled={true}
+          isDisabled={false}
         />
         <HomeOption
           color="yellow"

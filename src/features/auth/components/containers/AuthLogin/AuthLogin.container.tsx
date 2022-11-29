@@ -1,9 +1,5 @@
 import { FC, useState } from "react";
-import { FormikHelpers, FormikValues } from "formik";
-import { connect, ConnectedProps } from "react-redux";
-import { AnyAction } from "redux";
-import { ThunkDispatch } from "redux-thunk";
-import { createStructuredSelector } from "reselect";
+import { FormikHelpers } from "formik";
 import * as Yup from "yup";
 
 import LoginForm from "../../Forms/Login/Login.form";

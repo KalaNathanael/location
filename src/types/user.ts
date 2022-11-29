@@ -3,10 +3,14 @@ export type TUser = {
   id: number;
   created_at: Date;
   prenoms: string;
-  telephone: string;
-  profil: {
-    id: number;
-    libelle: string;
-  };
+  telephone?: string;
+  profil: TProfil;
   email: string;
+};
+
+export type TProfil = {
+  id: number;
+  description?: string;
+  libelle?: string;
+  created_at?: Date;
 };

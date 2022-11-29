@@ -29,3 +29,8 @@ export const sortAutoCompleteList = (list: IAutoCompleteList[]) => {
 
   return lowercaseList.map((elt) => list[elt.idx]);
 };
+
+export const changeDateStringFormat = (date: string) => {
+  let splitted = date.split("-");
+  return `${splitted[2]}-${splitted[1]}-${splitted[0]}`;
+};

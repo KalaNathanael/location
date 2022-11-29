@@ -29,12 +29,12 @@ const menuItems = [
     path: routePaths.home,
     icon: <HomeIcon color="primary" />,
   },
-  // {
-  //   name: "Espace administrateur",
-  //   path: routePaths.admin,
-  //   icon: <Icon color="var(--ui-green-normal)" icon="uit:create-dashboard" />,
-  //   admin: true,
-  // },
+  {
+    name: "Espace administrateur",
+    path: routePaths.admin,
+    icon: <Icon color="var(--ui-green-normal)" icon="uit:create-dashboard" />,
+    admin: true,
+  },
   {
     name: "Louer du matériel",
     path: routePaths.location,

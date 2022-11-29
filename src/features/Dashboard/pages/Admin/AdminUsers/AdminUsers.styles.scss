@@ -1,0 +1,42 @@
+.p-admin-users {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+
+  h2 {
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-transform: uppercase;
+    gap: 10px;
+    margin-bottom: 40px;
+
+    span {
+      border-radius: 7px;
+      padding: 4px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--ui-secondary);
+    }
+  }
+
+  .new-user {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 14px;
+
+    & > button {
+      width: 180px;
+      height: 36px;
+      font-size: 14px;
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 4px;
+  }
+}

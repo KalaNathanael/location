@@ -1,6 +1,5 @@
 import { FormikHelpers } from "formik";
 import { FC } from "react";
-import * as Yup from "yup";
 import { createStructuredSelector } from "reselect";
 
 import { Modal } from "@mui/material";
@@ -42,61 +41,6 @@ const CCreateClient: FC<CCreateClientProps> = ({
   open,
 }) => {
   const dispatch = store.dispatch;
-  const validationSchema: any = Yup.object({
-    email: Yup.string()
-      .email("Veuillez rentrer un e-mail valide.")
-      .required("L'email est requis"),
-    tel: Yup.string().required("Le numéro de tel est requis"),
-    type: Yup.string(),
-    companyName: Yup.string().test({
-      name: "companyRequired",
-      message: `Le nom de la companie est requis`,
-      test: function (value) {
-        const { type } = this.parent;
-        if (type === "Entreprise") {
-          if (value === "" || value === undefined) {
-            return false;
-          } else {
-            return true;
-          }
-        } else {
-          return true;
-        }
-      },
-    }),
-    lastName: Yup.string().test({
-      name: "firstNameRequired",
-      message: `Un nom est requis`,
-      test: function (value) {
-        const { type } = this.parent;
-        if (type === "Personne") {
-          if (value === "" || value === undefined) {
-            return false;
-          } else {
-            return true;
-          }
-        } else {
-          return true;
-        }
-      },
-    }),
-    firstName: Yup.string().test({
-      name: "lastNameRequired",
-      message: `Un prénom est requis`,
-      test: function (value) {
-        const { type } = this.parent;
-        if (type === "Personne") {
-          if (value === "" || value === undefined) {
-            return false;
-          } else {
-            return true;
-          }
-        } else {
-          return true;
-        }
-      },
-    }),
-  });
 
   const handleSubmit = async (
     values: TClientValues,
@@ -139,7 +83,6 @@ const CCreateClient: FC<CCreateClientProps> = ({
             handleClose={handleClose}
             handleSubmit={handleSubmit}
             initialValues={defaultValues}
-            validationSchema={validationSchema}
           />
         </div>
       </div>
