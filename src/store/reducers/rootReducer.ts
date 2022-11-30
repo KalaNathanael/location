@@ -8,7 +8,7 @@ import adminReducer from "./admin/admin.reducer";
 export const persistConfig = {
   key: "location",
   storage,
-  whitelist: ["items", "app"],
+  whitelist: ["app"],
   blacklist: [],
 };
 

@@ -15,7 +15,7 @@ export const fetchUsersAction = createAsyncThunk<
     state: TRootState;
     rejectValue: TReducerError;
   }
->("clients/getList", async (param, { rejectWithValue, getState }) => {
+>("users/getList", async (param, { rejectWithValue, getState }) => {
   try {
     const response = await APIfetchUsers();
     if (response.error) {
@@ -55,7 +55,7 @@ export const createUserAction = createAsyncThunk<
     state: TRootState;
     rejectValue: TReducerError;
   }
->("clients/create", async (param, { rejectWithValue, getState }) => {
+>("users/create", async (param, { rejectWithValue, getState }) => {
   try {
     const response = await APIcreateUser(param);
     if (response.error) {
