@@ -1,6 +1,6 @@
-import { TReducerError } from "@/types";
+import { TCat, TReducerError, TSubCat } from "@/types";
 import { TUser } from "@/types/user";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createUserAction, fetchUsersAction } from "./admin.action";
 
 const errorInitialValue: TReducerError = {
@@ -14,6 +14,9 @@ export type TAdminState = {
     data: TUser[];
     error: TReducerError;
   };
+
+  selectedCat: TCat | null;
+  selectedSubCat: TSubCat | null;
 };
 
 const initialState: TAdminState = {
@@ -22,11 +25,26 @@ const initialState: TAdminState = {
     error: errorInitialValue,
     loading: "idle",
   },
+  selectedCat: null,
+  selectedSubCat: null,
 };
 const adminSlice = createSlice({
   name: "admin",
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedCat: (state, action: PayloadAction<TCat>) => {
+      state.selectedCat = action.payload;
+    },
+    clearSelectedCat: (state) => {
+      state.selectedCat = null;
+    },
+    setSelectedSubCat: (state, action: PayloadAction<TSubCat>) => {
+      state.selectedSubCat = action.payload;
+    },
+    clearSelectedSubCat: (state) => {
+      state.selectedSubCat = null;
+    },
+  },
   extraReducers: (builder) => {
     //fetchUsersAction actions
     builder.addCase(fetchUsersAction.pending, (state) => {
@@ -61,5 +79,10 @@ const adminSlice = createSlice({
 });
 
 const { actions, reducer } = adminSlice;
-export const {} = actions;
+export const {
+  clearSelectedCat,
+  clearSelectedSubCat,
+  setSelectedCat,
+  setSelectedSubCat,
+} = actions;
 export default reducer;

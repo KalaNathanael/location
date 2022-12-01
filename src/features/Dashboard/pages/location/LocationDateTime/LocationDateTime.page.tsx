@@ -81,7 +81,6 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
   }, []);
 
   const convertClientsToAutoCompleteList = (list: TClient[]) => {
-    //console.log({ list });
     return clientList.map((client) => ({
       id: client.id,
       label: client.nom_prenom,
@@ -100,7 +99,6 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
     values: TLocationDateTimeValues,
     { resetForm, setSubmitting }: FormikHelpers<TLocationDateTimeValues>
   ) => {
-    //console.log({ values });
     const selectedClient: TClient = clientList.find(
       (elt) => elt.id === values.client.id
     );
@@ -163,8 +161,6 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
           let dateEnd = formik.values.dateTime.end
             ? dayjs(formik.values.dateTime.end)
             : null;
-
-          //console.log("formik.values", formik.values);
 
           return (
             <form
@@ -245,7 +241,6 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
                               formik.setFieldValue("dateTime.start", toSet);
                             } else {
                               let oldDate = formik.values.dateTime.start;
-                              //console.log({ oldDate });
                               let toSet = newValue
                                 .second(oldDate.getSeconds())
                                 .minute(oldDate.getMinutes())
@@ -275,13 +270,11 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
                         value={dateStart}
                         label="Heure"
                         onChange={(newValue) => {
-                          //console.log({ newValue });
                           if (newValue.valueOf()) {
                             if (!formik.values.dateTime.start) {
                               let toSet = new Date(newValue.valueOf());
                               formik.setFieldValue("dateTime.start", toSet);
                             } else {
-                              //console.log({ newValue: newValue.valueOf() });
                               let oldDate = formik.values.dateTime.start;
                               let toSet = newValue
                                 .date(oldDate.getDate())
@@ -296,7 +289,6 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
                             if (!formik.values.dateTime.start) {
                               formik.setFieldValue("dateTime.start", null);
                             } else {
-                              //console.log("😂🤣😍");
                               let oldDate = dayjs(formik.values.dateTime.start);
                               let toSet = oldDate.hour(0).minute(0).second(0);
                               formik.setFieldValue(
@@ -306,7 +298,6 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
                             }
                           }
                         }}
-                        minTime={dayjs()}
                         renderInput={(params) => (
                           <TextField size="small" {...params} />
                         )}
@@ -326,7 +317,6 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
                               formik.setFieldValue("dateTime.end", toSet);
                             } else {
                               let oldDate = formik.values.dateTime.end;
-                              //console.log({ oldDate });
                               let toSet = newValue
                                 .second(oldDate.getSeconds())
                                 .minute(oldDate.getMinutes())
@@ -383,11 +373,6 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
                             }
                           }
                         }}
-                        minTime={
-                          formik.values.dateTime.start
-                            ? dayjs(formik.values.dateTime.start)
-                            : dayjs()
-                        }
                         renderInput={(params) => (
                           <TextField size="small" {...params} />
                         )}

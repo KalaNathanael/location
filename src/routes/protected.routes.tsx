@@ -12,6 +12,7 @@ import PLocationDetails from "@/features/Dashboard/pages/location/LocationDetail
 import { routePaths } from "@/config";
 import PAdmin from "@/features/Dashboard/pages/Admin/Admin.page";
 import PAdminUsers from "@/features/Dashboard/pages/Admin/AdminUsers/AdminUsers.page";
+import PAdminItems from "@/features/Dashboard/pages/Admin/AdminItems/AdminItems.page";
 
 export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
   if (permitRent)
@@ -42,8 +43,16 @@ export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
             element: <PAdminUsers />,
           },
           {
+            path: routePaths.adminCategories,
+            element: <PAdminItems />,
+          },
+          {
+            path: routePaths.adminSubCategories,
+            element: <PAdminItems />,
+          },
+          {
             path: routePaths.adminArticles,
-            element: <div>Kiffer</div>,
+            element: <div>On va arriver à toi</div>,
           },
         ],
       },

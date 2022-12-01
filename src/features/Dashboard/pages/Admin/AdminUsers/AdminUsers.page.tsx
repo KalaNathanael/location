@@ -22,6 +22,8 @@ import { connect, ConnectedProps } from "react-redux";
 import { store } from "@/store";
 import { fetchUsersAction } from "@/store/reducers/admin/admin.action";
 import { TUser } from "@/types/user";
+import { useNavigate } from "react-router-dom";
+import { routePaths } from "@/config";
 
 type PAdminUsersProps = ConnectedProps<typeof connector>;
 const PAdminUsers: FC<PAdminUsersProps> = ({
@@ -129,6 +131,7 @@ const PAdminUsers: FC<PAdminUsersProps> = ({
     },
   ];
   const dispatch = store.dispatch;
+  const navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
@@ -147,6 +150,13 @@ const PAdminUsers: FC<PAdminUsersProps> = ({
 
   return (
     <div className="p-admin-users">
+      <Button
+        label="Retour"
+        inverted={true}
+        color="var(--ui-primary)"
+        Icon={<Icon icon="akar-icons:arrow-left" fontSize={18} />}
+        onClick={() => navigate(routePaths.admin)}
+      />
       <h2>
         <span>
           <Icon icon="clarity:administrator-line" fontSize={30} />

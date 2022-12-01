@@ -15,6 +15,8 @@ export const routePaths = {
   locationDetails: "/home/location/details/:id_command",
   admin: "/home/admin",
   adminUsers: "/home/admin/users",
-  adminArticles: "/home/admin/articles",
+  adminCategories: "/home/admin/categories",
+  adminSubCategories: "/home/admin/categories/:id_cat/subCat",
+  adminArticles: "/home/admin/categories/:id_cat/subCat/:id_subCat",
   statistics: "/home/statistics",
 };

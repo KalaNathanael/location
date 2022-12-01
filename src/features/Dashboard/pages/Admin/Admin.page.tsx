@@ -24,7 +24,7 @@ const PAdmin: FC = () => {
           icon="fluent-emoji-high-contrast:fork-and-knife-with-plate"
           label="Gérer les articles"
           onClick={() => {
-            navigate(routePaths.adminArticles);
+            navigate(routePaths.adminCategories);
           }}
         />
       </div>

@@ -15,3 +15,13 @@ export const selectAdminUsersError = createSelector(
   [selectAdmin],
   (admin) => admin.users.error
 );
+
+export const selectAdminSelectedCat = createSelector(
+  [selectAdmin],
+  (items) => items.selectedCat
+);
+
+export const selectAdminSelectedSubCat = createSelector(
+  [selectAdmin],
+  (items) => items.selectedSubCat
+);
