@@ -21,4 +21,6 @@ export type TArticle = {
   price: number;
   image_url?: string;
   set: number;
+  created_at?: Date;
+  updated_at?: Date | null;
 };

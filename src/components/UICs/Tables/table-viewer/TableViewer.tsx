@@ -40,6 +40,7 @@ type TableViewerProps = {
   rowPerPage?: number[];
   loading?: boolean;
   checkboxSelection?: boolean;
+  rowHeight?: number;
 };
 export const TableViewer: React.FC<TableViewerProps> = ({
   columns,
@@ -47,6 +48,7 @@ export const TableViewer: React.FC<TableViewerProps> = ({
   rowPerPage = [7],
   loading = false,
   checkboxSelection = false,
+  rowHeight = 50,
 }) => {
   const [filterButtonEl, setFilterButtonEl] =
     React.useState<HTMLButtonElement | null>(null);
@@ -63,7 +65,7 @@ export const TableViewer: React.FC<TableViewerProps> = ({
         columns={columns}
         initialState={{ columns: { columnVisibilityModel: { id: false } } }}
         rows={rows}
-        rowHeight={50}
+        rowHeight={rowHeight}
         rowsPerPageOptions={rowPerPage}
         pageSize={pageSize}
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}

@@ -13,6 +13,7 @@ import { routePaths } from "@/config";
 import PAdmin from "@/features/Dashboard/pages/Admin/Admin.page";
 import PAdminUsers from "@/features/Dashboard/pages/Admin/AdminUsers/AdminUsers.page";
 import PAdminItems from "@/features/Dashboard/pages/Admin/AdminItems/AdminItems.page";
+import PAdminArticles from "@/features/Dashboard/pages/Admin/AdminArticles/AdminArticles.page";
 
 export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
   if (permitRent)
@@ -52,7 +53,7 @@ export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
           },
           {
             path: routePaths.adminArticles,
-            element: <div>On va arriver à toi</div>,
+            element: <PAdminArticles />,
           },
         ],
       },
