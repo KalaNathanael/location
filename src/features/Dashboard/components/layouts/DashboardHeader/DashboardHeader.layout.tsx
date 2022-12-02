@@ -20,7 +20,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import "./DashboardHeader.styles.scss";
-import CCartModal from "../../Conainers/CartModal/CartModal.container";
+import CCartModal from "../../Containers/CartModal/CartModal.container";
 import { selectItemsBasket } from "@/store/reducers/items/items.selector";
 
 const menuItems = [

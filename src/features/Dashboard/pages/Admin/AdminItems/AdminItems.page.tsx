@@ -4,7 +4,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Icon } from "@iconify/react";
-import { Box, Skeleton, Button as MUIButton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 
 import Button from "@/components/UICs/Button/Button.uic";
 
@@ -27,6 +27,7 @@ import { TCat, TSubCat } from "@/types";
 
 import "./AdminItems.page.styles.scss";
 import AdminCatCardUIC from "@/features/Dashboard/components/elements/AdminCatCard.uic";
+import CCreateCat from "@/features/Dashboard/components/Containers/CreateCat/CreateCat.container";
 
 type PAdminItemsProps = ConnectedProps<typeof connector>;
 const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
@@ -36,6 +37,9 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
 
   const [catList, setCatList] = useState<TCat[]>([]);
   const [subCatList, setSubCatList] = useState<TSubCat[]>([]);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = useState<TCat | TSubCat | null>(null);
+  const [operation, setOperation] = useState<"Create" | "Update">("Create");
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -125,6 +129,14 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
     dispatch(setSelectedSubCat(elt));
   };
 
+  const handleCloseModal = (refetch?: boolean) => {
+    if (refetch) {
+      if (id_cat) getSubCatList();
+      else getCatList();
+    }
+    setOpenModal(false);
+  };
+
   const renderNewButton = () => {
     return (
       <Button
@@ -133,7 +145,9 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
         color="var(--ui-primary)"
         Icon={<Icon icon="material-symbols:add" fontSize={18} />}
         onClick={() => {
-          /*le formulaire à ouvrir*/
+          setOperation("Create");
+          setOpenModal(true);
+          setSelectedItem(null);
         }}
       />
     );
@@ -159,7 +173,10 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
                   /*Action de suppression attendue*/
                 }}
                 onModify={() => {
-                  /*Action de modification attendue*/
+                  console.log({ elt });
+                  setSelectedItem(elt);
+                  setOpenModal(true);
+                  setOperation("Update");
                 }}
                 onView={() => {
                   onCatItemClick(elt);
@@ -222,7 +239,9 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
                   /*Action de suppression attendue*/
                 }}
                 onModify={() => {
-                  /*Action de modification attendue*/
+                  setSelectedItem(elt);
+                  setOpenModal(true);
+                  setOperation("Update");
                 }}
                 onView={() => {
                   onSubCatItemClick(elt);
@@ -270,6 +289,14 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
         onClick={() => onReturnPage()}
       />
       {!id_cat ? renderCategories() : renderSubCategories()}
+      <CCreateCat
+        handleClose={() => {
+          handleCloseModal();
+        }}
+        open={openModal}
+        operation={operation}
+        selectedItem={selectedItem}
+      />
     </div>
   );
 };

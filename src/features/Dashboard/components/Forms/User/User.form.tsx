@@ -112,7 +112,7 @@ const FUser: FC<FUserProps> = ({
 
         return (
           <form
-            className="f-client"
+            className="f-user"
             autoComplete="off"
             onSubmit={formik.handleSubmit}
           >

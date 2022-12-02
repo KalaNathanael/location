@@ -9,7 +9,7 @@ import {
 } from "@/store/reducers/items/items.selector";
 import Button from "@/components/UICs/Button/Button.uic";
 
-import { TCartElt } from "@/features/Dashboard/components/Conainers/CartModal/CartModal.container";
+import { TCartElt } from "@/features/Dashboard/components/Containers/CartModal/CartModal.container";
 
 import { TBasket } from "@/store/reducers/items/items.reducer";
 

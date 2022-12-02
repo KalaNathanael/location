@@ -1,6 +1,6 @@
 import { IAPIResponseInterface } from "@/interfaces";
 import { axios } from "@/lib/axios";
-import { TUserValues } from "../components/Conainers/CreateUser/CreateUser.container";
+import { TUserValues } from "../components/Containers/CreateUser/CreateUser.container";
 
 export const APIfetchUsers = (): Promise<IAPIResponseInterface> => {
   return axios.get("accounts");

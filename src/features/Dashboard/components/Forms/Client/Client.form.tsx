@@ -11,7 +11,7 @@ import FormLabel from "@mui/material/FormLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 
-import { TClientValues } from "../../Conainers/CreateClient/CreateClient.conatainer";
+import { TClientValues } from "../../Containers/CreateClient/CreateClient.conatainer";
 import Button from "@/components/UICs/Button/Button.uic";
 
 import "./Client.form.styles.scss";

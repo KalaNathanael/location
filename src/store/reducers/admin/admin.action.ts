@@ -1,6 +1,6 @@
 import { defaultProfils } from "@/config";
 import { APIcreateUser, APIfetchUsers } from "@/features/Dashboard/api/admin";
-import { TUserValues } from "@/features/Dashboard/components/Conainers/CreateUser/CreateUser.container";
+import { TUserValues } from "@/features/Dashboard/components/Containers/CreateUser/CreateUser.container";
 import { TRootState } from "@/store";
 import { TReducerError } from "@/types";
 import { TUser } from "@/types/user";

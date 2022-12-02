@@ -33,7 +33,7 @@ import { TClient } from "@/types/client";
 import { IAutoCompleteList } from "@/interfaces";
 
 import { getClientsListAction } from "@/store/reducers/items/items.action";
-import CCreateClient from "@/features/Dashboard/components/Conainers/CreateClient/CreateClient.conatainer";
+import CCreateClient from "@/features/Dashboard/components/Containers/CreateClient/CreateClient.conatainer";
 
 import "./LocationDateTime.styles.scss";
 

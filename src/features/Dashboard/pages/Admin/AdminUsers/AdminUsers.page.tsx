@@ -12,7 +12,7 @@ import { ToastError } from "@/utils/toast";
 
 import "./AdminUsers.styles.scss";
 import Button from "@/components/UICs/Button/Button.uic";
-import CCreateUser from "@/features/Dashboard/components/Conainers/CreateUser/CreateUser.container";
+import CCreateUser from "@/features/Dashboard/components/Containers/CreateUser/CreateUser.container";
 import {
   selectAdminUsers,
   selectAdminUsersError,

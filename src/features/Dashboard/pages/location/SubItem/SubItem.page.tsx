@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "@/components/UICs/Button/Button.uic";
-import CSubItemPanel from "../../../components/Conainers/SubItemPanel/SubItemPanel.container";
+import CSubItemPanel from "../../../components/Containers/SubItemPanel/SubItemPanel.container";
 
 import { TArticle } from "@/types";
 import { routePaths } from "@/config";

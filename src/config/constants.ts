@@ -1,6 +1,9 @@
 import { TStatus } from "@/types/command";
 
 export const API_URL = process.env.REACT_APP_API_URL as string;
+export const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
+
+export const FILE_SIZE = 5 * 1024 * 1024;
 
 export const commandStatus: { [key: string]: TStatus } = {
   "En attente": {

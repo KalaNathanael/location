@@ -34,3 +34,11 @@ export const changeDateStringFormat = (date: string) => {
   let splitted = date.split("-");
   return `${splitted[2]}-${splitted[1]}-${splitted[0]}`;
 };
+
+export const isEmpty = (value: any): boolean =>
+  value === undefined ||
+  value === null ||
+  (typeof value === "object" &&
+    Object.keys(value).length === 0 &&
+    typeof value.getMonth !== "function") ||
+  (typeof value === "string" && value.trim().length === 0);
