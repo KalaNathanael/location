@@ -4,13 +4,17 @@
   padding: 20px 34px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  gap: 8px;
   align-items: center;
   border-radius: 16px;
   transition: all 0.25s ease-in-out;
+  color: #fff;
 
   &.disable {
-    background: linear-gradient(321.68deg, #8e8e8e, #dedede 100%);
+    border: 2px solid #dedede;
+    background: white;
+    color: #dedede;
+    // background: linear-gradient(321.68deg, #8e8e8e, #dedede 100%);
     pointer-events: none;
   }
 
@@ -49,16 +53,17 @@
   }
 
   .icon {
-    color: #fff;
+    color: inherit;
     opacity: 0.8;
   }
 
   .label {
+    flex: 1;
     display: flex;
     width: 184px;
     font-size: 24px;
     font-weight: bold;
     line-height: 1.25;
-    color: #fff;
+    color: inherit;
   }
 }

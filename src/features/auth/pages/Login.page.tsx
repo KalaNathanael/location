@@ -1,6 +1,4 @@
 import { FC } from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { createStructuredSelector } from "reselect";
 
 import { Alert } from "@mui/material";
 

@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Formik, FormikHelpers, getIn } from "formik";
+import * as Yup from "yup";
 
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -10,13 +11,12 @@ import FormLabel from "@mui/material/FormLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 
-import { TClientValues } from "../../Conainers/CreateClient/CreateClient.conatainer";
+import { TClientValues } from "../../Containers/CreateClient/CreateClient.conatainer";
 import Button from "@/components/UICs/Button/Button.uic";
 
 import "./Client.form.styles.scss";
 
 type FClientProps = {
-  validationSchema: any;
   initialValues: TClientValues;
   handleSubmit: (
     values: TClientValues,
@@ -26,10 +26,65 @@ type FClientProps = {
 };
 const FClient: FC<FClientProps> = ({
   initialValues,
-  validationSchema,
   handleClose,
   handleSubmit,
 }) => {
+  const validationSchema: any = Yup.object({
+    email: Yup.string()
+      .email("Veuillez rentrer un e-mail valide.")
+      .required("L'email est requis"),
+    tel: Yup.string().required("Le numéro de tel est requis"),
+    type: Yup.string(),
+    companyName: Yup.string().test({
+      name: "companyRequired",
+      message: `Le nom de la companie est requis`,
+      test: function (value) {
+        const { type } = this.parent;
+        if (type === "Entreprise") {
+          if (value === "" || value === undefined) {
+            return false;
+          } else {
+            return true;
+          }
+        } else {
+          return true;
+        }
+      },
+    }),
+    lastName: Yup.string().test({
+      name: "firstNameRequired",
+      message: `Un nom est requis`,
+      test: function (value) {
+        const { type } = this.parent;
+        if (type === "Personne") {
+          if (value === "" || value === undefined) {
+            return false;
+          } else {
+            return true;
+          }
+        } else {
+          return true;
+        }
+      },
+    }),
+    firstName: Yup.string().test({
+      name: "lastNameRequired",
+      message: `Un prénom est requis`,
+      test: function (value) {
+        const { type } = this.parent;
+        if (type === "Personne") {
+          if (value === "" || value === undefined) {
+            return false;
+          } else {
+            return true;
+          }
+        } else {
+          return true;
+        }
+      },
+    }),
+  });
+
   return (
     <Formik
       initialValues={initialValues}

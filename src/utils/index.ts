@@ -29,3 +29,36 @@ export const sortAutoCompleteList = (list: IAutoCompleteList[]) => {
 
   return lowercaseList.map((elt) => list[elt.idx]);
 };
+
+export const changeDateStringFormat = (date: string) => {
+  let splitted = date.split("-");
+  return `${splitted[2]}-${splitted[1]}-${splitted[0]}`;
+};
+
+export const isEmpty = (value: any): boolean =>
+  value === undefined ||
+  value === null ||
+  (typeof value === "object" &&
+    Object.keys(value).length === 0 &&
+    typeof value.getMonth !== "function") ||
+  (typeof value === "string" && value.trim().length === 0);
+
+export const formatPriceOnDisplay = (number: number) => {
+  let numberStringified = number.toString();
+  let charsToIgnore = numberStringified.length % 3;
+  let regExp = null;
+  switch (charsToIgnore) {
+    case 0:
+      regExp = /(?<=[0-9]{3})([0-9]{3})/g;
+      break;
+    case 1:
+      regExp = /(?<=[0-9]{1})([0-9]{3})/g;
+      break;
+    case 2:
+      regExp = /(?<=[0-9]{2})([0-9]{3})/g;
+      break;
+    default:
+      regExp = null;
+  }
+  return numberStringified.replace(regExp, " $1");
+};

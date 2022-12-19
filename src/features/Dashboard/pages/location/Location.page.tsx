@@ -6,6 +6,7 @@ import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { TableViewer } from "@/components/UICs/Tables/table-viewer/TableViewer";
 import { IconButton, Tooltip, Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
+import { Button as MuiButton } from "@mui/material";
 
 import PreviewIcon from "@mui/icons-material/Preview";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -124,7 +125,7 @@ const PLocation: FC = () => {
     {
       field: "actions",
       headerName: "Actions",
-      minWidth: 200,
+      minWidth: 402,
       disableColumnMenu: true,
       renderCell: (params: GridRenderCellParams) => {
         let code = params.row.codeCommande;
@@ -133,43 +134,43 @@ const PLocation: FC = () => {
 
         return (
           <div className="actions">
-            <Tooltip title="Consulter le devis" placement="top">
-              <IconButton
-                aria-label="visualize"
-                color="primary"
-                onClick={() => {
-                  getDevis(code);
-                }}
-              >
-                <PreviewIcon />
-              </IconButton>
-            </Tooltip>
+            <MuiButton
+              aria-label="visualize"
+              color="primary"
+              onClick={() => {
+                getDevis(code);
+              }}
+              variant="contained"
+              sx={{ color: "white" }}
+            >
+              Voir Devis
+            </MuiButton>
             {status_devis.label === "À régler" && (
               <>
-                <Tooltip title="Valider le devis" placement="top">
-                  <IconButton
-                    aria-label="visualize"
-                    color="success"
-                    onClick={() => {
-                      // visualizeSheet(url);
-                    }}
-                    disabled={true}
-                  >
-                    <PriceCheckIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Annuler la commande" placement="top">
-                  <IconButton
-                    aria-label="reject"
-                    color="error"
-                    onClick={() => {
-                      // alertOnRejectingSheet(sheetId, connectedUser?.id!);
-                    }}
-                    disabled={true}
-                  >
-                    <CancelIcon />
-                  </IconButton>
-                </Tooltip>
+                <MuiButton
+                  aria-label="visualize"
+                  color="success"
+                  onClick={() => {
+                    // visualizeSheet(url);
+                  }}
+                  disabled={true}
+                  variant="contained"
+                  sx={{ color: "white" }}
+                >
+                  Valider devis
+                </MuiButton>
+                <MuiButton
+                  aria-label="reject"
+                  color="error"
+                  onClick={() => {
+                    // alertOnRejectingSheet(sheetId, connectedUser?.id!);
+                  }}
+                  disabled={true}
+                  variant="contained"
+                  sx={{ color: "white" }}
+                >
+                  Annuler commande
+                </MuiButton>
               </>
             )}
             {statusCommande.label === "À livrer" && (
@@ -252,19 +253,29 @@ const PLocation: FC = () => {
     setLoadingDatas(false);
   };
 
-  function getDevis(code: string) {
+  async function getDevis(code: string) {
     setLoadingDatas(true);
-    APIfetchDevis(code)
+    await APIfetchDevis(code)
       .then((res) => {
         if (res.error) {
           ToastError.fire();
         } else {
+          const href = URL.createObjectURL(res);
+          const link = document.createElement("a");
+
+          console.log("Humu humu humu");
+          link.href = href;
+          link.setAttribute("download", `devis_${code}.pdf`);
+          link.click();
+          URL.revokeObjectURL(href);
         }
       })
       .catch((reason) => {
         ToastError.fire();
+      })
+      .finally(() => {
+        setLoadingDatas(false);
       });
-    setLoadingDatas(false);
   }
 
   return (
@@ -309,7 +320,7 @@ const PLocation: FC = () => {
         <TableViewer
           columns={tableColumns}
           rows={datas}
-          rowPerPage={10}
+          rowPerPage={[10, 20, 50]}
           loading={loadingDatas}
         />
       </div>

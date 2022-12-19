@@ -20,7 +20,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import "./DashboardHeader.styles.scss";
-import CCartModal from "../../Conainers/CartModal/CartModal.container";
+import CCartModal from "../../Containers/CartModal/CartModal.container";
 import { selectItemsBasket } from "@/store/reducers/items/items.selector";
 
 const menuItems = [
@@ -29,12 +29,12 @@ const menuItems = [
     path: routePaths.home,
     icon: <HomeIcon color="primary" />,
   },
-  // {
-  //   name: "Espace administrateur",
-  //   path: routePaths.admin,
-  //   icon: <Icon color="var(--ui-green-normal)" icon="uit:create-dashboard" />,
-  //   admin: true,
-  // },
+  {
+    name: "Espace administrateur",
+    path: routePaths.admin,
+    icon: <Icon color="var(--ui-green-normal)" icon="uit:create-dashboard" />,
+    admin: true,
+  },
   {
     name: "Louer du matériel",
     path: routePaths.location,

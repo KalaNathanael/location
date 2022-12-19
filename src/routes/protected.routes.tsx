@@ -10,6 +10,10 @@ import PLocation from "@/features/Dashboard/pages/location/Location.page";
 import PLocationDetails from "@/features/Dashboard/pages/location/LocationDetails/LocationDetails.page";
 
 import { routePaths } from "@/config";
+import PAdmin from "@/features/Dashboard/pages/Admin/Admin.page";
+import PAdminUsers from "@/features/Dashboard/pages/Admin/AdminUsers/AdminUsers.page";
+import PAdminItems from "@/features/Dashboard/pages/Admin/AdminItems/AdminItems.page";
+import PAdminArticles from "@/features/Dashboard/pages/Admin/AdminArticles/AdminArticles.page";
 
 export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
   if (permitRent)
@@ -33,6 +37,25 @@ export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
             </MainContainer>
           </>
         ),
+        children: [
+          { path: "", element: <PAdmin /> },
+          {
+            path: routePaths.adminUsers,
+            element: <PAdminUsers />,
+          },
+          {
+            path: routePaths.adminCategories,
+            element: <PAdminItems />,
+          },
+          {
+            path: routePaths.adminSubCategories,
+            element: <PAdminItems />,
+          },
+          {
+            path: routePaths.adminArticles,
+            element: <PAdminArticles />,
+          },
+        ],
       },
       {
         path: routePaths.location,

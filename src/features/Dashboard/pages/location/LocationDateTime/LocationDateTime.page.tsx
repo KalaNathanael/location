@@ -4,11 +4,11 @@ import * as Yup from "yup";
 import { connect, ConnectedProps } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 import { Autocomplete } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Icon } from "@iconify/react";
-import { DateRangePicker } from "rsuite";
 import Button from "@/components/UICs/Button/Button.uic";
 
 import { store } from "@/store";
@@ -23,17 +23,19 @@ import {
   selectItemsEventDetails,
 } from "@/store/reducers/items/items.selector";
 
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+
 import { sortAutoCompleteList } from "@/utils";
 import { routePaths } from "@/config";
 
 import { TClient } from "@/types/client";
 import { IAutoCompleteList } from "@/interfaces";
 
-import "./LocationDateTime.styles.scss";
 import { getClientsListAction } from "@/store/reducers/items/items.action";
-import CCreateClient from "@/features/Dashboard/components/Conainers/CreateClient/CreateClient.conatainer";
+import CCreateClient from "@/features/Dashboard/components/Containers/CreateClient/CreateClient.conatainer";
 
-const { beforeToday } = DateRangePicker;
+import "./LocationDateTime.styles.scss";
 
 export type TLocationDateTimeValues = {
   dateTime: {
@@ -52,7 +54,6 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
 }) => {
   const dispatch = store.dispatch;
   const navigate = useNavigate();
-  const currentDate = new Date();
 
   const validationSchema: any = Yup.object({
     dateTime: Yup.object().shape({
@@ -98,7 +99,6 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
     values: TLocationDateTimeValues,
     { resetForm, setSubmitting }: FormikHelpers<TLocationDateTimeValues>
   ) => {
-    console.log({ values });
     const selectedClient: TClient = clientList.find(
       (elt) => elt.id === values.client.id
     );
@@ -155,6 +155,13 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
             touched: getIn(formik.touched, "client"),
           };
 
+          let dateStart = formik.values.dateTime.start
+            ? dayjs(formik.values.dateTime.start)
+            : null;
+          let dateEnd = formik.values.dateTime.end
+            ? dayjs(formik.values.dateTime.end)
+            : null;
+
           return (
             <form
               className="f-loction-date"
@@ -176,7 +183,7 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
                 />
               </div> */}
               <div className="form-group">
-                <label className="client-label">Client</label>
+                <label className="label">Client</label>
                 <div className="no-client">
                   <span>Le client n'existe pas encore ?</span>{" "}
                   <em
@@ -219,26 +226,160 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
                 />
               </div>
               <div className="form-group">
-                <label className="date-label">Date de location</label>
-                <DateRangePicker
-                  id="date-time-field"
-                  name="dateTime"
-                  format="yyyy-MM-dd HH:mm:ss"
-                  defaultCalendarValue={[
-                    currentDate,
-                    new Date(new Date().setMonth(currentDate.getMonth() + 1)),
-                  ]}
-                  disabledDate={beforeToday()}
-                  value={[
-                    formik.values.dateTime.start,
-                    formik.values.dateTime.end,
-                  ]}
-                  onChange={(value, e) => {
-                    formik.setFieldValue("dateTime.start", value?.[0]);
-                    formik.setFieldValue("dateTime.end", value?.[1]);
-                  }}
-                  onBlur={formik.handleBlur}
-                />
+                <label className="label">Dates et heures de location</label>
+                <div className="date-group">
+                  <div className="date-debut">
+                    <label>Début</label>
+                    <span className="date">
+                      <DatePicker
+                        label="Date"
+                        value={dateStart}
+                        onChange={(newValue) => {
+                          if (newValue) {
+                            if (!formik.values.dateTime.start) {
+                              let toSet = new Date(newValue.valueOf());
+                              formik.setFieldValue("dateTime.start", toSet);
+                            } else {
+                              let oldDate = formik.values.dateTime.start;
+                              let toSet = newValue
+                                .second(oldDate.getSeconds())
+                                .minute(oldDate.getMinutes())
+                                .hour(oldDate.getHours());
+                              formik.setFieldValue(
+                                "dateTime.start",
+                                new Date(toSet.valueOf())
+                              );
+                            }
+                          } else {
+                            formik.setFieldValue("dateTime.start", null);
+                          }
+                        }}
+                        minDate={dayjs()}
+                        maxDate={
+                          formik.values.dateTime.end
+                            ? dayjs(formik.values.dateTime.end)
+                            : null
+                        }
+                        renderInput={(params) => (
+                          <TextField size="small" {...params} />
+                        )}
+                      />
+                    </span>
+                    <span className="hour">
+                      <TimePicker
+                        value={dateStart}
+                        label="Heure"
+                        onChange={(newValue) => {
+                          if (newValue.valueOf()) {
+                            if (!formik.values.dateTime.start) {
+                              let toSet = new Date(newValue.valueOf());
+                              formik.setFieldValue("dateTime.start", toSet);
+                            } else {
+                              let oldDate = formik.values.dateTime.start;
+                              let toSet = newValue
+                                .date(oldDate.getDate())
+                                .month(oldDate.getMonth())
+                                .year(oldDate.getFullYear());
+                              formik.setFieldValue(
+                                "dateTime.start",
+                                new Date(toSet.valueOf())
+                              );
+                            }
+                          } else {
+                            if (!formik.values.dateTime.start) {
+                              formik.setFieldValue("dateTime.start", null);
+                            } else {
+                              let oldDate = dayjs(formik.values.dateTime.start);
+                              let toSet = oldDate.hour(0).minute(0).second(0);
+                              formik.setFieldValue(
+                                "dateTime.start",
+                                new Date(toSet.valueOf())
+                              );
+                            }
+                          }
+                        }}
+                        renderInput={(params) => (
+                          <TextField size="small" {...params} />
+                        )}
+                      />
+                    </span>
+                  </div>
+                  <div className="date-fin">
+                    <label>Fin</label>
+                    <span className="date">
+                      <DatePicker
+                        label="Date"
+                        value={dateEnd}
+                        onChange={(newValue) => {
+                          if (newValue) {
+                            if (!formik.values.dateTime.end) {
+                              let toSet = new Date(newValue.valueOf());
+                              formik.setFieldValue("dateTime.end", toSet);
+                            } else {
+                              let oldDate = formik.values.dateTime.end;
+                              let toSet = newValue
+                                .second(oldDate.getSeconds())
+                                .minute(oldDate.getMinutes())
+                                .hour(oldDate.getHours());
+                              formik.setFieldValue(
+                                "dateTime.end",
+                                new Date(toSet.valueOf())
+                              );
+                            }
+                          } else {
+                            formik.setFieldValue("dateTime.end", null);
+                          }
+                        }}
+                        minDate={
+                          formik.values.dateTime.start
+                            ? dayjs(formik.values.dateTime.start)
+                            : dayjs()
+                        }
+                        renderInput={(params) => (
+                          <TextField size="small" {...params} />
+                        )}
+                      />
+                    </span>
+                    <span className="hour">
+                      <TimePicker
+                        value={dateEnd}
+                        label="Heure"
+                        onChange={(newValue) => {
+                          if (newValue.valueOf()) {
+                            if (!formik.values.dateTime.end) {
+                              let toSet = new Date(newValue.valueOf());
+                              formik.setFieldValue("dateTime.end", toSet);
+                            } else {
+                              let oldDate = formik.values.dateTime.end;
+                              let toSet = newValue
+                                .date(oldDate.getDate())
+                                .month(oldDate.getMonth())
+                                .year(oldDate.getFullYear());
+                              formik.setFieldValue(
+                                "dateTime.end",
+                                new Date(toSet.valueOf())
+                              );
+                            }
+                          } else {
+                            if (!formik.values.dateTime.end) {
+                              formik.setFieldValue("dateTime.end", null);
+                            } else {
+                              let oldDate = dayjs(formik.values.dateTime.end);
+                              let toSet = oldDate.hour(0).minute(0).second(0);
+                              formik.setFieldValue(
+                                "dateTime.end",
+                                new Date(toSet.valueOf())
+                              );
+                            }
+                          }
+                        }}
+                        renderInput={(params) => (
+                          <TextField size="small" {...params} />
+                        )}
+                      />
+                    </span>
+                  </div>
+                </div>
               </div>
               <div className="button-group">
                 <div className="submit-button">

@@ -32,10 +32,30 @@ const GloablStyle = createGlobalStyle`
         flex-direction: column;
         margin-bottom: 20px;
     }
-    .button-group {
-      display: flex;
-      gap: 10px;
+
+    
+  .button-group {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-end;
+
+    .cancel-button,
+    .submit-button {
+      min-width: 93px;
+      height: 36px;
+
+      button {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.33;
+      }
     }
+
+    .cancel-button {
+      margin-right: 10px;
+    }
+  }
 `;
 
 export default GloablStyle;
