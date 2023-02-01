@@ -165,6 +165,7 @@ const PAdminArticles: FC<PAdminArticlesProps> = ({ selectedSubCat }) => {
     else {
       getArticles();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id_subCat]);
 
   async function getArticles() {

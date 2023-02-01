@@ -6,7 +6,7 @@ type KPICardUICProps = {
   icon: string;
   value: number;
   title: string;
-  color: "red" | "green" | "yellow" | "blue";
+  color: "red" | "green" | "yellow" | "blue" | "orange";
 };
 const KPICardUIC: FC<KPICardUICProps> = ({ color, icon, title, value }) => {
   return (

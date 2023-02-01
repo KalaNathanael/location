@@ -6,8 +6,19 @@ import { Modal } from "@mui/material";
 import { TCat, TSubCat } from "@/types";
 import { FormikHelpers } from "formik";
 
-import "./CreateCat.container.styles.scss";
 import FCategory from "../../Forms/Category/Category.form";
+import { createStructuredSelector } from "reselect";
+import { selectConnectedUser } from "@/store/reducers/app/app.selector";
+import { connect, ConnectedProps } from "react-redux";
+import {
+  APIaddCategories,
+  APIaddSubCategories,
+  APImodifyCategories,
+  APImodifySubCategories,
+} from "@/features/Dashboard/api/category.api";
+import { ToastError, ToastSuccess } from "@/utils/toast";
+
+import "./CreateCat.container.styles.scss";
 
 export type TCatFormValues = {
   name: string;
@@ -19,7 +30,7 @@ const defaultValues: TCatFormValues = {
   file: null,
 };
 
-type CCreateCatProps = {
+type CCreateCatProps = ConnectedProps<typeof connector> & {
   open: boolean;
   handleClose: (refetch?: boolean) => void;
   operation: "Create" | "Update";
@@ -27,6 +38,7 @@ type CCreateCatProps = {
 };
 const CCreateCat: FC<CCreateCatProps> = ({
   handleClose,
+  connectedUser,
   open,
   operation,
   selectedItem,
@@ -55,12 +67,62 @@ const CCreateCat: FC<CCreateCatProps> = ({
     }
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: TCatFormValues,
     { resetForm, setSubmitting }: FormikHelpers<TCatFormValues>
   ) => {
-    console.log("Submission des catégories");
+    try {
+      if (operation === "Create") {
+        await createItem(values);
+      } else {
+        await modifyItem(values);
+      }
+    } catch (e) {
+      ToastError.fire();
+    } finally {
+      setSubmitting(false);
+    }
   };
+
+  async function createItem(values: TCatFormValues) {
+    const API = id_cat ? APIaddSubCategories : APIaddCategories;
+    try {
+      const response = await API(
+        String(connectedUser.id),
+        values.name,
+        values.file!,
+        id_cat
+      );
+      if (response.error) {
+        ToastError.fire({ title: response.message });
+      } else {
+        ToastSuccess.fire();
+
+        handleClose(true);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+  async function modifyItem(values: TCatFormValues) {
+    const API = id_cat ? APImodifySubCategories : APImodifyCategories;
+    try {
+      const response = await API(
+        String(connectedUser.id),
+        values.name,
+        values.file!,
+        id_cat
+      );
+      if (response.error) {
+        ToastError.fire({ title: response.message });
+      } else {
+        ToastSuccess.fire();
+        handleClose(true);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
 
   return (
     <Modal
@@ -88,4 +150,8 @@ const CCreateCat: FC<CCreateCatProps> = ({
   );
 };
 
-export default CCreateCat;
+const mapStateToProps = createStructuredSelector({
+  connectedUser: selectConnectedUser,
+});
+const connector = connect(mapStateToProps);
+export default connector(CCreateCat);

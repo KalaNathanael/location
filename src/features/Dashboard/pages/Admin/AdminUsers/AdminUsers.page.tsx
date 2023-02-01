@@ -84,9 +84,10 @@ const PAdminUsers: FC<PAdminUsersProps> = ({
       minWidth: 150,
       disableColumnMenu: true,
       renderCell: (params: GridRenderCellParams) => {
+        console.log("What is going on ?", params.value);
         return (
           <Typography fontWeight="500" fontSize={12}>
-            {params.value.toLocaleDateString()}
+            {new Date(params.value).toLocaleDateString()}
           </Typography>
         );
       },

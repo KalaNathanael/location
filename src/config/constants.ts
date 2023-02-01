@@ -10,7 +10,7 @@ export const commandStatus: { [key: string]: TStatus } = {
     label: "En attente",
     color: "var(--ui-yellow-normal)",
   },
-  "A livrer": {
+  "En attente de livraison": {
     label: "À livrer",
     color: "var(--ui-orange-normal)",
   },
@@ -29,7 +29,7 @@ export const devisStatus: { [key: string]: TStatus } = {
     label: "À régler",
     color: "var(--ui-red-normal)",
   },
-  Réglé: {
+  Régler: {
     label: "Réglé",
     color: "var(--ui-green-dark)",
   },

@@ -4,15 +4,9 @@ import { Icon } from "@iconify/react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 
 import { TableViewer } from "@/components/UICs/Tables/table-viewer/TableViewer";
-import { IconButton, Tooltip, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import { Button as MuiButton } from "@mui/material";
-
-import PreviewIcon from "@mui/icons-material/Preview";
-import CancelIcon from "@mui/icons-material/Cancel";
-import PriceCheckIcon from "@mui/icons-material/PriceCheck";
-import DoneIcon from "@mui/icons-material/Done";
-import DoneAllIcon from "@mui/icons-material/DoneAll";
 
 import { commandStatus, devisStatus, routePaths } from "@/config";
 import { useNavigate } from "react-router-dom";
@@ -20,8 +14,13 @@ import { useNavigate } from "react-router-dom";
 import "./Location.styles.scss";
 import KPICardUIC from "../../components/elements/KPICard/KPICard.uic";
 import { TCommand } from "@/types/command";
-import { APIfetchCommands, APIfetchDevis } from "../../api/command.api";
-import { ToastError } from "@/utils/toast";
+import {
+  APIcancelDevis,
+  APIfetchCommands,
+  APIfetchDevis,
+  APIvalidateDevis,
+} from "../../api/command.api";
+import { ToastError, ToastSuccess } from "@/utils/toast";
 
 const PLocation: FC = () => {
   const navigate = useNavigate();
@@ -140,8 +139,7 @@ const PLocation: FC = () => {
               onClick={() => {
                 getDevis(code);
               }}
-              variant="contained"
-              sx={{ color: "white" }}
+              variant="outlined"
             >
               Voir Devis
             </MuiButton>
@@ -151,11 +149,9 @@ const PLocation: FC = () => {
                   aria-label="visualize"
                   color="success"
                   onClick={() => {
-                    // visualizeSheet(url);
+                    validateDevis(code);
                   }}
-                  disabled={true}
-                  variant="contained"
-                  sx={{ color: "white" }}
+                  variant="outlined"
                 >
                   Valider devis
                 </MuiButton>
@@ -163,11 +159,9 @@ const PLocation: FC = () => {
                   aria-label="reject"
                   color="error"
                   onClick={() => {
-                    // alertOnRejectingSheet(sheetId, connectedUser?.id!);
+                    cancelDevis(code);
                   }}
-                  disabled={true}
-                  variant="contained"
-                  sx={{ color: "white" }}
+                  variant="outlined"
                 >
                   Annuler commande
                 </MuiButton>
@@ -175,34 +169,31 @@ const PLocation: FC = () => {
             )}
             {statusCommande.label === "À livrer" && (
               <>
-                <Tooltip title="Confirmer la livraison" placement="top">
-                  <IconButton
-                    aria-label="visualize"
-                    color="success"
-                    onClick={() => {
-                      // visualizeSheet(url);
-                    }}
-                    disabled={true}
-                  >
-                    <DoneIcon />
-                  </IconButton>
-                </Tooltip>
+                <MuiButton
+                  aria-label="visualize"
+                  color="success"
+                  onClick={() => {
+                    // visualizeSheet(url);
+                  }}
+                  variant="outlined"
+                  disabled={true}
+                >
+                  Confirmer livraison
+                </MuiButton>
               </>
             )}
             {statusCommande.label === "À récupérer" && (
               <>
-                <Tooltip title="Confirmer la récupération" placement="top">
-                  <IconButton
-                    aria-label="visualize"
-                    color="success"
-                    onClick={() => {
-                      // visualizeSheet(url);
-                    }}
-                    disabled={true}
-                  >
-                    <DoneAllIcon />
-                  </IconButton>
-                </Tooltip>
+                <MuiButton
+                  aria-label="visualize"
+                  color="success"
+                  onClick={() => {
+                    // visualizeSheet(url);
+                  }}
+                  disabled={true}
+                >
+                  Terminer commande
+                </MuiButton>
               </>
             )}
           </div>
@@ -278,6 +269,77 @@ const PLocation: FC = () => {
       });
   }
 
+  async function validateDevis(code: string) {
+    setLoadingDatas(true);
+    await APIvalidateDevis(code)
+      .then((res) => {
+        if (res.error) {
+          ToastError.fire({ text: res.message });
+        } else {
+          let data = res.data;
+          let updatedList: TCommand[] = datas.map((elt) => {
+            if (elt.id === data.commande_id) {
+              return {
+                id: data.commande_id,
+                codeCommande: data.code_commande,
+                client: data.client,
+                created_at: new Date(data.created_at),
+                dateDebut: new Date(data.date_debut),
+                dateFin: new Date(data.date_fin),
+                montantDevis: data.montant_devis,
+                statusCommande: commandStatus[data.status_commande]
+                  ? commandStatus[data.status_commande]
+                  : commandStatus["En attente"],
+                statusDevis: devisStatus[data.status_devis]
+                  ? devisStatus[data.status_devis]
+                  : devisStatus["A régler"],
+              };
+            } else {
+              return elt;
+            }
+          });
+          setDatas(updatedList);
+          ToastSuccess.fire();
+        }
+      })
+      .catch((reason) => {
+        if (reason.response.status === 400) {
+          ToastError.fire({ text: reason.response.data.message, timer: 6000 });
+        } else {
+          ToastError.fire();
+        }
+      })
+      .finally(() => {
+        setLoadingDatas(false);
+      });
+  }
+
+  async function cancelDevis(code: string) {
+    setLoadingDatas(true);
+    await APIcancelDevis(code)
+      .then((res) => {
+        if (res.error) {
+          ToastError.fire({ text: res.message });
+        } else {
+          let filteredDatas = datas.filter(
+            (data) => data.codeCommande !== code
+          );
+          setDatas(filteredDatas);
+          ToastSuccess.fire();
+        }
+      })
+      .catch((reason) => {
+        if (reason.response.status === 400) {
+          ToastError.fire({ text: reason.response.data.message, timer: 6000 });
+        } else {
+          ToastError.fire();
+        }
+      })
+      .finally(() => {
+        setLoadingDatas(false);
+      });
+  }
+
   return (
     <div className="p-location">
       <div className="location-kpi">
@@ -285,25 +347,36 @@ const PLocation: FC = () => {
           color="red"
           icon="mdi:auto-pay"
           title="En attente de paiement"
-          value={0}
+          value={
+            datas.filter((elt) => elt.statusCommande.label === "En attente")
+              .length
+          }
         />
         <KPICardUIC
-          color="yellow"
+          color="orange"
           icon="carbon:delivery"
           title="À livrer"
-          value={0}
+          value={
+            datas.filter((elt) => elt.statusCommande.label === "À livrer")
+              .length
+          }
         />
         <KPICardUIC
           color="yellow"
           icon="mdi:timer-sand"
           title="À récupérer"
-          value={0}
+          value={
+            datas.filter((elt) => elt.statusCommande.label === "À récupérer")
+              .length
+          }
         />
         <KPICardUIC
           color="green"
           icon="ep:finished"
           title="Terminé"
-          value={0}
+          value={
+            datas.filter((elt) => elt.statusCommande.label === "Terminé").length
+          }
         />
       </div>
       <div className="new-location">

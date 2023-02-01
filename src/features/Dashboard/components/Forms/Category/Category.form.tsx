@@ -23,7 +23,7 @@ type FCategoryProps = {
   handleSubmit: (
     values: TCatFormValues,
     formikHelpers: FormikHelpers<TCatFormValues>
-  ) => void | Promise<TCatFormValues>;
+  ) => Promise<void>;
   handleClose: () => void;
   operation: "Create" | "Update";
 };

@@ -43,13 +43,17 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    getItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id_cat]);
+
+  const getItems = () => {
     if (id_cat) {
       getSubCatList();
     } else {
       getCatList();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id_cat]);
+  };
 
   async function getCatList() {
     setLoading(true);
@@ -131,6 +135,7 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
 
   const handleCloseModal = (refetch?: boolean) => {
     if (refetch) {
+      console.log("un an et demi");
       if (id_cat) getSubCatList();
       else getCatList();
     }
@@ -290,9 +295,7 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
       />
       {!id_cat ? renderCategories() : renderSubCategories()}
       <CCreateCat
-        handleClose={() => {
-          handleCloseModal();
-        }}
+        handleClose={handleCloseModal}
         open={openModal}
         operation={operation}
         selectedItem={selectedItem}

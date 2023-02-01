@@ -24,8 +24,18 @@ export const APIsaveCommand = (
   return axios.post("commandes", toSend);
 };
 
-export const APIfetchDevis = (
-  codeCommande: string
-): Promise<any> => {
+export const APIfetchDevis = (codeCommande: string): Promise<any> => {
   return axios.get(`get-devis/${codeCommande}`, { responseType: "blob" });
+};
+
+export const APIvalidateDevis = (
+  codeCommande: string
+): Promise<IAPIResponseInterface> => {
+  return axios.put(`update-devis/${codeCommande}`, { statut: 1 });
+};
+
+export const APIcancelDevis = (
+  codeCommande: string
+): Promise<IAPIResponseInterface> => {
+  return axios.put(`update-devis/${codeCommande}`, { statut: 0 });
 };
