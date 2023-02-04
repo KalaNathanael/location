@@ -26,13 +26,7 @@ const AdminCatCardUIC: FC<AdminCatCardUICProps> = ({
       <RightSide>
         <CardName onClick={onView}>{item.label}</CardName>
         <CardButtons>
-          <Button
-            id="delete"
-            variant="text"
-            color="error"
-            onClick={onDelete}
-            disabled={true}
-          >
+          <Button id="delete" variant="text" color="error" onClick={onDelete}>
             Supprimer
           </Button>
           <Button id="modify" variant="text" color="warning" onClick={onModify}>

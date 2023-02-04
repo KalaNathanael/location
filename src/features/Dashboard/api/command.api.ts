@@ -37,5 +37,5 @@ export const APIvalidateDevis = (
 export const APIcancelDevis = (
   codeCommande: string
 ): Promise<IAPIResponseInterface> => {
-  return axios.put(`update-devis/${codeCommande}`, { statut: 0 });
+  return axios.put(`update-devis/${codeCommande}`, { statut: -1 });
 };

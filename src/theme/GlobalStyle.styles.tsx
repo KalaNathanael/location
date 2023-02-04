@@ -56,6 +56,12 @@ const GloablStyle = createGlobalStyle`
       margin-right: 10px;
     }
   }
+
+  .swal2-container {
+    .swal2-title{
+      line-height: 1.5;
+    }
+  }
 `;
 
 export default GloablStyle;

@@ -1,3 +1,4 @@
+import "./AdminArticles.page.styles.scss";
 import { FC, useState, useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,15 +11,17 @@ import { Icon } from "@iconify/react";
 
 import { TableViewer } from "@/components/UICs/Tables/table-viewer/TableViewer";
 import Button from "@/components/UICs/Button/Button.uic";
+import CCreateArticle from "@/features/Dashboard/components/Containers/CreateArticle/CreateArticle.container";
 
 import { routePaths } from "@/config";
 
 import { selectAdminSelectedSubCat } from "@/store/reducers/admin/admin.selector";
 import { TArticle } from "@/types";
-import { APIfetchArticles } from "@/features/Dashboard/api/article.api";
-import { ToastError } from "@/utils/toast";
-
-import "./AdminArticles.page.styles.scss";
+import {
+  APIdeleteArticle,
+  APIfetchArticles,
+} from "@/features/Dashboard/api/article.api";
+import { ToastError, ToastSuccess } from "@/utils/toast";
 import { formatPriceOnDisplay } from "@/utils";
 
 type PAdminArticlesProps = ConnectedProps<typeof connector>;
@@ -130,7 +133,9 @@ const PAdminArticles: FC<PAdminArticlesProps> = ({ selectedSubCat }) => {
               aria-label="modify"
               color="primary"
               onClick={() => {
-                //actions de modification attendues
+                setSelectedItem(params.row);
+                setOperation("Update");
+                setOpenModal(true);
               }}
               variant="contained"
               sx={{ color: "white" }}
@@ -141,11 +146,10 @@ const PAdminArticles: FC<PAdminArticlesProps> = ({ selectedSubCat }) => {
               aria-label="suppress"
               color="error"
               onClick={() => {
-                // visualizeSheet(url);
+                deleteArticle(params.row.id);
               }}
               variant="contained"
               sx={{ color: "white" }}
-              disabled={true}
             >
               Supprimer
             </MuiButton>
@@ -159,6 +163,9 @@ const PAdminArticles: FC<PAdminArticlesProps> = ({ selectedSubCat }) => {
 
   const [articles, setArticles] = useState<TArticle[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = useState<TArticle | null>(null);
+  const [operation, setOperation] = useState<"Create" | "Update">("Create");
 
   useEffect(() => {
     if (!selectedSubCat) navigate(routePaths.adminCategories);
@@ -201,6 +208,34 @@ const PAdminArticles: FC<PAdminArticlesProps> = ({ selectedSubCat }) => {
     setLoading(false);
   }
 
+  const handleCloseModal = (refetch?: boolean) => {
+    if (refetch) {
+      console.log("deux ans et demi");
+      getArticles();
+    }
+    setOpenModal(false);
+  };
+
+  async function deleteArticle(id: string) {
+    try {
+      setLoading(true);
+      const response = await APIdeleteArticle(id);
+      if (response?.error) {
+        ToastError.fire({ title: response.message });
+        throw response.error;
+      } else {
+        getArticles();
+        ToastSuccess.fire({
+          title: "L'article a été supprimé avec succès.",
+        });
+      }
+    } catch (e) {
+      throw e;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="p-admin-articles">
       <Button
@@ -230,9 +265,9 @@ const PAdminArticles: FC<PAdminArticlesProps> = ({ selectedSubCat }) => {
         color="var(--ui-primary)"
         Icon={<Icon icon="material-symbols:add" fontSize={18} />}
         onClick={() => {
-          //   setOperation("Create");
-          //   setOpenModal(true);
-          //   setSelectedItem(null);
+          setOperation("Create");
+          setOpenModal(true);
+          setSelectedItem(null);
         }}
       />
 
@@ -242,6 +277,14 @@ const PAdminArticles: FC<PAdminArticlesProps> = ({ selectedSubCat }) => {
         loading={loading}
         rowPerPage={[5, 10, 20]}
         rowHeight={100}
+      />
+
+      <CCreateArticle
+        handleClose={handleCloseModal}
+        open={openModal}
+        operation={operation}
+        selectedItem={selectedItem}
+        fetchArticles={getArticles}
       />
     </div>
   );

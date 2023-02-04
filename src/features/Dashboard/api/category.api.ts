@@ -27,11 +27,17 @@ export const APIaddCategories = (
   return axios.post(categoryURL, formData, config);
 };
 
-export const APImodifyCategories = (
-  userId: string,
-  libelle: string,
-  file: File
-): Promise<IAPIResponseInterface> => {
+export const APImodifyCategories = ({
+  categoryId,
+  userId,
+  libelle,
+  file,
+}: {
+  categoryId: string;
+  userId: string;
+  libelle: string;
+  file: File;
+}): Promise<IAPIResponseInterface> => {
   const formData = new FormData();
   formData.append("libelle", libelle);
   formData.append("utilisateurs_id", userId);
@@ -43,7 +49,13 @@ export const APImodifyCategories = (
     },
   };
 
-  return axios.put(categoryURL, formData, config);
+  return axios.put(`${categoryURL}/${categoryId}`, formData, config);
+};
+
+export const APIdeleteCategories = (
+  id: string
+): Promise<IAPIResponseInterface> => {
+  return axios.delete(`${categoryURL}/${id}`);
 };
 
 export const APIfetchSubCategories = (): Promise<IAPIResponseInterface> => {
@@ -71,12 +83,19 @@ export const APIaddSubCategories = (
   return axios.post(subCategoryURL, formData, config);
 };
 
-export const APImodifySubCategories = (
-  userId: string,
-  libelle: string,
-  file: File,
-  categoryId: string
-): Promise<IAPIResponseInterface> => {
+export const APImodifySubCategories = ({
+  subCatId,
+  userId,
+  libelle,
+  file,
+  categoryId,
+}: {
+  subCatId: string;
+  userId: string;
+  libelle: string;
+  file: File;
+  categoryId: string;
+}): Promise<IAPIResponseInterface> => {
   const formData = new FormData();
   formData.append("libelle", libelle);
   formData.append("utilisateurs_id", userId);
@@ -89,5 +108,11 @@ export const APImodifySubCategories = (
     },
   };
 
-  return axios.put(subCategoryURL, formData, config);
+  return axios.put(`${subCategoryURL}/${subCatId}`, formData, config);
+};
+
+export const APIdeleteSubCategories = (
+  id: string
+): Promise<IAPIResponseInterface> => {
+  return axios.delete(`${subCategoryURL}/${id}`);
 };

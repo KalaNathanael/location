@@ -12,5 +12,5 @@ export default FormErrorMessage;
 const ErrorMessage = styled.span`
   font-size: 0.8rem;
   font-style: italic;
-  color: var(--text-error);
+  color: var(--ui-red-normal);
 `;

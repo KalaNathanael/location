@@ -116,11 +116,11 @@ const FCategory: FC<FCategoryProps> = ({
                 variant="outlined"
                 error={!!name.error && name.touched}
               >
-                <InputLabel htmlFor="id-field">Nom(s)</InputLabel>
+                <InputLabel htmlFor="id-field">Nom</InputLabel>
                 <OutlinedInput
                   id="lastName-field"
                   type="text"
-                  label="Nom(s)"
+                  label="Nom"
                   name="name"
                   value={formik.values.name}
                   onChange={formik.handleChange}

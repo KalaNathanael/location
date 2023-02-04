@@ -1,3 +1,5 @@
+import "./AdminItems.page.styles.scss";
+
 import { FC, useState, useEffect } from "react";
 import { createStructuredSelector } from "reselect";
 import { connect, ConnectedProps } from "react-redux";
@@ -17,17 +19,19 @@ import {
 import { selectAdminSelectedCat } from "@/store/reducers/admin/admin.selector";
 
 import {
+  APIdeleteCategories,
+  APIdeleteSubCategories,
   APIfetchCategories,
   APIfetchSubCategories,
 } from "@/features/Dashboard/api/category.api";
-import { ToastError } from "@/utils/toast";
+import { ToastError, ToastSuccess } from "@/utils/toast";
 import { routePaths } from "@/config";
 
 import { TCat, TSubCat } from "@/types";
 
-import "./AdminItems.page.styles.scss";
 import AdminCatCardUIC from "@/features/Dashboard/components/elements/AdminCatCard.uic";
 import CCreateCat from "@/features/Dashboard/components/Containers/CreateCat/CreateCat.container";
+import Swal from "sweetalert2";
 
 type PAdminItemsProps = ConnectedProps<typeof connector>;
 const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
@@ -111,6 +115,40 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
     setLoading(false);
   }
 
+  async function deleteItem(elt: TCat | TSubCat) {
+    const API = id_cat ? APIdeleteSubCategories : APIdeleteCategories;
+
+    Swal.fire({
+      title: `Suppression d'une ${id_cat ? "sous-catégorie" : "catégorie"}`,
+      text: `Vous vous apprêtez à supprimer la ${
+        id_cat ? "sous-catégorie" : "catégorie"
+      } ${elt.label}, êtes-vous sûr de vouloir le faire ?`,
+      showCancelButton: true,
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Oui, supprimer",
+      confirmButtonColor: "var(--ui-primary)",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("daoidnaofia");
+        API(elt.id)
+          .then((response) => {
+            ToastSuccess.fire({
+              title:
+                (id_cat ? "La sous-catégorie" : "La catégorie") +
+                ` ${elt.label}` +
+                " a été supprimée.",
+            });
+
+            if (id_cat) getSubCatList();
+            else getCatList();
+          })
+          .catch((err) => {
+            throw err;
+          });
+      }
+    });
+  }
+
   const onReturnPage = () => {
     if (id_cat) {
       dispatch(clearSelectedCat());
@@ -175,7 +213,7 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
                 key={elt.id}
                 item={elt}
                 onDelete={() => {
-                  /*Action de suppression attendue*/
+                  deleteItem(elt);
                 }}
                 onModify={() => {
                   console.log({ elt });
@@ -241,7 +279,7 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
                 key={elt.id}
                 item={elt}
                 onDelete={() => {
-                  /*Action de suppression attendue*/
+                  deleteItem(elt);
                 }}
                 onModify={() => {
                   setSelectedItem(elt);

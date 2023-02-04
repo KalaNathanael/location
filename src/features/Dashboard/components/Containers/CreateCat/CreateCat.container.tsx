@@ -107,12 +107,13 @@ const CCreateCat: FC<CCreateCatProps> = ({
   async function modifyItem(values: TCatFormValues) {
     const API = id_cat ? APImodifySubCategories : APImodifyCategories;
     try {
-      const response = await API(
-        String(connectedUser.id),
-        values.name,
-        values.file!,
-        id_cat
-      );
+      const response = await API({
+        categoryId: id_cat ? id_cat : selectedItem.id,
+        file: values.file,
+        libelle: values.name,
+        subCatId: id_cat ? selectedItem.id : undefined,
+        userId: String(connectedUser.id),
+      });
       if (response.error) {
         ToastError.fire({ title: response.message });
       } else {
