@@ -8,14 +8,10 @@ export const FILE_SIZE = 5 * 1024 * 1024;
 export const commandStatus: { [key: string]: TStatus } = {
   "En attente": {
     label: "En attente",
-    color: "var(--ui-yellow-normal)",
+    color: "var(--ui-blue-normal)",
   },
   "En attente de livraison": {
     label: "À livrer",
-    color: "var(--ui-orange-normal)",
-  },
-  "A récupérer": {
-    label: "À récupérer",
     color: "var(--ui-orange-normal)",
   },
   Terminé: {
@@ -29,9 +25,13 @@ export const devisStatus: { [key: string]: TStatus } = {
     label: "À régler",
     color: "var(--ui-red-normal)",
   },
+  Livré: {
+    label: "À récupérer",
+    color: "var(--ui-yellow-normal)",
+  },
   Régler: {
     label: "Réglé",
-    color: "var(--ui-green-dark)",
+    color: "var(--ui-blue-dark)",
   },
 };
 

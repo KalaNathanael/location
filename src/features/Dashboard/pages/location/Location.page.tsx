@@ -16,11 +16,13 @@ import KPICardUIC from "../../components/elements/KPICard/KPICard.uic";
 import { TCommand } from "@/types/command";
 import {
   APIcancelDevis,
+  APIdeliverDevis,
   APIfetchCommands,
   APIfetchDevis,
   APIvalidateDevis,
 } from "../../api/command.api";
 import { ToastError, ToastSuccess } from "@/utils/toast";
+import Swal from "sweetalert2";
 
 const PLocation: FC = () => {
   const navigate = useNavigate();
@@ -147,7 +149,7 @@ const PLocation: FC = () => {
               <>
                 <MuiButton
                   aria-label="visualize"
-                  color="success"
+                  color="info"
                   onClick={() => {
                     validateDevis(code);
                   }}
@@ -167,7 +169,22 @@ const PLocation: FC = () => {
                 </MuiButton>
               </>
             )}
-            {statusCommande.label === "À livrer" && (
+            {statusCommande.label === "À livrer" &&
+              status_devis.label !== "À récupérer" && (
+                <>
+                  <MuiButton
+                    aria-label="visualize"
+                    color="warning"
+                    onClick={() => {
+                      deliverDevis(code);
+                    }}
+                    variant="outlined"
+                  >
+                    Confirmer livraison
+                  </MuiButton>
+                </>
+              )}
+            {status_devis.label === "À récupérer" && (
               <>
                 <MuiButton
                   aria-label="visualize"
@@ -175,22 +192,8 @@ const PLocation: FC = () => {
                   onClick={() => {
                     // visualizeSheet(url);
                   }}
+                  // disabled={true}
                   variant="outlined"
-                  disabled={true}
-                >
-                  Confirmer livraison
-                </MuiButton>
-              </>
-            )}
-            {statusCommande.label === "À récupérer" && (
-              <>
-                <MuiButton
-                  aria-label="visualize"
-                  color="success"
-                  onClick={() => {
-                    // visualizeSheet(url);
-                  }}
-                  disabled={true}
                 >
                   Terminer commande
                 </MuiButton>
@@ -319,7 +322,7 @@ const PLocation: FC = () => {
     await APIcancelDevis(code)
       .then((res) => {
         if (res.error) {
-          ToastError.fire({ text: res.message });
+          ToastError.fire({ title: res.message });
         } else {
           let filteredDatas = datas.filter(
             (data) => data.codeCommande !== code
@@ -330,7 +333,7 @@ const PLocation: FC = () => {
       })
       .catch((reason) => {
         if (reason.response.status === 400) {
-          ToastError.fire({ text: reason.response.data.message, timer: 6000 });
+          ToastError.fire({ title: reason.response.data.message, timer: 6000 });
         } else {
           ToastError.fire();
         }
@@ -338,6 +341,43 @@ const PLocation: FC = () => {
       .finally(() => {
         setLoadingDatas(false);
       });
+  }
+
+  async function deliverDevis(code: string) {
+    Swal.fire({
+      title: "Confirmer la livraison",
+      text: `Voulez vous confirmer la livraison ${code} ?`,
+      showCancelButton: true,
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Confirmer",
+      confirmButtonColor: "var(--ui-primary)",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setLoadingDatas(true);
+        APIdeliverDevis(code)
+          .then((res) => {
+            if (res.error) {
+              ToastError.fire({ title: res.message });
+            } else {
+              getDatas();
+              ToastSuccess.fire({ title: "La livraison a été enregistrée." });
+            }
+          })
+          .catch((reason) => {
+            if (reason.response.status === 400) {
+              ToastError.fire({
+                title: reason.response.data.message,
+                timer: 6000,
+              });
+            } else {
+              ToastError.fire();
+            }
+          })
+          .finally(() => {
+            setLoadingDatas(false);
+          });
+      }
+    });
   }
 
   return (
@@ -366,7 +406,7 @@ const PLocation: FC = () => {
           icon="mdi:timer-sand"
           title="À récupérer"
           value={
-            datas.filter((elt) => elt.statusCommande.label === "À récupérer")
+            datas.filter((elt) => elt.statusDevis.label === "À récupérer")
               .length
           }
         />

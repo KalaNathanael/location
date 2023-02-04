@@ -24,3 +24,20 @@ export type TArticle = {
   created_at?: Date;
   updated_at?: Date | null;
 };
+
+export type TTypeArticle = {
+  libelle: string;
+  img_path: string;
+  qte_livree: number;
+  qte_retour: number;
+  categorie_libelle: {
+    id: number;
+    libelle: string;
+    img_path: string;
+  };
+  sous_categorie: {
+    id: number;
+    libelle: string;
+    img_path: string;
+  };
+};

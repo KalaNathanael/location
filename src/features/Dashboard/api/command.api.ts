@@ -39,3 +39,15 @@ export const APIcancelDevis = (
 ): Promise<IAPIResponseInterface> => {
   return axios.put(`update-devis/${codeCommande}`, { statut: -1 });
 };
+
+export const APIdeliverDevis = (
+  code: string
+): Promise<IAPIResponseInterface> => {
+  return axios.put(`/validation-devis/${code}`, { statut: 1 });
+};
+
+export const APIdetailDevis = (
+  code: string
+): Promise<IAPIResponseInterface> => {
+  return axios.get(`/devis/${code}`);
+};
