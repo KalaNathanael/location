@@ -22,7 +22,7 @@ const HomePage: FC<HomePageProps> = ({ connectedUser }) => {
   let navigate = useNavigate();
 
   return (
-    <div className="p-dashboard">
+    <div className="page p-dashboard">
       <LogoHeaderLayout />
       <h1 className="welcome-message">
         <span className="welcome">Bienvenue</span>

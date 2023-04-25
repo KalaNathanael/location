@@ -107,7 +107,7 @@ const PLocationDetails: FC<PLocationDetailsProps> = ({
   };
 
   return (
-    <div className="p-location-details">
+    <div className="page p-location-details">
       <span className="header-icon">
         <Icon icon="mdi:package-variant-closed-delivered" fontSize={300} />{" "}
       </span>

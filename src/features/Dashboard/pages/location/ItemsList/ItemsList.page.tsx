@@ -254,7 +254,7 @@ const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
   };
 
   return (
-    <div className="p-items-list">
+    <div className="page p-items-list">
       <Button
         label="Retour"
         inverted={true}

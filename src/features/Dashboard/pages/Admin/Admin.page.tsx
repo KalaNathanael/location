@@ -10,7 +10,7 @@ const PAdmin: FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="p-admin">
+    <div className="page p-admin">
       <h5>Que cherchez-vous manager ?</h5>
       <div className="admin-menus">
         <AdminCardUIC

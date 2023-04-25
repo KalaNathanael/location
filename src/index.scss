@@ -3,6 +3,39 @@
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
 
+html {
+  font-size: 14px;
+  line-height: 1.2;
+
+  // @media only screen and (max-width: 600px) {
+  //   font-size: 14px;
+  // }
+
+  // @media only screen and (min-width: 1600px) {
+  //   font-size: 14px;
+  // }
+}
+
+body {
+  // &::-webkit-scrollbar {
+  //   height: 11px;
+  //   width: 11px;
+  //   // border-left: 1px solid rgba(192, 192, 192, 0.4);
+  // }
+  // &::-webkit-scrollbar-thumb {
+  //   border-radius: 11px;
+  //   background-color: rgba(192, 192, 192, 0.6);
+  //   border: 3px solid rgba(255, 255, 255, 0.1);
+  //   -webkit-background-clip: padding-box;
+  //   background-clip: padding-box;
+  //   transition: background-color 500ms;
+
+  //   &:hover {
+  //     background-color: rgba(192, 192, 192, 0.9);
+  //   }
+  // }
+}
+
 .no-element {
   display: flex;
   align-items: center;
@@ -10,4 +43,8 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 1.5;
+}
+
+.page {
+  padding: 15px 20px;
 }

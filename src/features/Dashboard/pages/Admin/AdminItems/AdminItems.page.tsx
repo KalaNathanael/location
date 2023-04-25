@@ -322,7 +322,7 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
   };
 
   return (
-    <div className="p-admin-items">
+    <div className="page p-admin-items">
       <Button
         className="return-button"
         label="Retour"

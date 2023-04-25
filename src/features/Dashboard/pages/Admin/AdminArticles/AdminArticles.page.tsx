@@ -237,7 +237,7 @@ const PAdminArticles: FC<PAdminArticlesProps> = ({ selectedSubCat }) => {
   }
 
   return (
-    <div className="p-admin-articles">
+    <div className="page p-admin-articles">
       <Button
         className="return-button"
         label="Retour"

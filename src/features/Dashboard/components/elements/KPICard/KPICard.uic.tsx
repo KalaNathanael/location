@@ -27,9 +27,9 @@ export default KPICardUIC;
 const KPIContainer = styled.div<{
   color: string;
 }>`
-  width: 180px;
-  display: flex;
+  width: 150px;
   height: fit-content;
+  display: flex;
   flex-direction: column;
   align-items: center;
   padding: 8px 0;

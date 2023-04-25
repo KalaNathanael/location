@@ -107,7 +107,7 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
   };
 
   return (
-    <div className="p-location-datetime">
+    <div className="page p-location-datetime">
       <Button
         label="Retour"
         inverted={true}

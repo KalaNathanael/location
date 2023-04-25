@@ -381,7 +381,7 @@ const PLocation: FC = () => {
   }
 
   return (
-    <div className="p-location">
+    <div className="page p-location">
       <div className="location-kpi">
         <KPICardUIC
           color="red"

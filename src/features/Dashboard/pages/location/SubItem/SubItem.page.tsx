@@ -110,7 +110,7 @@ const PSubItem: FC<PSubItemProps> = ({ selectedCat, selectedSubCat }) => {
     };
 
   return (
-    <div className="p-sub-item">
+    <div className="page p-sub-item">
       <Button
         label="Retour"
         inverted={true}

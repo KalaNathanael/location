@@ -150,7 +150,7 @@ const PAdminUsers: FC<PAdminUsersProps> = ({
   }, [usersError]);
 
   return (
-    <div className="p-admin-users">
+    <div className="page p-admin-users">
       <Button
         label="Retour"
         inverted={true}

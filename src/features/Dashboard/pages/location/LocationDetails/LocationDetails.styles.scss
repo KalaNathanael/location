@@ -1,6 +1,5 @@
 .p-location-details {
   position: relative;
-  padding: 24px 10px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -135,7 +134,7 @@
   .location-details-buttons {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 10px;
     margin-top: 24px;
 

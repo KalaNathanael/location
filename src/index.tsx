@@ -1,5 +1,6 @@
 import "react-app-polyfill/ie9";
 import "react-app-polyfill/stable";
+import "./index.scss";
 
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -7,8 +8,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
-
-import "./index.scss";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
