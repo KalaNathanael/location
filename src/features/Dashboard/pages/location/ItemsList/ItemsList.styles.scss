@@ -13,27 +13,34 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     margin-top: 1rem;
-    margin-bottom: 2rem;
-    font-weight: 600;
+    margin-bottom: 24px;
+    font-weight: 500;
     color: var(--ui-secondary);
+
     & > img {
-      width: 90px;
-      object-fit: contain;
+      width: 45px;
+      height: 45px;
+      object-fit: fill;
       font-size: 14px;
       line-height: 1.5;
       font-weight: 400;
+      border-radius: 5px;
     }
   }
 
   & > h2 {
-    font-size: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.4rem;
     letter-spacing: 1px;
-    font-weight: 600;
-    color: var(--ui-secondary);
+    font-weight: 500;
+    color: var(--text-secondary);
     line-height: 1.5;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
     margin-top: 1rem;
   }
 
@@ -58,7 +65,7 @@
 
       &:hover {
         & > .item-image {
-          box-shadow: 0px 0px 5px rgba(213, 157, 34, 0.7);
+          box-shadow: 0px 0px 5px hsla(77, 72%, 44%, 0.7);
         }
         & > .item-name {
           color: var(--ui-primary);
@@ -70,13 +77,14 @@
         height: 100px;
         padding: 3px;
         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
-        border-radius: 7px;
+        border-radius: 10px;
         transition: box-shadow 100ms ease-in-out;
 
         & > img {
           object-fit: cover;
           height: 100%;
           width: 100%;
+          border-radius: 8px;
         }
       }
 
@@ -85,7 +93,7 @@
         justify-content: center;
         padding-top: 5px;
         font-size: 1rem;
-        font-weight: 600;
+        font-weight: 500;
         transition: color 100ms ease-in-out;
         text-transform: capitalize;
         text-align: center;

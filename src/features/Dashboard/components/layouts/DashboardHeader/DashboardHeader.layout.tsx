@@ -121,6 +121,7 @@ const DashboardHeader: FC<DashboardHeaderProps> = ({ basket }) => {
             onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) =>
               e.preventDefault()
             }
+            color="primary"
             aria-controls={openMenu ? "navigation-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={openMenu ? "true" : undefined}

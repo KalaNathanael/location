@@ -1,11 +1,12 @@
-import { FC } from "react";
 import "./LogoHeader.styles.scss";
+
+import { FC } from "react";
 
 const LogoHeaderLayout: FC = () => {
   return (
     <div className="logo-header">
       <span className="left-logo">
-        <img src={require("@/assets/images/logo.jpeg")} alt="tedis-logo" />
+        <img src={require("@/assets/images/logo-event.png")} alt="tedis-logo" />
       </span>
       {/* <span className="right-logo">
         <img

@@ -1,26 +1,30 @@
+import "./LocationDetails.styles.scss";
+
 import { FC, Fragment, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-import {
-  selectItemsBasket,
-  selectItemsEventDetails,
-} from "@/store/reducers/items/items.selector";
+import IconButton from "@mui/material/IconButton";
+
 import Button from "@/components/UICs/Button/Button.uic";
 
 import { TCartElt } from "@/features/Dashboard/components/Containers/CartModal/CartModal.container";
 
-import { TBasket } from "@/store/reducers/items/items.reducer";
-
-import "./LocationDetails.styles.scss";
-import { formatNumberOnDisplay } from "@/utils";
 import { Icon } from "@iconify/react";
-import { routePaths } from "@/config";
-import Swal from "sweetalert2";
+
+import { TBasket } from "@/store/reducers/items/items.reducer";
 import { selectConnectedUser } from "@/store/reducers/app/app.selector";
-import { APIsaveCommand } from "@/features/Dashboard/api/command.api";
+import {
+  selectItemsBasket,
+  selectItemsEventDetails,
+} from "@/store/reducers/items/items.selector";
+
+import { routePaths } from "@/config";
+import { formatNumberOnDisplay } from "@/utils";
 import { ToastError, ToastSuccess } from "@/utils/toast";
+import { APIsaveCommand } from "@/features/Dashboard/api/command.api";
 
 type PLocationDetailsProps = ConnectedProps<typeof connector>;
 const PLocationDetails: FC<PLocationDetailsProps> = ({
@@ -111,7 +115,18 @@ const PLocationDetails: FC<PLocationDetailsProps> = ({
       <span className="header-icon">
         <Icon icon="mdi:package-variant-closed-delivered" fontSize={300} />{" "}
       </span>
-      <h3 className="location-details-title">Détails de la commande</h3>
+      <h3 className="location-details-title">
+        <IconButton
+          aria-label="back-drop"
+          color="primary"
+          size="medium"
+          onClick={() => navigate(-1)}
+          sx={{ width: "fit-content" }}
+        >
+          <Icon icon="akar-icons:arrow-left" fontSize={20} />
+        </IconButton>
+        Détails de la commande
+      </h3>
       <div className="location-details-content">
         <h5 className="location-details-content__subtitle">Client</h5>
         <div className="location-details-content__client">

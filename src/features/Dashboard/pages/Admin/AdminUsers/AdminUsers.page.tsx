@@ -1,28 +1,31 @@
+import "./AdminUsers.styles.scss";
+
 import { FC, useEffect, useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { createStructuredSelector } from "reselect";
+import { useNavigate } from "react-router-dom";
 
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { Button as MuiButton, Typography } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 
 import { Icon } from "@iconify/react";
-
-import { Button as MuiButton, Typography } from "@mui/material";
 
 import { TableViewer } from "@/components/UICs/Tables/table-viewer/TableViewer";
 import { ToastError } from "@/utils/toast";
 
-import "./AdminUsers.styles.scss";
 import Button from "@/components/UICs/Button/Button.uic";
 import CCreateUser from "@/features/Dashboard/components/Containers/CreateUser/CreateUser.container";
+
+import { store } from "@/store";
 import {
   selectAdminUsers,
   selectAdminUsersError,
   selectAdminUsersLoading,
 } from "@/store/reducers/admin/admin.selector";
-import { connect, ConnectedProps } from "react-redux";
-import { store } from "@/store";
 import { fetchUsersAction } from "@/store/reducers/admin/admin.action";
+
 import { TUser } from "@/types/user";
-import { useNavigate } from "react-router-dom";
 import { routePaths } from "@/config";
 
 type PAdminUsersProps = ConnectedProps<typeof connector>;
@@ -151,15 +154,23 @@ const PAdminUsers: FC<PAdminUsersProps> = ({
 
   return (
     <div className="page p-admin-users">
-      <Button
+      {/* <Button
         label="Retour"
         inverted={true}
         color="var(--ui-primary)"
-        Icon={<Icon icon="akar-icons:arrow-left" fontSize={18} />}
-        onClick={() => navigate(routePaths.admin)}
-      />
+        Icon={}
+      /> */}
       <h2>
-        <span>
+        <IconButton
+          aria-label="back-drop"
+          color="primary"
+          size="medium"
+          onClick={() => navigate(routePaths.admin)}
+          sx={{ width: "fit-content" }}
+        >
+          <Icon icon="akar-icons:arrow-left" fontSize={20} />
+        </IconButton>
+        <span className="icon">
           <Icon icon="clarity:administrator-line" fontSize={30} />
         </span>{" "}
         Gestion des utilisateurs

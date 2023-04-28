@@ -6,6 +6,7 @@ type TRecursiveDeeper = (
   workingObject: TThemeColors,
   workingKey?: string
 ) => void;
+
 type TConvertThemeColorsToRootColors = (arg: TThemeColors) => string;
 
 const convertThemeColorsToRootColors: TConvertThemeColorsToRootColors = (
@@ -51,6 +52,8 @@ const convertThemeColorsToRootColors: TConvertThemeColorsToRootColors = (
         nominalFunction(currentLevel[key] as TThemeColors, key);
       }
     });
+
+    if (typeof currentLevel[keys.pop()!] === "object") deeping -= 1;
 
     currentKey = currentKey.slice(0, deeping);
 

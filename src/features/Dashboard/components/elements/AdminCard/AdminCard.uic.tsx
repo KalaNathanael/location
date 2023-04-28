@@ -55,7 +55,7 @@ const LabelContainer = styled.span`
   font-size: 18px;
   font-weight: 500;
   transition: all ease-in 100ms;
-  color: var(--ui-secondary);
+  color: var(--text-primary);
 `;
 
 const MenuCard = styled.div`

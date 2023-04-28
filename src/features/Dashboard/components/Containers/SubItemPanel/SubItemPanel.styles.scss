@@ -13,10 +13,11 @@
       line-height: 1.5;
       display: flex;
       align-items: center;
-      color: var(--ui-secondary);
+      color: var(--text-secondary);
     }
 
     .badges {
+      margin-right: 4px;
       display: flex;
       align-items: center;
       gap: 14px;
@@ -80,7 +81,7 @@
           & > em {
             font-weight: 700;
             font-size: 14px;
-            color: var(--ui-primary);
+            color: var(--ui-blue-normal);
           }
         }
         & > p {

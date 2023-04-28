@@ -1,3 +1,5 @@
+import "./LocationDateTime.styles.scss";
+
 import { FC, useEffect, useState } from "react";
 import { Formik, FormikHelpers, getIn } from "formik";
 import * as Yup from "yup";
@@ -6,12 +8,20 @@ import { createStructuredSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
-import { Autocomplete } from "@mui/material";
+import Autocomplete from "@mui/material//Autocomplete";
+import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
+
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+
 import { Icon } from "@iconify/react";
+
 import Button from "@/components/UICs/Button/Button.uic";
+import CCreateClient from "@/features/Dashboard/components/Containers/CreateClient/CreateClient.conatainer";
 
 import { store } from "@/store";
+import { getClientsListAction } from "@/store/reducers/items/items.action";
 import {
   clearBasket,
   clearEventDetails,
@@ -23,19 +33,10 @@ import {
   selectItemsEventDetails,
 } from "@/store/reducers/items/items.selector";
 
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-
 import { sortAutoCompleteList } from "@/utils";
 import { routePaths } from "@/config";
-
 import { TClient } from "@/types/client";
 import { IAutoCompleteList } from "@/interfaces";
-
-import { getClientsListAction } from "@/store/reducers/items/items.action";
-import CCreateClient from "@/features/Dashboard/components/Containers/CreateClient/CreateClient.conatainer";
-
-import "./LocationDateTime.styles.scss";
 
 export type TLocationDateTimeValues = {
   dateTime: {
@@ -108,15 +109,15 @@ const PLocationDateTime: FC<PLocationDateTimeProps> = ({
 
   return (
     <div className="page p-location-datetime">
-      <Button
-        label="Retour"
-        inverted={true}
-        color="var(--ui-primary)"
-        Icon={<Icon icon="akar-icons:arrow-left" fontSize={18} />}
-        onClick={() => {
-          navigate(routePaths.location);
-        }}
-      />
+      <IconButton
+        aria-label="back-drop"
+        color="primary"
+        size="medium"
+        onClick={() => navigate(routePaths.location)}
+        sx={{ width: "fit-content" }}
+      >
+        <Icon icon="akar-icons:arrow-left" fontSize={20} />
+      </IconButton>
 
       <span className="header-icon">
         <Icon icon="healthicons:stock-out" fontSize={100} />{" "}

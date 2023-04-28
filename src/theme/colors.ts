@@ -2,9 +2,13 @@ import { TThemeColors } from "../utils/convertThemeColorsToRootColors";
 
 export const colors: TThemeColors = {
   ui: {
-    primary: "#D59D22",
+    primary: "hsla(77, 72%, 44%, 1)",
     "primary-rgb": "213, 157, 34",
-    secondary: "#050609",
+    secondary: "hsla(177, 100%, 32%, 1)",
+    info: "rgba(93, 183, 222, 1)",
+    success: "rgba(12, 245, 116, 1)",
+    warning: "rgba(250, 155, 47, 1)",
+    danger: "rgba(193, 41, 46, 1)",
     red: {
       normal: "rgba(193, 41, 46, 1)",
       lighter: "rgba(193, 41, 46, 0.5)",
@@ -48,5 +52,11 @@ export const colors: TThemeColors = {
       normal: "rgba(158, 158, 158, 1)",
       lighter: "rgba(158, 158, 158, 0.5)",
     },
+  },
+  text: {
+    primary: "hsla(225, 29%, 3%, 1)",
+    secondary: "hsla(0, 0%, 34%, 1)",
+    tertiary: "hsla(177, 100%, 32%, 1)",
+    disabled: "hsla(192, 5%, 82%, 1)",
   },
 };

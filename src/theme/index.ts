@@ -9,10 +9,10 @@ const testTheme = createTheme({
   },
   palette: {
     primary: {
-      main: "#D59D22",
+      main: "hsla(77, 72%, 44%, 1)",
     },
     secondary: {
-      main: "#6750A4",
+      main: "hsla(177, 100%, 32%, 1)",
     },
   },
   zIndex: {

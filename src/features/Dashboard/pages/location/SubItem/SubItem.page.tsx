@@ -1,10 +1,16 @@
+import "./SubItem.styles.scss";
+import heart from "@/assets/images/coeur_ci.png";
+
 import { useState, FC, SyntheticEvent, useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { Icon } from "@iconify/react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import Button from "@/components/UICs/Button/Button.uic";
+import IconButton from "@mui/material/IconButton";
+import Skeleton from "@mui/material/Skeleton";
+import Box from "@mui/material/Box";
+
 import CSubItemPanel from "../../../components/Containers/SubItemPanel/SubItemPanel.container";
 
 import { TArticle } from "@/types";
@@ -20,11 +26,8 @@ import {
   clearSelectedSubCat,
 } from "@/store/reducers/items/items.reducer";
 
-import heart from "@/assets/images/coeur_ci.png";
-import "./SubItem.styles.scss";
 import { APIfetchArticles } from "@/features/Dashboard/api/article.api";
 import { ToastError } from "@/utils/toast";
-import { Box, Skeleton } from "@mui/material";
 
 type PSubItemProps = ConnectedProps<typeof connector>;
 const PSubItem: FC<PSubItemProps> = ({ selectedCat, selectedSubCat }) => {
@@ -111,22 +114,24 @@ const PSubItem: FC<PSubItemProps> = ({ selectedCat, selectedSubCat }) => {
 
   return (
     <div className="page p-sub-item">
-      <Button
-        label="Retour"
-        inverted={true}
-        color="var(--ui-primary)"
-        Icon={<Icon icon="akar-icons:arrow-left" fontSize={18} />}
-        onClick={() => {
-          if (id_subCat) {
-            dispatch(clearSelectedSubCat());
-            navigate(`${routePaths.locationCategories}/${id_cat}/subCat`);
-          } else {
-            dispatch(clearSelectedCat());
-            navigate(routePaths.locationCategories);
-          }
-        }}
-      />
       <h3>
+        <IconButton
+          aria-label="back-drop"
+          color="primary"
+          size="medium"
+          onClick={() => {
+            if (id_subCat) {
+              dispatch(clearSelectedSubCat());
+              navigate(`${routePaths.locationCategories}/${id_cat}/subCat`);
+            } else {
+              dispatch(clearSelectedCat());
+              navigate(routePaths.locationCategories);
+            }
+          }}
+          sx={{ width: "fit-content" }}
+        >
+          <Icon icon="akar-icons:arrow-left" fontSize={20} />
+        </IconButton>
         <img src={selectedSubCat?.image_url} alt="categorie-representative" />
         {id_subCat ? selectedSubCat?.label : selectedCat?.label}{" "}
       </h3>

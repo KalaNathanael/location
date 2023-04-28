@@ -12,7 +12,7 @@ const KPICardUIC: FC<KPICardUICProps> = ({ color, icon, title, value }) => {
   return (
     <KPIContainer color={color}>
       <KPISymbol color={color}>
-        <Icon icon={icon} fontSize={24} />
+        <Icon icon={icon} color={`var(--ui-${color}-dark)`} fontSize={24} />
       </KPISymbol>
       <KPIMainData>
         <KPIValue color={color}>{value}</KPIValue>

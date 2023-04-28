@@ -5,14 +5,15 @@ import convertThemeColorsToRootColors, {
 
 const GloablStyle = createGlobalStyle`
     *, ::after, ::before {
-        box-sizing: border-box;
-        font-family: 'Roboto', sans-serif;
-        padding: 0;
-        margin: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+      padding: 0;
+      margin: 0;
     }
 
     body {
-        overflow-x: hidden;
+      overflow-x: hidden;
+      color: var(--text-primary);
     }
 
     :root {

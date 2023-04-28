@@ -1,12 +1,6 @@
 .p-location-datetime {
   display: flex;
   flex-direction: column;
-  & > button {
-    width: 100px;
-    height: 34px;
-    font-size: 14px;
-    margin-bottom: 14px;
-  }
 
   .date-label {
     position: absolute;
@@ -65,8 +59,9 @@
   }
 
   & > .header-icon {
+    margin-top: -18px;
     align-self: center;
-    color: var(--ui-primary);
+    color: var(--ui-secondary);
   }
 
   & > h3 {

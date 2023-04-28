@@ -1,3 +1,5 @@
+import "./ItemsList.styles.scss";
+
 import { FC, useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -8,8 +10,8 @@ import { Icon } from "@iconify/react";
 
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
+import IconButton from "@mui/material/IconButton";
 
-import Button from "@/components/UICs/Button/Button.uic";
 import { ToastError } from "@/utils/toast";
 
 import {
@@ -31,8 +33,6 @@ import {
   selectItemsSelectedCat,
 } from "@/store/reducers/items/items.selector";
 import { store } from "@/store";
-
-import "./ItemsList.styles.scss";
 
 type PItemListProps = ConnectedProps<typeof connector>;
 const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
@@ -152,7 +152,18 @@ const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
   const renderCategories = () => {
     return (
       <>
-        <h2>Liste des Catégories d'articles</h2>
+        <h2>
+          <IconButton
+            aria-label="back-drop"
+            color="primary"
+            size="medium"
+            onClick={onReturnPage}
+            sx={{ width: "fit-content" }}
+          >
+            <Icon icon="akar-icons:arrow-left" fontSize={20} />
+          </IconButton>
+          Liste des Catégories d'articles
+        </h2>
         {/* <p>
           Tips : Sélectionnez un type d'objet et choisissez dans la liste
           d'éléments générés, les éléments et leurs quantités qui vous
@@ -206,6 +217,15 @@ const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
     return (
       <>
         <h3 className="subCat-title">
+          <IconButton
+            aria-label="back-drop"
+            color="primary"
+            size="medium"
+            onClick={onReturnPage}
+            sx={{ width: "fit-content" }}
+          >
+            <Icon icon="akar-icons:arrow-left" fontSize={20} />
+          </IconButton>
           <img src={selectedCat.image_url} alt={selectedCat.label} />
           {selectedCat.label}
         </h3>
@@ -255,13 +275,6 @@ const PItemList: FC<PItemListProps> = ({ eventDetails, selectedCat }) => {
 
   return (
     <div className="page p-items-list">
-      <Button
-        label="Retour"
-        inverted={true}
-        color="var(--ui-primary)"
-        Icon={<Icon icon="akar-icons:arrow-left" fontSize={18} />}
-        onClick={() => onReturnPage()}
-      />
       {!id_cat ? renderCategories() : renderSubCategories()}
     </div>
   );
