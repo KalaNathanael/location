@@ -21,6 +21,11 @@ export const selectItemsClientsLoading = createSelector(
   (items) => items.clientList.loading
 );
 
+export const selectItemsSelectedCommand = createSelector(
+  [selectItems],
+  (items) => items.selectedCommand
+);
+
 export const selectItemsSelectedCat = createSelector(
   [selectItems],
   (items) => items.selectedCat

@@ -1,19 +1,20 @@
-import { FC, useState, useEffect } from "react";
-import Button from "@/components/UICs/Button/Button.uic";
-import { Icon } from "@iconify/react";
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import "./Location.styles.scss";
 
-import { TableViewer } from "@/components/UICs/Tables/table-viewer/TableViewer";
+import { FC, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
+import { Icon } from "@iconify/react";
+
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
-import { Button as MuiButton } from "@mui/material";
+import MuiButton from "@mui/material/Button";
 
-import { commandStatus, devisStatus, routePaths } from "@/config";
-import { useNavigate } from "react-router-dom";
-
-import "./Location.styles.scss";
+import Button from "@/components/UICs/Button/Button.uic";
+import { TableViewer } from "@/components/UICs/Tables/table-viewer/TableViewer";
 import KPICardUIC from "../../components/elements/KPICard/KPICard.uic";
-import { TCommand } from "@/types/command";
+
 import {
   APIcancelDevis,
   APIdeliverDevis,
@@ -21,11 +22,17 @@ import {
   APIfetchDevis,
   APIvalidateDevis,
 } from "../../api/command.api";
+
+import { TCommand } from "@/types/command";
+import { commandStatus, devisStatus, routePaths } from "@/config";
 import { ToastError, ToastSuccess } from "@/utils/toast";
-import Swal from "sweetalert2";
+import { useAppDispatch } from "@/store";
+import { setSelectedCommand } from "@/store/reducers/items/items.reducer";
 
 const PLocation: FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const tableColumns: GridColDef[] = [
     {
       field: "id",
@@ -190,7 +197,11 @@ const PLocation: FC = () => {
                   aria-label="visualize"
                   color="success"
                   onClick={() => {
-                    // visualizeSheet(url);
+                    let currentCommand = datas.find(
+                      (elt) => elt.codeCommande === code
+                    );
+                    dispatch(setSelectedCommand(currentCommand));
+                    navigate(routePaths.locationCollect);
                   }}
                   // disabled={true}
                   variant="outlined"
@@ -235,6 +246,59 @@ const PLocation: FC = () => {
             statusDevis: devisStatus[command.status_devis]
               ? devisStatus[command.status_devis]
               : devisStatus["A régler"],
+            //TODO: Demander au père Alexis de me retourner les fichiers sous le bon format
+            commandArticles: [
+              {
+                id: 53,
+                img_path:
+                  "http://164.132.51.93:7200/static/files/sous_categories/20230203/test_09143289519903022023.jpeg",
+                libelle: "BURNA",
+                price: 5000,
+                qte_livree: 10,
+                qte_damaged: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
+                qte_retour: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
+              },
+              {
+                id: 3,
+                img_path:
+                  "http://164.132.51.93:7200/static/files/sous_categories/20221109/assiètte_-_service_européen_11473325817409112022.jpeg",
+                libelle: "SET 3 PIECES RONDE A FLEURS",
+                price: 100,
+                qte_livree: 9,
+                qte_damaged: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
+                qte_retour: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
+              },
+              {
+                id: 6,
+                img_path:
+                  "http://164.132.51.93:7200/static/files/sous_categories/20221109/assiètte_-_service_européen_11473325817409112022.jpeg",
+                libelle: "SET 3 PIECES CARRE BORD DORE",
+                price: 100,
+                qte_livree: 9,
+                qte_damaged: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
+                qte_retour: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
+              },
+              {
+                id: 45,
+                img_path:
+                  "http://164.132.51.93:7200/static/files/sous_categories/20221109/serviette_de_table_11500724453509112022.jpeg",
+                libelle: "VERT D'EAU",
+                price: 100,
+                qte_livree: 3,
+                qte_damaged: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
+                qte_retour: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
+              },
+              {
+                id: 43,
+                img_path:
+                  "http://164.132.51.93:7200/static/files/sous_categories/20221109/serviette_de_table_11500724453509112022.jpeg",
+                libelle: "SAUMON",
+                price: 100,
+                qte_livree: 5,
+                qte_damaged: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
+                qte_retour: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
+              },
+            ],
           };
         });
 
@@ -296,6 +360,7 @@ const PLocation: FC = () => {
                 statusDevis: devisStatus[data.status_devis]
                   ? devisStatus[data.status_devis]
                   : devisStatus["A régler"],
+                //TODO: voir ce qu'il y a à faire de "commandArticles"
               };
             } else {
               return elt;

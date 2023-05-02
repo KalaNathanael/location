@@ -1,24 +1,25 @@
+import "./CreateCat.container.styles.scss";
+
 import { FC, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { connect, ConnectedProps } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { FormikHelpers } from "formik";
 
 import { Modal } from "@mui/material";
 
-import { TCat, TSubCat } from "@/types";
-import { FormikHelpers } from "formik";
-
 import FCategory from "../../Forms/Category/Category.form";
-import { createStructuredSelector } from "reselect";
+
 import { selectConnectedUser } from "@/store/reducers/app/app.selector";
-import { connect, ConnectedProps } from "react-redux";
 import {
   APIaddCategories,
   APIaddSubCategories,
   APImodifyCategories,
   APImodifySubCategories,
 } from "@/features/Dashboard/api/category.api";
-import { ToastError, ToastSuccess } from "@/utils/toast";
 
-import "./CreateCat.container.styles.scss";
+import { TCat, TSubCat } from "@/types";
+import { ToastError, ToastSuccess } from "@/utils/toast";
 
 export type TCatFormValues = {
   name: string;
@@ -111,7 +112,7 @@ const CCreateCat: FC<CCreateCatProps> = ({
         categoryId: id_cat ? id_cat : selectedItem.id,
         file: values.file,
         libelle: values.name,
-        subCatId: id_cat ? selectedItem.id : undefined,
+        subCatId: id_cat !== "" ? selectedItem.id : undefined,
         userId: String(connectedUser.id),
       });
       if (response.error) {

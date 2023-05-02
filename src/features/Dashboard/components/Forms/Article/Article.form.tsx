@@ -3,7 +3,9 @@ import { FC, useState } from "react";
 import { FormikHelpers, getIn, useFormik } from "formik";
 import * as Yup from "yup";
 
-import { FormControl, InputLabel, OutlinedInput } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
 
 import { TArticleFormValues } from "../../Containers/CreateArticle/CreateArticle.container";
 import ButtonAdd from "@/components/UICs/Button/ButtonAdd/ButtonAdd.uic";
@@ -214,7 +216,7 @@ const FArticle: FC<FArticleProps> = ({
           variant="outlined"
           // error={!!name.error && name.touched}
         >
-          <InputLabel htmlFor="id-field">Quantité totale</InputLabel>
+          <InputLabel htmlFor="price-field">Quantité totale</InputLabel>
           <OutlinedInput
             id="price-field"
             type="number"

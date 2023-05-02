@@ -25,8 +25,6 @@ import {
   TBasket,
 } from "@/store/reducers/items/items.reducer";
 
-import heart from "@/assets/images/coeur_ci.png";
-
 import "./SubItemPanel.styles.scss";
 
 type CSubItemPanelProps = ConnectedProps<typeof connector> & {

@@ -38,7 +38,6 @@
     "redux": "^4.2.0",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
-    "reduxjs-toolkit-persist": "^7.2.1",
     "rsuite": "^5.19.1",
     "styled-components": "^5.3.6",
     "sweetalert2": "^11.5.2",

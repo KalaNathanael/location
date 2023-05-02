@@ -1,3 +1,6 @@
+import { TClient } from "./client";
+import { TTypeArticle } from "./item";
+
 export type TStatus = {
   label: string;
   color: string;
@@ -11,9 +14,7 @@ export type TCommand = {
   codeCommande: string;
   statusDevis: TStatus;
   montantDevis: number;
-  client: {
-    id: number;
-    nom_prenom: string;
-  };
+  client: TClient;
+  commandArticles?: TTypeArticle[];
   created_at: Date;
 };

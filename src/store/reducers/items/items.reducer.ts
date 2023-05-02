@@ -4,6 +4,7 @@ import { TClient } from "@/types/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { logout } from "../app/app.reducer";
 import { createClientAction, getClientsListAction } from "./items.action";
+import { TCommand } from "@/types/command";
 
 const errorInitialValue: TReducerError = {
   message: "",
@@ -28,6 +29,7 @@ export type TEventDetails = Pick<TLocationDateTimeValues, "dateTime"> & {
 
 export type TItemsState = {
   eventDetails: TEventDetails;
+  selectedCommand: TCommand | null;
   selectedCat: TCat | null;
   selectedSubCat: TSubCat | null;
   clientList: {
@@ -54,6 +56,7 @@ const initialState: TItemsState = {
     error: errorInitialValue,
     loading: "idle",
   },
+  selectedCommand: null,
   selectedCat: null,
   selectedSubCat: null,
   basket: {},
@@ -82,6 +85,12 @@ const itemSlice = createSlice({
     },
     addClient: (state, action: PayloadAction<TClient>) => {
       state.clientList.data.push(action.payload);
+    },
+    setSelectedCommand: (state, action: PayloadAction<TCommand>) => {
+      state.selectedCommand = action.payload;
+    },
+    clearSelectedCommand: (state) => {
+      state.selectedCommand = null;
     },
     setSelectedCat: (state, action: PayloadAction<TCat>) => {
       state.selectedCat = action.payload;
@@ -170,49 +179,50 @@ const itemSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(logout, (state) => {
-      state.basket = {};
-      state.error = errorInitialValue;
-      state.eventDetails = initialState.eventDetails;
-      state.loading = "idle";
-      state.selectedCat = null;
-      state.selectedSubCat = null;
-      state.clientList = {
-        data: [],
-        error: errorInitialValue,
-        loading: "idle",
-      };
-    });
+    builder
+      .addCase(logout, (state) => {
+        state.basket = {};
+        state.error = errorInitialValue;
+        state.eventDetails = initialState.eventDetails;
+        state.loading = "idle";
+        state.selectedCat = null;
+        state.selectedSubCat = null;
+        state.clientList = {
+          data: [],
+          error: errorInitialValue,
+          loading: "idle",
+        };
+      })
 
-    //getClientsListAction actions
-    builder.addCase(getClientsListAction.pending, (state) => {
-      state.clientList.loading = "pending";
-      state.clientList.error = errorInitialValue;
-    });
-    builder.addCase(getClientsListAction.fulfilled, (state, action) => {
-      state.clientList.data = action.payload;
-      state.clientList.loading = "idle";
-      state.clientList.error = errorInitialValue;
-    });
-    builder.addCase(getClientsListAction.rejected, (state, action) => {
-      state.clientList.loading = "failed";
-      state.clientList.error = action.payload!;
-    });
+      //getClientsListAction actions
+      .addCase(getClientsListAction.pending, (state) => {
+        state.clientList.loading = "pending";
+        state.clientList.error = errorInitialValue;
+      })
+      .addCase(getClientsListAction.fulfilled, (state, action) => {
+        state.clientList.data = action.payload;
+        state.clientList.loading = "idle";
+        state.clientList.error = errorInitialValue;
+      })
+      .addCase(getClientsListAction.rejected, (state, action) => {
+        state.clientList.loading = "failed";
+        state.clientList.error = action.payload!;
+      })
 
-    //createClientAction actions
-    builder.addCase(createClientAction.pending, (state) => {
-      state.clientList.loading = "pending";
-      state.clientList.error = errorInitialValue;
-    });
-    builder.addCase(createClientAction.fulfilled, (state, action) => {
-      state.clientList.data.push(action.payload);
-      state.clientList.loading = "idle";
-      state.clientList.error = errorInitialValue;
-    });
-    builder.addCase(createClientAction.rejected, (state, action) => {
-      state.clientList.loading = "failed";
-      state.clientList.error = action.payload!;
-    });
+      //createClientAction actions
+      .addCase(createClientAction.pending, (state) => {
+        state.clientList.loading = "pending";
+        state.clientList.error = errorInitialValue;
+      })
+      .addCase(createClientAction.fulfilled, (state, action) => {
+        state.clientList.data.push(action.payload);
+        state.clientList.loading = "idle";
+        state.clientList.error = errorInitialValue;
+      })
+      .addCase(createClientAction.rejected, (state, action) => {
+        state.clientList.loading = "failed";
+        state.clientList.error = action.payload!;
+      });
   },
 });
 
@@ -229,5 +239,7 @@ export const {
   setEventDetails,
   setSelectedCat,
   setSelectedSubCat,
+  clearSelectedCommand,
+  setSelectedCommand,
 } = actions;
 export default reducer;

@@ -1,6 +1,7 @@
 import { IAPIResponseInterface } from "@/interfaces";
 import { axios } from "@/lib/axios";
 import { TBasket, TEventDetails } from "@/store/reducers/items/items.reducer";
+import { TTypeArticle } from "@/types";
 
 export const APIfetchCommands = (): Promise<IAPIResponseInterface> => {
   return axios.get("commandes");
@@ -50,4 +51,16 @@ export const APIdetailDevis = (
   code: string
 ): Promise<IAPIResponseInterface> => {
   return axios.get(`/devis/${code}`);
+};
+
+export const APIcollectItems = (
+  commandCode: string,
+  datas: TTypeArticle[]
+): Promise<IAPIResponseInterface> => {
+  //TODO: On attend la route
+  const toSend = {
+    code: commandCode,
+    articles: datas,
+  };
+  return axios.put(`route`, toSend);
 };

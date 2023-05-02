@@ -1,0 +1,56 @@
+.f-collect-article {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .form-data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    strong {
+      font-weight: 700;
+      color: var(--ui-info);
+    }
+  }
+
+  .form-group {
+    width: 100%;
+    margin: 0;
+    gap: 8px;
+    & > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      label {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        flex-shrink: 0;
+      }
+    }
+
+    & > span {
+      align-self: flex-end;
+      margin-bottom: -8px;
+    }
+  }
+
+  .MuiInputBase-formControl {
+    width: 60px;
+
+    input {
+      padding: 7px;
+    }
+  }
+}

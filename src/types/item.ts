@@ -26,18 +26,21 @@ export type TArticle = {
 };
 
 export type TTypeArticle = {
+  id: any;
   libelle: string;
   img_path: string;
   qte_livree: number;
   qte_retour: number;
-  categorie_libelle: {
-    id: number;
-    libelle: string;
-    img_path: string;
-  };
-  sous_categorie: {
-    id: number;
-    libelle: string;
-    img_path: string;
-  };
+  qte_damaged: number;
+  price: number;
+  // categorie: {
+  //   id: number;
+  //   libelle: string;
+  //   img_path: string;
+  // };
+  // sub_categorie: {
+  //   id: number;
+  //   libelle: string;
+  //   img_path: string;
+  // };
 };
