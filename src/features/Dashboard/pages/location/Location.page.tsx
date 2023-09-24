@@ -233,9 +233,9 @@ const PLocation: FC = () => {
         const data: any[] = response.data;
         let toSend: TCommand[] = data.map((command) => {
           return {
-            id: command.commande_id,
+            id: command.id,
+            client: command.clients,
             codeCommande: command.code_commande,
-            client: command.client,
             created_at: new Date(command.created_at),
             dateDebut: new Date(command.date_debut),
             dateFin: new Date(command.date_fin),
