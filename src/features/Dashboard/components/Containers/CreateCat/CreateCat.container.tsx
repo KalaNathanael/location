@@ -109,7 +109,7 @@ const CCreateCat: FC<CCreateCatProps> = ({
     const API = id_cat ? APImodifySubCategories : APImodifyCategories;
     try {
       const response = await API({
-        categoryId: id_cat ? id_cat : selectedItem.id,
+        categoryId: id_cat ? id_cat : (selectedItem.id as string),
         file: values.file,
         libelle: values.name,
         subCatId: id_cat !== "" ? selectedItem.id : undefined,

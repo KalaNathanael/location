@@ -32,11 +32,13 @@ export const APImodifyCategories = ({
   userId,
   libelle,
   file,
+  subCatId,
 }: {
   categoryId: string;
   userId: string;
   libelle: string;
   file: File;
+  subCatId: any;
 }): Promise<IAPIResponseInterface> => {
   const formData = new FormData();
   formData.append("libelle", libelle);

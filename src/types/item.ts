@@ -1,5 +1,5 @@
 export type TCat = {
-  id: any;
+  id: string;
   label: string;
   image_url: string;
   description?: string;
@@ -7,7 +7,7 @@ export type TCat = {
 };
 
 export type TSubCat = {
-  id: any;
+  id: string;
   label: string;
   image_url: string;
   description?: string;
