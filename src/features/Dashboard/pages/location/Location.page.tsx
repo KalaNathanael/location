@@ -246,59 +246,16 @@ const PLocation: FC = () => {
             statusDevis: devisStatus[command.status_devis]
               ? devisStatus[command.status_devis]
               : devisStatus["A régler"],
-            //TODO: Demander au père Alexis de me retourner les fichiers sous le bon format
-            commandArticles: [
-              {
-                id: 53,
-                img_path:
-                  "http://164.132.51.93:7200/static/files/sous_categories/20230203/test_09143289519903022023.jpeg",
-                libelle: "BURNA",
-                price: 5000,
-                qte_livree: 10,
-                qte_damaged: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
-                qte_retour: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
-              },
-              {
-                id: 3,
-                img_path:
-                  "http://164.132.51.93:7200/static/files/sous_categories/20221109/assiètte_-_service_européen_11473325817409112022.jpeg",
-                libelle: "SET 3 PIECES RONDE A FLEURS",
-                price: 100,
-                qte_livree: 9,
-                qte_damaged: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
-                qte_retour: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
-              },
-              {
-                id: 6,
-                img_path:
-                  "http://164.132.51.93:7200/static/files/sous_categories/20221109/assiètte_-_service_européen_11473325817409112022.jpeg",
-                libelle: "SET 3 PIECES CARRE BORD DORE",
-                price: 100,
-                qte_livree: 9,
-                qte_damaged: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
-                qte_retour: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
-              },
-              {
-                id: 45,
-                img_path:
-                  "http://164.132.51.93:7200/static/files/sous_categories/20221109/serviette_de_table_11500724453509112022.jpeg",
-                libelle: "VERT D'EAU",
-                price: 100,
-                qte_livree: 3,
-                qte_damaged: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
-                qte_retour: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
-              },
-              {
-                id: 43,
-                img_path:
-                  "http://164.132.51.93:7200/static/files/sous_categories/20221109/serviette_de_table_11500724453509112022.jpeg",
-                libelle: "SAUMON",
-                price: 100,
-                qte_livree: 5,
-                qte_damaged: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
-                qte_retour: 0, //TODO: Quand les vraies données seront envoyées, initialiser à zéro si le paramètre n'est pas retourné
-              },
-            ],
+              
+            commandArticles: command.details_commandes.map((elt) => ({
+              id: elt.id,
+              img_path: elt.articles.img_path,
+              libelle: elt.articles.libelle,
+              price: elt.prix_unitaire,
+              qte_livree: elt.qte,
+              qte_damaged: elt.qte_damaged,
+              qte_retour: elt.qte_retour,
+            })),
           };
         });
 
