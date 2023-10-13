@@ -10,9 +10,11 @@ axios.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    const message = error.response?.data?.message || error.message;
-
-    console.log(message);
+    if (error.response.status > 400){
+      const message = error.response?.data?.message || error.message;
+  
+      //console.log(message);
+    }
 
     return Promise.reject(error);
   }

@@ -36,7 +36,7 @@ const AuthLoginContainer: FC = () => {
     values: TAuthValues,
     { resetForm, setSubmitting }: FormikHelpers<TAuthValues>
   ) => {
-    console.log({ values });
+    //console.log({ values });
     setLoading(true);
     try {
       const response = await APIauth({

@@ -259,7 +259,7 @@ const PLocation: FC = () => {
           };
         });
 
-        console.log({ toSend });
+        //console.log({ toSend });
         setDatas(toSend);
       }
     } catch (e: any) {
@@ -275,17 +275,21 @@ const PLocation: FC = () => {
         if (res.error) {
           ToastError.fire();
         } else {
+          //console.log("Humu humu humu 1");
           const href = URL.createObjectURL(res);
+          
+          //console.log("Humu humu humu 2");
           const link = document.createElement("a");
 
-          console.log("Humu humu humu");
+          //console.log("Humu humu humu 3");
           link.href = href;
           link.setAttribute("download", `devis_${code}.pdf`);
           link.click();
-          URL.revokeObjectURL(href);
+          // URL.revokeObjectURL(href);
         }
       })
       .catch((reason) => {
+        //console.log({reason})
         ToastError.fire();
       })
       .finally(() => {

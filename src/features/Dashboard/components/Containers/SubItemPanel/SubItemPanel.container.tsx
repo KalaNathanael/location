@@ -143,7 +143,7 @@ const CSubItemPanel: FC<CSubItemPanelProps> = ({
                   min={0}
                   value={value}
                   onChange={(e) => {
-                    console.log({ e });
+                    //console.log({ e });
                     let newValue: number = Number(e.target.value);
                     if (newValue > subItem.available_qte) {
                       setValue(subItem.available_qte);

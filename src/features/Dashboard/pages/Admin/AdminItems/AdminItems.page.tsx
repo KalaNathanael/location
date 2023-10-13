@@ -129,7 +129,7 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
       confirmButtonColor: "var(--ui-primary)",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("daoidnaofia");
+        //console.log("daoidnaofia");
         API(elt.id)
           .then((response) => {
             ToastSuccess.fire({
@@ -173,7 +173,7 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
 
   const handleCloseModal = (refetch?: boolean) => {
     if (refetch) {
-      console.log("un an et demi");
+      //console.log("un an et demi");
       if (id_cat) getSubCatList();
       else getCatList();
     }
@@ -216,7 +216,7 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
                   deleteItem(elt);
                 }}
                 onModify={() => {
-                  console.log({ elt });
+                  //console.log({ elt });
                   setSelectedItem(elt);
                   setOpenModal(true);
                   setOperation("Update");

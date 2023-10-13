@@ -210,7 +210,7 @@ const PAdminArticles: FC<PAdminArticlesProps> = ({ selectedSubCat }) => {
 
   const handleCloseModal = (refetch?: boolean) => {
     if (refetch) {
-      console.log("deux ans et demi");
+      //console.log("deux ans et demi");
       getArticles();
     }
     setOpenModal(false);
