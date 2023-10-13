@@ -5,7 +5,7 @@ export const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
 
 export const FILE_SIZE = 5 * 1024 * 1024;
 
-export const commandStatus: { [key: string]: TStatus } = {
+export let commandStatus: { [key: string]: TStatus } = {
   "En attente": {
     label: "En attente",
     color: "var(--ui-blue-normal)",
@@ -14,22 +14,26 @@ export const commandStatus: { [key: string]: TStatus } = {
     label: "À livrer",
     color: "var(--ui-orange-normal)",
   },
+  "Livré": {
+    label: "Livré",
+    color: "var(--ui-blue-dark)",
+  },
   Terminé: {
     label: "Terminé",
     color: "var(--ui-green-dark)",
   },
 };
 
-export const devisStatus: { [key: string]: TStatus } = {
+export let devisStatus: { [key: string]: TStatus } = {
   "A régler": {
     label: "À régler",
     color: "var(--ui-red-normal)",
   },
-  Livré: {
+  "Livré": {
     label: "À récupérer",
     color: "var(--ui-yellow-normal)",
   },
-  Régler: {
+  "Régler": {
     label: "Réglé",
     color: "var(--ui-blue-dark)",
   },

@@ -232,6 +232,17 @@ const PLocation: FC = () => {
       } else {
         const data: any[] = response.data;
         let toSend: TCommand[] = data.map((command) => {
+          let statusCommande = commandStatus[command.status_commande]
+          ? commandStatus[command.status_commande]
+          : commandStatus["En attente"];
+          let statusDevis = devisStatus[command.status_devis]
+          ? devisStatus[command.status_devis]
+          : devisStatus["A régler"];
+
+          if(statusDevis.label === "À récupérer"){
+            statusCommande = commandStatus["Livré"];
+          }
+
           return {
             id: command.id,
             client: command.clients,
@@ -240,12 +251,8 @@ const PLocation: FC = () => {
             dateDebut: new Date(command.date_debut),
             dateFin: new Date(command.date_fin),
             montantDevis: command.montant_devis,
-            statusCommande: commandStatus[command.status_commande]
-              ? commandStatus[command.status_commande]
-              : commandStatus["En attente"],
-            statusDevis: devisStatus[command.status_devis]
-              ? devisStatus[command.status_devis]
-              : devisStatus["A régler"],
+            statusCommande: statusCommande,
+            statusDevis: statusDevis,
               
             commandArticles: command.details_commandes.map((elt) => ({
               id: elt.id,
