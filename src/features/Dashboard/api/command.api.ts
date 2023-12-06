@@ -57,10 +57,9 @@ export const APIcollectItems = (
   commandCode: string,
   datas: TTypeArticle[]
 ): Promise<IAPIResponseInterface> => {
-  //TODO: On attend la route
   const toSend = {
-    code: commandCode,
+    statut: 2,
     articles: datas,
   };
-  return axios.put(`route`, toSend);
+  return axios.put(`/validation-devis/${commandCode}`, toSend);
 };

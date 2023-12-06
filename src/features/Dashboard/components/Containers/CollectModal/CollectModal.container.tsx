@@ -14,8 +14,10 @@ import Button from "@/components/UICs/Button/Button.uic";
 import FCollectArticle from "../../Forms/CollectArticle/CollectArticle.form";
 
 import { APIcollectItems } from "@/features/Dashboard/api/command.api";
-import { ToastError } from "@/utils/toast";
+import { ToastError, ToastSuccess } from "@/utils/toast";
 import { TTypeArticle } from "@/types";
+import { useNavigate } from "react-router-dom";
+import { routePaths } from "@/config";
 
 export type TCollectFormValues = Pick<
   TTypeArticle,
@@ -26,6 +28,8 @@ interface CSetCollectProps {
   devisDetails: TTypeArticle[];
 }
 const CSetCollect: FC<CSetCollectProps> = ({ devisDetails, commandCode }) => {
+  const navigate = useNavigate();
+
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState<{
     [k: number]: boolean;
@@ -181,7 +185,12 @@ const CSetCollect: FC<CSetCollectProps> = ({ devisDetails, commandCode }) => {
       setLoading(true);
       APIcollectItems(commandCode, datasForm)
         .then((res) => {
-          //TODO: A rajouter
+          if (res.error) {
+            ToastError.fire({ text: res.message });
+          } else {
+            ToastSuccess.fire({ text: "La commande est terminée. Veuillez consulter les stocks pour s'assurer de l'inventaire.", timer: 10000});
+            navigate(routePaths.location);
+          }
         })
         .catch((reason) => {
           if (reason.response.status === 400) {

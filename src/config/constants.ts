@@ -15,11 +15,11 @@ export let commandStatus: { [key: string]: TStatus } = {
     color: "var(--ui-orange-normal)",
   },
   "Livré": {
-    label: "Livré",
-    color: "var(--ui-blue-dark)",
+    label: "À recupérer",
+    color: "var(--ui-yellow-normal)",
   },
-  Terminé: {
-    label: "Terminé",
+  "Terminée": {
+    label: "Terminée",
     color: "var(--ui-green-dark)",
   },
 };
@@ -30,12 +30,12 @@ export let devisStatus: { [key: string]: TStatus } = {
     color: "var(--ui-red-normal)",
   },
   "Livré": {
-    label: "À récupérer",
-    color: "var(--ui-yellow-normal)",
-  },
-  "Régler": {
     label: "Réglé",
-    color: "var(--ui-blue-dark)",
+    color: "var(--ui-green-dark)",
+  },
+  "Réglé": {
+    label: "Réglé",
+    color: "var(--ui-green-dark)",
   },
 };
 

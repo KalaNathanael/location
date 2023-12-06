@@ -6,6 +6,7 @@
 
     & h6 {
       min-width: 44%;
+      max-width: 60%;
       flex-shrink: 0;
       padding-right: 10px;
       font-size: 14px;
@@ -17,18 +18,21 @@
     }
 
     .badges {
+      max-width: 35%;
       margin-right: 4px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 4px;
+      flex-wrap: wrap;
+      justify-content: right;
     }
 
     .badge-metric {
-      font-size: 16px;
-      font-weight: 900;
+      font-size: 13px;
+      font-weight: 600;
       letter-spacing: 1px;
-      min-width: 28px;
-      height: 28px;
+      min-width: 22px;
+      height: 22px;
       display: flex;
       justify-content: center;
       align-items: center;

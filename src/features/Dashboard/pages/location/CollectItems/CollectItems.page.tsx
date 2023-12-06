@@ -95,24 +95,24 @@ const PCollectItems: FC = () => {
               <div className="sub-content">
                 <span className="data">
                   <strong>Début : </strong>
-                  {(selectedCommand as TCommand).dateDebut.toLocaleDateString(
+                  {new Date((selectedCommand as TCommand).dateDebut).toLocaleDateString(
                     "fr",
                     { dateStyle: "full" }
                   )}{" "}
                   à{" "}
-                  {(selectedCommand as TCommand).dateDebut.toLocaleTimeString(
+                  {new Date((selectedCommand as TCommand).dateDebut).toLocaleTimeString(
                     "fr",
                     { timeStyle: "medium" }
                   )}
                 </span>
                 <span className="data">
                   <strong>Fin : </strong>
-                  {(selectedCommand as TCommand).dateFin.toLocaleDateString(
+                  {new Date((selectedCommand as TCommand).dateFin).toLocaleDateString(
                     "fr",
                     { dateStyle: "full" }
                   )}{" "}
                   à{" "}
-                  {(selectedCommand as TCommand).dateFin.toLocaleTimeString(
+                  {new Date((selectedCommand as TCommand).dateFin).toLocaleTimeString(
                     "fr",
                     { timeStyle: "medium" }
                   )}

@@ -191,7 +191,7 @@ const PLocation: FC = () => {
                   </MuiButton>
                 </>
               )}
-            {status_devis.label === "À récupérer" && (
+            {statusCommande.label === "À recupérer" && (
               <>
                 <MuiButton
                   aria-label="visualize"
@@ -239,10 +239,6 @@ const PLocation: FC = () => {
           ? devisStatus[command.status_devis]
           : devisStatus["A régler"];
 
-          if(statusDevis.label === "À récupérer"){
-            statusCommande = commandStatus["Livré"];
-          }
-
           return {
             id: command.id,
             client: command.clients,
@@ -266,7 +262,7 @@ const PLocation: FC = () => {
           };
         });
 
-        //console.log({ toSend });
+        console.log({ toSend });
         setDatas(toSend);
       }
     } catch (e: any) {
@@ -328,7 +324,6 @@ const PLocation: FC = () => {
                 statusDevis: devisStatus[data.status_devis]
                   ? devisStatus[data.status_devis]
                   : devisStatus["A régler"],
-                //TODO: voir ce qu'il y a à faire de "commandArticles"
               };
             } else {
               return elt;
@@ -439,16 +434,16 @@ const PLocation: FC = () => {
           icon="mdi:timer-sand"
           title="À récupérer"
           value={
-            datas.filter((elt) => elt.statusDevis.label === "À récupérer")
+            datas.filter((elt) => elt.statusCommande.label === "À recupérer")
               .length
           }
         />
         <KPICardUIC
           color="green"
           icon="ep:finished"
-          title="Terminé"
+          title="Terminée"
           value={
-            datas.filter((elt) => elt.statusCommande.label === "Terminé").length
+            datas.filter((elt) => elt.statusCommande.label === "Terminée").length
           }
         />
       </div>
