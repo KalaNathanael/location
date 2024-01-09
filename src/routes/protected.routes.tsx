@@ -16,48 +16,60 @@ import PAdminItems from "@/features/Dashboard/pages/Admin/AdminItems/AdminItems.
 import PAdminArticles from "@/features/Dashboard/pages/Admin/AdminArticles/AdminArticles.page";
 import PCollectItems from "@/features/Dashboard/pages/location/CollectItems/CollectItems.page";
 
-export const protectedRoutes = (permitRent: boolean = true): RouteObject[] => {
+const HomeRoutes = {
+  path: routePaths.home,
+  element: (
+    <MainContainer>
+      <HomePage />
+    </MainContainer>
+  ),
+};
+
+const adminRoutes = (admin: boolean) => {
+  const sharedAdminRoutes = [
+    { path: "", element: <PAdmin /> },
+    {
+      path: routePaths.adminCategories,
+      element: <PAdminItems />,
+    },
+    {
+      path: routePaths.adminSubCategories,
+      element: <PAdminItems />,
+    },
+    {
+      path: routePaths.adminArticles,
+      element: <PAdminArticles />,
+    },
+  ];
+  const protectedAdminRoutes = [
+    {
+      path: routePaths.adminUsers,
+      element: <PAdminUsers />,
+    },
+  ]
+
+  let childrenRoutes = admin ? [...sharedAdminRoutes, ...protectedAdminRoutes] : [...sharedAdminRoutes];
+
+  return {
+    path: routePaths.admin,
+    element: (
+      <>
+        <DashboardHeader />
+        <MainContainer>
+          <div style={{ height: "63.5px" }}></div>
+          <Outlet />
+        </MainContainer>
+      </>
+    ),
+    children: childrenRoutes
+  }
+};
+
+export const protectedRoutes = (permitRent: boolean = true, admin: boolean): RouteObject[] => {
   if (permitRent)
     return [
-      {
-        path: routePaths.home,
-        element: (
-          <MainContainer>
-            <HomePage />
-          </MainContainer>
-        ),
-      },
-      {
-        path: routePaths.admin,
-        element: (
-          <>
-            <DashboardHeader />
-            <MainContainer>
-              <div style={{ height: "63.5px" }}></div>
-              <Outlet />
-            </MainContainer>
-          </>
-        ),
-        children: [
-          { path: "", element: <PAdmin /> },
-          {
-            path: routePaths.adminUsers,
-            element: <PAdminUsers />,
-          },
-          {
-            path: routePaths.adminCategories,
-            element: <PAdminItems />,
-          },
-          {
-            path: routePaths.adminSubCategories,
-            element: <PAdminItems />,
-          },
-          {
-            path: routePaths.adminArticles,
-            element: <PAdminArticles />,
-          },
-        ],
-      },
+      HomeRoutes,
+      adminRoutes(admin),
       {
         path: routePaths.location,
         element: (

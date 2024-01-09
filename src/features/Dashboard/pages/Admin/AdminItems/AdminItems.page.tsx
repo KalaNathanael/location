@@ -4,10 +4,14 @@ import { FC, useState, useEffect } from "react";
 import { createStructuredSelector } from "reselect";
 import { connect, ConnectedProps } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 import { Icon } from "@iconify/react";
 import { Box, Skeleton } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 
+import AdminCatCardUIC from "@/features/Dashboard/components/elements/AdminCatCard.uic";
+import CCreateCat from "@/features/Dashboard/components/Containers/CreateCat/CreateCat.container";
 import Button from "@/components/UICs/Button/Button.uic";
 
 import { store } from "@/store";
@@ -17,6 +21,7 @@ import {
   setSelectedSubCat,
 } from "@/store/reducers/admin/admin.reducer";
 import { selectAdminSelectedCat } from "@/store/reducers/admin/admin.selector";
+import { selectConnectedUser } from "@/store/reducers/app/app.selector";
 
 import {
   APIdeleteCategories,
@@ -29,12 +34,10 @@ import { routePaths } from "@/config";
 
 import { TCat, TSubCat } from "@/types";
 
-import AdminCatCardUIC from "@/features/Dashboard/components/elements/AdminCatCard.uic";
-import CCreateCat from "@/features/Dashboard/components/Containers/CreateCat/CreateCat.container";
-import Swal from "sweetalert2";
-
 type PAdminItemsProps = ConnectedProps<typeof connector>;
-const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
+const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat, connectedUser }) => {
+  const isUserAdmin: boolean = connectedUser?.profil.id === 2;
+
   const dispatch = store.dispatch;
   const navigate = useNavigate();
   const { id_cat } = useParams();
@@ -199,7 +202,7 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
   const renderCategories = () => {
     return (
       <>
-        <h2>Liste des Catégories d'articles</h2>
+        <h2 className="subtitle">Liste des Catégories d'articles</h2>
         {/* <p>
           Tips : Sélectionnez un type d'objet et choisissez dans la liste
           d'éléments générés, les éléments et leurs quantités qui vous
@@ -212,6 +215,10 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
               <AdminCatCardUIC
                 key={elt.id}
                 item={elt}
+                rights={{
+                  delete: isUserAdmin,
+                  update: isUserAdmin
+                }}
                 onDelete={() => {
                   deleteItem(elt);
                 }}
@@ -278,6 +285,10 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
               <AdminCatCardUIC
                 key={elt.id}
                 item={elt}
+                rights={{
+                  delete: isUserAdmin,
+                  update: isUserAdmin
+                }}
                 onDelete={() => {
                   deleteItem(elt);
                 }}
@@ -323,14 +334,29 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
 
   return (
     <div className="page p-admin-items">
-      <Button
+      {/* <Button
         className="return-button"
         label="Retour"
         inverted={true}
         color="var(--ui-primary)"
         Icon={<Icon icon="akar-icons:arrow-left" fontSize={18} />}
         onClick={() => onReturnPage()}
-      />
+      /> */}
+      <h2>
+        <IconButton
+          aria-label="back-drop"
+          color="primary"
+          size="medium"
+          onClick={() => onReturnPage()}
+          sx={{ width: "fit-content" }}
+        >
+          <Icon icon="akar-icons:arrow-left" fontSize={20} />
+        </IconButton>
+        <span className="icon">
+          <Icon icon="fluent-emoji-high-contrast:fork-and-knife-with-plate" fontSize={30} />
+        </span>{" "}
+        Gestion des articles
+      </h2>
       {!id_cat ? renderCategories() : renderSubCategories()}
       <CCreateCat
         handleClose={handleCloseModal}
@@ -344,6 +370,7 @@ const PAdminItems: FC<PAdminItemsProps> = ({ selectedCat }) => {
 
 const mapStateToProps = createStructuredSelector({
   selectedCat: selectAdminSelectedCat,
+  connectedUser: selectConnectedUser
 });
 const connector = connect(mapStateToProps);
 

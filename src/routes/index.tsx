@@ -10,6 +10,7 @@ import { publicRoutes } from "./public.routes";
 type AppRoutesProps = ConnectedProps<typeof connector>;
 const AppRoutes: React.FC<AppRoutesProps> = ({ connectedUser }) => {
   const auth: boolean = !!connectedUser;
+  const isUserAdmin: boolean = connectedUser?.profil.id === 2;
   const routes = publicRoutes;
 
   const commonRoutes = [
@@ -27,7 +28,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({ connectedUser }) => {
   const element = useRoutes([
     ...commonRoutes,
     ...routes,
-    ...protectedRoutes(auth),
+    ...protectedRoutes(auth, isUserAdmin),
   ]);
 
   return <>{element}</>;

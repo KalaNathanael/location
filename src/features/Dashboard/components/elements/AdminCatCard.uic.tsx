@@ -5,6 +5,10 @@ import { Button } from "@mui/material";
 import styled from "styled-components";
 
 type AdminCatCardUICProps = {
+  rights: {
+    delete: boolean;
+    update: boolean;
+  };
   item: TCat | TSubCat;
   onView: () => void;
   onModify: () => void;
@@ -12,6 +16,7 @@ type AdminCatCardUICProps = {
 };
 const AdminCatCardUIC: FC<AdminCatCardUICProps> = ({
   item,
+  rights,
   onDelete,
   onModify,
   onView,
@@ -26,10 +31,10 @@ const AdminCatCardUIC: FC<AdminCatCardUICProps> = ({
       <RightSide>
         <CardName onClick={onView}>{item.label}</CardName>
         <CardButtons>
-          <Button id="delete" variant="text" color="error" onClick={onDelete}>
+          <Button id="delete" variant="text" color="error" onClick={onDelete} disabled={!rights.delete}>
             Supprimer
           </Button>
-          <Button id="modify" variant="text" color="warning" onClick={onModify}>
+          <Button id="modify" variant="text" color="warning" onClick={onModify} disabled={!rights.update}>
             Modifier
           </Button>
           <Button id="view" variant="text" color="success" onClick={onView}>
